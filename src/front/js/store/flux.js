@@ -2,6 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			message: null,
+			apiUrl: "https://3001-sabonrex-playlistcreato-vssaa19alph.ws-eu92.gitpod.io/api/",
 			demo: [
 				{
 					title: "FIRST",
