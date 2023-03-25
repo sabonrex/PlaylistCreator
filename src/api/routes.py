@@ -2,9 +2,8 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, Users, Tracks, Playlists, Favourites
 from api.utils import generate_sitemap, APIException
-
 
 
 from flask_jwt_extended import create_access_token
@@ -25,11 +24,10 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-#add sign up
-
+# route to signup a user and add it to the database
 @api.route("/signup", methods=["POST"])
 def add_user():
-    user = User()
+    user = Users()
 
     request_user = request.json
 
@@ -49,12 +47,13 @@ def add_user():
 
     return jsonify(response), 201
 
+# route to check if the user exists and creates is authentication token
 @api.route("/login", methods=["POST"])
 def login():
     email = request.json.get("email", None)
     password = request.json.get("password", None)
 
-    user = User.query.filter_by(email=email).first()
+    user = Users.query.filter_by(email=email).first()
 
     if password != user.password:
         return jsonify({"msg": "Bad email or password"}), 401
@@ -62,13 +61,13 @@ def login():
     access_token = create_access_token(identity=email)
     return jsonify(access_token=access_token)
 
-#Add to check user
 
+# route to check if the user exists and is authenticated
 @api.route("/check", methods=["GET"])
 @jwt_required()
 def protected():
     # Access the identity of the current user with get_jwt_identity
     current_email = get_jwt_identity()
-    user = User.query.filter_by(email=current_email).first()
+    user = Users.query.filter_by(email=current_email).first()
 
-    return jsonify(user.serialize()),200
+    return jsonify(user.serialize()), 200
