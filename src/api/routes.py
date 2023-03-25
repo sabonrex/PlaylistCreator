@@ -22,8 +22,8 @@ def handle_hello():
 
 
 #  Client Keys
-CLIENT_ID = "c1c79c2efac2469d962d2593a7962e50"
-CLIENT_SECRET = "3e9319711f9945c28641e22e270f0662"
+CLIENT_ID = "644ceddb45c84fbaa56651b0f952de2a"
+CLIENT_SECRET = "f951c5d97b004f60a23d350f8e23dc6e"
 
 # Spotify URLS
 SPOTIFY_AUTH_URL = "https://accounts.spotify.com/authorize"
