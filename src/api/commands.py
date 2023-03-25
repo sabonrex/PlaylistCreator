@@ -19,7 +19,8 @@ def setup_commands(app):
     def insert_test_data(count):
         print("Creating test users")
         for x in range(1, int(count) + 1):
-            user = User()
+            user = Users()
+            user.username = "test_user" + str(x)
             user.email = "test_user" + str(x) + "@test.com"
             user.password = "123456"
             user.is_active = True
