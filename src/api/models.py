@@ -11,7 +11,7 @@ class Users(db.Model):
     is_active = db.Column(db.Boolean(), unique=False, nullable=False) # ask Edgar why is this possibly necessary?
     spotify_token = db.Column(db.String(500), unique=False)
     #token_created_at = db.Column(db.DateTime(), default=datetime.utcnow)
-    #\token_expires_at = db.Column(db.DateTime(), default=datetime.utcnow)
+    #token_expires_at = db.Column(db.DateTime(), default=datetime.utcnow)
 
     def __repr__(self):
         return f'<User {self.username}>'
