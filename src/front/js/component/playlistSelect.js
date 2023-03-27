@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Accordion, Button, Col, Container, ListGroup, ListGroupItem, Row, Stack } from "react-bootstrap";
+import { Accordion, AccordionButton, Button, Col, Container, ListGroup, ListGroupItem, Row, Stack } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import { faPlay, faEllipsisVertical, faListUl } from "@fortawesome/free-solid-svg-icons";
 
 import { playlistData } from "./testData";
 
@@ -17,37 +17,42 @@ export const Playlists = () => {
             <Row>
             <Col md={{ span: 8, offset: 2 }}>
                 <Accordion>
-                    {playlistData.map((entry, index) =>            
+                    {playlistData.map((entry, index) =>
+                                    
                         <Accordion.Item key={index} eventKey={index}>
-                            {console.log(entry)}
-                            <Accordion.Header>
+                            <Accordion.Header className="d-flex">
                                 <Button className="me-3" variant="success"><FontAwesomeIcon icon={faPlay} /></Button>
                                 <strong>{entry.playlistName}</strong>&nbsp;playlist
                             </Accordion.Header>
+                            
                             <Accordion.Body>
                                 <ListGroup variant="flush">
                                     {entry.list.tracks.map((trackDetails, index) =>
                                     <ListGroupItem action>
                                     <Row>
-                                        <Col xs="1">
-                                            <div className="text-start">
-                                                {index + 1}
-                                            </div>
+                                        <Col xs="1" className="d-flex justify-content-start my-auto">
+                                            <Button variant="outline-success">
+                                                <FontAwesomeIcon icon={faEllipsisVertical} />
+                                            </Button>
+                                        </Col>  
+                                        <Col xs="1" className="my-auto">
+                                            {index + 1}
                                         </Col>
-                                        <Col xs="5">
-                                            <div className="text-start">
+                                        <Col xs="1" className="justify-content-center me-auto">
+                                            <img src={trackDetails.album.images[2].url}></img>
+                                        </Col>
+                                        <Col xs="5" className="my-auto">
+                                            <div className="text-start ps-2">
                                                 <div className="fw-bold">{trackDetails.name}</div>
                                                 {trackDetails.artists[0].name}
                                             </div>
                                         </Col>
-                                        <Col xs="4">
-                                            <div className="text-end">
+                                        <Col xs="3" className="pe-4 my-auto text-end">
                                                 <em>{trackDetails.album.name}</em>
-                                            </div>
                                         </Col>
-                                        <Col xs="2">
-                                            <div className="text-end">{msToMin(trackDetails.duration_ms)}</div>
-                                        </Col>    
+                                        <Col xs="1" className="d-flex justify-content-center my-auto">
+                                            {msToMin(trackDetails.duration_ms)}
+                                        </Col>   
                                     </Row>
                                     </ListGroupItem>
                                 )}
