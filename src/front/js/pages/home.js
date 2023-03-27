@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
+import { Playlists } from "../component/playlistSelect";
+import { Link } from "react-router-dom";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 
@@ -8,10 +10,14 @@ export const Home = () => {
 
 	return (
 		<div className="text-center mt-5">
+			<Playlists />
 			<h1>Hello Rigo!!</h1>
 			<p>
 				<img src={rigoImageUrl} />
 			</p>
+			<div className="alert alert-info">
+				<Link to="/mainView" />
+			</div>
 			<div className="alert alert-info">
 				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
 			</div>
