@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
+import { Playlists } from "../component/playlistSelect";
 import { Link } from "react-router-dom";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
@@ -9,6 +10,7 @@ export const Home = () => {
 
 	return (
 		<div className="text-center mt-5">
+			<Playlists />
 			<h1>Hello Rigo!!</h1>
 			<p>
 				<img src={rigoImageUrl} />
