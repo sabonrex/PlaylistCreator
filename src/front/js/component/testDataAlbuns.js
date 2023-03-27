@@ -1,0 +1,58 @@
+export const tracks = [
+    {
+        id: 1,
+        url: "https://media.pitchfork.com/photos/5929a1a8c0084474cd0bfe6a/1:1/w_600/2099047d.jpg",
+        alt: "Cover picture of Arcade Fire's Funeral Album",
+        title: "Wake Up",
+        artist: "Arcade Fire",
+    },
+    {
+        id: 2,
+        url: "https://wvcw.org/wp-content/uploads/2020/04/The-Strokes-Album-Review.jpg",
+        alt: "The New Abnormal album cover",
+        title: "Ode to The Mets",
+        artist: "The Strokes",
+    },
+    {
+        id: 3,
+        url: "https://images-eu.ssl-images-amazon.com/images/I/41QfcId32+L._AC_UL600_SR600,600_.jpg",
+        alt: "Alteres cover of Dark Side of The Moon album",
+        title: "I Wish You Were Here",
+        artist: "Pink Floyd",
+    },
+    {
+        id: 4,
+        url: "https://lastfm.freetls.fastly.net/i/u/ar0/f5887321b7f84347a9d90a5ea22b027d.jpg",
+        alt: "Alteres cover of Dark Side of The Moon album",
+        title: "Black Bird",
+        artist: "The Beatles",
+    },
+    {
+        id: 5,
+        url: "https://media.pitchfork.com/photos/5929a1a8c0084474cd0bfe6a/1:1/w_600/2099047d.jpg",
+        alt: "Cover picture of Arcade Fire's Funeral Album",
+        title: "Rebellion (lies)",
+        artist: "Arcade Fire",
+    },
+    {
+        id: 6,
+        url: "https://wvcw.org/wp-content/uploads/2020/04/The-Strokes-Album-Review.jpg",
+        alt: "The New Abnormal album cover",
+        title: "The Adults are Talking",
+        artist: "The Strokes",
+    },
+    {
+        id: 7,
+        url: "https://images-eu.ssl-images-amazon.com/images/I/41QfcId32+L._AC_UL600_SR600,600_.jpg",
+        alt: "Alteres cover of Dark Side of The Moon album",
+        title: "Time",
+        artist: "Pink Floyd",
+    },
+    {
+        id: 8,
+        url: "https://images-eu.ssl-images-amazon.com/images/I/41QfcId32+L._AC_UL600_SR600,600_.jpg",
+        alt: "Alteres cover of Dark Side of The Moon album",
+        title: "The Great Gig in The Sky",
+        artist: "Pink Floyd",
+    },
+  ];
