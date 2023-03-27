@@ -5,7 +5,6 @@ import json
 from flask import Flask, request, jsonify, url_for, Blueprint, redirect, g, render_template
 import requests
 from urllib.parse import quote
-from api.models import db, User
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, Users, Tracks, Playlists, Favourites
 from api.utils import generate_sitemap, APIException
