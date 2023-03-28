@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import { Playlists } from "../component/playlistSelect";
+import { Favorites } from "../component/favoritesSelect";
 
 import "../../styles/index.css";
 
@@ -14,6 +15,7 @@ export const MainView = () => {
             <h1 className="jumbo-text my-5">Find Your <span style={{"color": "#BAFF4F", "fontWeight": "bold"}}>Music</span></h1>
             <button className="discover-button my-5">Discover your Playlist</button>
         </div>
+        <Favorites />
         <Playlists />
     </section>
   );

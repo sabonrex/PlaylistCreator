@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faEllipsisVertical, faListUl } from "@fortawesome/free-solid-svg-icons";
 
 import { favoritesData } from "./testData";
-import { msToMin } from "../../utils/msToMin";
+import { msToMin } from "./utils/msToMin";
 
 export const Favorites = () => {
     return (
