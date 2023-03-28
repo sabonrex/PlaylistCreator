@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import { Playlists } from "../component/playlistSelect";
+import { Playlists } from "../component/playlistSelect.jsx";
 import { Link } from "react-router-dom";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
