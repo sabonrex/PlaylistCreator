@@ -9,8 +9,8 @@ export const Navibar = () => {
 		<nav className="navbar navbar-light bg-DarkBlue">
 			<div className="container">
 				<h1>Aleatorium</h1>
-				<Nav.Link to="/home">Home</Nav.Link>
-				<Nav.Link to="/favorite">Favorite</Nav.Link>
+				<Nav.Link className="navv" href="#home">Home</Nav.Link>
+				<Nav.Link className="navv" href="#favorite">Favorite</Nav.Link>			
 				<div className="ml-auto">
 				<Nav>
             <Nav.Link href="#login">Login in</Nav.Link>
