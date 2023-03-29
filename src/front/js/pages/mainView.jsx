@@ -1,25 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { Playlists } from "../component/playlistSelect.jsx";
 import { playlistData } from "../component/testDataPlaylist";
+import { Context } from "../store/appContext";
 
 import "../../styles/index.css";
-
-const BACKEND_URL = process.env.BACKEND_URL;
+import { Button } from "react-bootstrap";
 
 export const MainView = () => {
-  const [playlist, setPlaylist] = useState(null);
+  const { actions, store } = useContext(Context);
 
-  const fetchPlaylist = async () => {
-    try {
-      const response = await fetch(`${BACKEND_URL}/api/spotify/random`);
-      if (!response.ok) throw new Error("Something went wrong");
-      const jsonResponse = await response.json();
-      setPlaylist(jsonResponse?.data || []);
-    } catch {
-      window.alert("Something went wrong");
-    }
-  };
+  const fetchPlaylist = () => actions.fetchPlaylist();
 
   return (
     <section
@@ -34,10 +25,11 @@ export const MainView = () => {
         <button className="discover-button my-5" onClick={fetchPlaylist}>
           Discover your Playlist
         </button>
+        <SavePlaylistButton />
       </div>
       <Playlists playlist={playlistData} />
-      {playlist &&
-        playlist.map((track) => {
+      {store.randomPlaylist?.length > 0 &&
+        store.randomPlaylist.map((track) => {
           return (
             <li key={track.id}>
               {Object.values(track).map((value) => (
@@ -49,5 +41,19 @@ export const MainView = () => {
           );
         })}
     </section>
+  );
+};
+
+const SavePlaylistButton = () => {
+  const { store } = useContext(Context);
+  return (
+    <Button
+      onClick={() => {
+        console.log("Saving playlist");
+        console.log(store.randomPlaylist);
+      }}
+    >
+      Save
+    </Button>
   );
 };

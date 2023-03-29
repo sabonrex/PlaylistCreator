@@ -2,8 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       message: null,
-      apiUrl:
-        "https://3001-sabonrex-playlistcreato-vssaa19alph.ws-eu92.gitpod.io/api/", // process.env.BACKEND_URL
+      apiUrl: process.env.BACKEND_URL,
       demo: [
         {
           title: "FIRST",
@@ -16,6 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           initial: "white",
         },
       ],
+      randomPlaylist: [],
     },
     actions: {
       // Use getActions to call a function within a fuction
@@ -48,6 +48,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         //reset the global store
         setStore({ demo: demo });
+      },
+      fetchPlaylist: async () => {
+        const store = getStore();
+        try {
+          const response = await fetch(`${store.apiUrl}/api/spotify/random`);
+
+          if (!response.ok) throw new Error("Something went wrong");
+          const jsonResponse = await response.json();
+          setStore({ randomPlaylist: jsonResponse?.data || [] });
+        } catch {
+          window.alert("Something went wrong");
+        }
       },
     },
   };
