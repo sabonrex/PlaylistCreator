@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 
 import { Playlists } from "../component/playlistSelect.jsx";
 import { playlistData } from "../component/testDataPlaylist";
+import { Favorites } from "../component/favoriteSelect.js";
+import { favoritesData } from "../component/testDataFavorites.js";
 import { Context } from "../store/appContext";
 
 import "../../styles/index.css";
@@ -24,8 +26,9 @@ export const MainView = () => {
         </button>
         <SavePlaylistButton />
       </div>
+      <Favorites favorites={favoritesData} />
       <Playlists playlist={playlistData} />
-
+    </>
   );
 };
 
