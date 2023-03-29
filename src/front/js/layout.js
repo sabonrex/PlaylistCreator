@@ -10,7 +10,7 @@ import { Login } from "./pages/login.jsx";
 import { Signup } from "./pages/signup.jsx";
 import injectContext from "./store/appContext";
 
-import { Navbar } from "./component/navbar";
+import { Navibar } from "./component/navbar.jsx";
 import { Footer } from "./component/footer";
 import { CarouselFooter } from "./component/carouselFooter.jsx";
 
@@ -24,7 +24,7 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    <Navbar />
+                    <Navibar />
                     <Routes>
                         <Route element={<MainView />} path="/" />
                         <Route element={<Demo />} path="/demo" />
