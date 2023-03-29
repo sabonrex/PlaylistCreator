@@ -1,15 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
+import { Context } from "../store/appContext";
 import { Playlists } from "../component/playlistSelect.jsx";
 import { playlistData } from "../component/testDataPlaylist";
 
 import "../../styles/index.css";
 
 export const MainView = () => {
+  const { store } = useContext(Context);
   const [playlist, setPlaylist] = useState(null);
 
-  const fetchPlaylist = () => {
-    console.log("vai po caralho");
+  const fetchPlaylist = async () => {
+    const apiUrl = store.apiUrl + "randomlist/";
+    console.log(apiUrl)
+    const request = {
+      method: "GET",
+      cors: "no-cors"
+    }
+    
+    const resp = await fetch(apiUrl, request);
+    console.log(resp)
+    const readableResp = await resp.json();
+    console.log(readableResp)
   };
 
   return (

@@ -40,7 +40,7 @@ API_VERSION = "v1"
 SPOTIFY_API_URL = "{}/{}".format(SPOTIFY_API_BASE_URL, API_VERSION)
 
 # Server-side Parameters
-CLIENT_SIDE_URL = "https://3001-sabonrex-playlistcreato-mkniel1kd1y.ws-eu92.gitpod.io/api"
+CLIENT_SIDE_URL = "https://3001-sabonrex-playlistcreato-vssaa19alph.ws-eu92.gitpod.io/api"
 # PORT = 3001
 REDIRECT_URI = "{}/callback/q".format(CLIENT_SIDE_URL)
 REDIRECT_RANDOM_LIST_URI = "{}/randomlistcallback/q".format(CLIENT_SIDE_URL)

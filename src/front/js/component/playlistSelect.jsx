@@ -12,7 +12,6 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay } from "@fortawesome/free-solid-svg-icons";
 
-import { playlistData } from "./testDataPlaylist";
 
 const msToMin = (ms) => {
   const minutes = Math.floor(ms / 60000);
