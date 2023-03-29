@@ -3,7 +3,6 @@ import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import { Playlists } from "../component/playlistSelect.jsx";
 import { playlistData } from "../component/testDataPlaylist";
-import { Context } from "../store/appContext";
 
 import "../../styles/index.css";
 import { Button } from "react-bootstrap";
