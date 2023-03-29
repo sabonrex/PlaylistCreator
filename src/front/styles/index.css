@@ -36,3 +36,12 @@ button.discover-button {
 button.discover-button:hover {
     opacity: 0.9;
 }
+
+nav h1 {
+    color: #BAFF4F;
+    border-color: #1D2343;
+}
+
+nav span {
+    color: #BAFF4F;
+}

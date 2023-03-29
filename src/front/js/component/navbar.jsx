@@ -6,23 +6,20 @@ import NavDropdown from 'react-bootstrap/NavDropdown'
 
 export const Navibar = () => {
 	return (
-		<navv className="navbar navbar-light bg-DarkBlue">
+		<nav className="navbar navbar-light bg-DarkBlue">
 			<div className="container">
 				<h1>Aleatorium</h1>
-				 
-				<Link to="/home">
-					<span className="navbar-brand mb-0 h1">Home</span>
-				</Link>
-				<Link to="/favorite">
-					<span className="navbar-brand mb-0 h1">Favorite</span>
-				</Link>
+				<Nav.Link to="/home">Home</Nav.Link>
+				<Nav.Link to="/favorite">Favorite</Nav.Link>
 				<div className="ml-auto">
-					<Link to="/demo">
-						<button className="btn btn-primary">Check the Context in action</button>
-					</Link>
+				<Nav>
+            <Nav.Link href="#login">Login in</Nav.Link>
+			<h1>/</h1>
+            <Nav.Link href="#signup">Sign Up</Nav.Link>
+          </Nav>
 					
 				</div>
 			</div>
-		</navv>
+		</nav>
 	);
 };
