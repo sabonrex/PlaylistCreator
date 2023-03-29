@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { Playlists } from "../component/playlistSelect.jsx";
 import { playlistData } from "../component/testDataPlaylist";
+import { Context } from "../store/appContext";
 
 import "../../styles/index.css";
+import { Button } from "react-bootstrap";
 
 export const MainView = () => {
-  const [playlist, setPlaylist] = useState(null);
+  const { actions, store } = useContext(Context);
 
-  const fetchPlaylist = () => {
-    console.log("vai po caralho");
-  };
+  const fetchPlaylist = () => actions.fetchPlaylist();
 
   return (
     <>
@@ -22,8 +22,23 @@ export const MainView = () => {
         <button className="discover-button my-5" onClick={fetchPlaylist}>
           Discover your Playlist
         </button>
+        <SavePlaylistButton />
       </div>
       <Playlists playlist={playlistData} />
-    </>
+
+  );
+};
+
+const SavePlaylistButton = () => {
+  const { store } = useContext(Context);
+  return (
+    <Button
+      onClick={() => {
+        console.log("Saving playlist");
+        console.log(store.randomPlaylist);
+      }}
+    >
+      Save
+    </Button>
   );
 };
