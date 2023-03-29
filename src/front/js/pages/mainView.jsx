@@ -5,11 +5,20 @@ import { playlistData } from "../component/testDataPlaylist";
 
 import "../../styles/index.css";
 
+const BACKEND_URL = process.env.BACKEND_URL;
+
 export const MainView = () => {
   const [playlist, setPlaylist] = useState(null);
 
-  const fetchPlaylist = () => {
-    console.log("vai po caralho");
+  const fetchPlaylist = async () => {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/spotify/random`);
+      if (!response.ok) throw new Error("Something went wrong");
+      const jsonResponse = await response.json();
+      setPlaylist(jsonResponse?.data || []);
+    } catch {
+      window.alert("Something went wrong");
+    }
   };
 
   return (
@@ -27,6 +36,18 @@ export const MainView = () => {
         </button>
       </div>
       <Playlists playlist={playlistData} />
+      {playlist &&
+        playlist.map((track) => {
+          return (
+            <li key={track.id}>
+              {Object.values(track).map((value) => (
+                <ul style={{ color: "white" }} key={value}>
+                  {value}
+                </ul>
+              ))}
+            </li>
+          );
+        })}
     </section>
   );
 };

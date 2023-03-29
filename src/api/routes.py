@@ -104,11 +104,26 @@ def randomlist_callback():
     return f"<p>{random_list_data}</p>"
 
 
+def transform_tracks(track):
+    return {
+        "id": track["id"],
+        "name": track["name"],
+        "track_number": track["track_number"],
+        "image_url": track["album"]["images"][1]["url"],
+        "album_name": track["artists"][0]["name"],
+        "duration_ms": track["duration_ms"]
+
+    }
+
+
 @api.route("/spotify/random")
 def get_random_list_of_songs():
     token = spotify_api.get_access_token()
     random_list = spotify_api.get_random_list()
-    return jsonify({"data": random_list}), 200
+    tracks = random_list["tracks"]
+    converted_tracks = list(map(transform_tracks, tracks))
+
+    return jsonify({"data": converted_tracks}), 200
 
 
 @api.route("/spotifyauth/")
