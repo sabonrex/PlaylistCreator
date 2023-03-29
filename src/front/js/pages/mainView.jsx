@@ -24,8 +24,9 @@ export const MainView = () => {
         </button>
         <SavePlaylistButton />
       </div>
+       <Favorites favorites={favoritesData} />
       <Playlists playlist={playlistData} />
-
+    </>
   );
 };
 
