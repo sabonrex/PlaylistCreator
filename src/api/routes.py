@@ -8,6 +8,7 @@ from urllib.parse import quote
 from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, Users, Tracks, Playlists, Favourites
 from api.utils import generate_sitemap, APIException
+from api.auth import SpotifyAPI
 
 
 from flask_jwt_extended import create_access_token
@@ -58,13 +59,18 @@ auth_query_parameters = {
     "client_id": CLIENT_ID
 }
 
+spotify_api = SpotifyAPI(client_id=CLIENT_ID, client_secret=CLIENT_SECRET)
+
+
 @api.route("/randomlist/")
 def request_auth():
     # Auth Step 1: Authorization
     auth_query_parameters["redirect_uri"] = REDIRECT_RANDOM_LIST_URI
-    url_args = "&".join(["{}={}".format(key, quote(val)) for key, val in auth_query_parameters.items()])
+    url_args = "&".join(["{}={}".format(key, quote(val))
+                        for key, val in auth_query_parameters.items()])
     auth_url = "{}/?{}".format(SPOTIFY_AUTH_URL, url_args)
     return redirect(auth_url)
+
 
 @api.route("/randomlistcallback/q")
 def randomlist_callback():
@@ -91,18 +97,29 @@ def randomlist_callback():
 
     # Generate random list from a seed song
     random_list_request = "https://api.spotify.com/v1/recommendations?seed_artists=6WH1V41LwGDGmlPUhSZLHO&seed_genres=electronic&seed_tracks=33zDGjUK3BiqgFxoIpUWLy"
-    list_response = requests.get(random_list_request, headers=authorization_header)
+    list_response = requests.get(
+        random_list_request, headers=authorization_header)
     random_list_data = json.loads(list_response.text)
 
     return f"<p>{random_list_data}</p>"
+
+
+@api.route("/spotify/random")
+def get_random_list_of_songs():
+    token = spotify_api.get_access_token()
+    random_list = spotify_api.get_random_list()
+    return jsonify({"data": random_list}), 200
+
 
 @api.route("/spotifyauth/")
 def index():
     # Auth Step 1: Authorization
     auth_query_parameters["redirect_uri"] = REDIRECT_URI
-    url_args = "&".join(["{}={}".format(key, quote(val)) for key, val in auth_query_parameters.items()])
+    url_args = "&".join(["{}={}".format(key, quote(val))
+                        for key, val in auth_query_parameters.items()])
     auth_url = "{}/?{}".format(SPOTIFY_AUTH_URL, url_args)
     return redirect(auth_url)
+
 
 @api.route("/callback/q")
 def callback():
@@ -129,12 +146,14 @@ def callback():
 
     # Get profile data
     user_profile_api_endpoint = "{}/me".format(SPOTIFY_API_URL)
-    profile_response = requests.get(user_profile_api_endpoint, headers=authorization_header)
+    profile_response = requests.get(
+        user_profile_api_endpoint, headers=authorization_header)
     profile_data = json.loads(profile_response.text)
 
     # Get user playlist data
     playlist_api_endpoint = "{}/playlists".format(profile_data["href"])
-    playlists_response = requests.get(playlist_api_endpoint, headers=authorization_header)
+    playlists_response = requests.get(
+        playlist_api_endpoint, headers=authorization_header)
     playlist_data = json.loads(playlists_response.text)
 
     return f"<p>Successful auth</p>"
@@ -148,6 +167,8 @@ if __name__ == "__main__":
     api.run(debug=True, port=PORT)
 
 # route to signup a user and add it to the database
+
+
 @api.route("/signup", methods=["POST"])
 def add_user():
     user = Users()
@@ -171,6 +192,8 @@ def add_user():
     return jsonify(response), 201
 
 # route to check if the user exists and creates is authentication token
+
+
 @api.route("/login", methods=["POST"])
 def login():
     email = request.json.get("email", None)
