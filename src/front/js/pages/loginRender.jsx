@@ -15,7 +15,7 @@ export const LoginRender = ({handleSubmit, handleChange}) => {
                             <div className="col-lg-10 mx-auto">
                                 <div>
                                     <div className="text-center">
-                                    <h1>Log In</h1>
+                                    <h1 className="mt-1 mb-5 pb-1">Log In</h1>
                                     </div>
                                     <form  name="login" onSubmit={handleSubmit}>
                                         
@@ -41,13 +41,13 @@ export const LoginRender = ({handleSubmit, handleChange}) => {
                                         </div>
 
                                         <div className="text-center pt-1 mb-5 pb-1">
-                                            <button className="btn btn-primary btn-lg gradient-custom-2 m-3" type="submit">Login</button>
+                                            <button className="btn btn-success btn-lg gradient-custom-2 m-3" type="submit">Login</button>
                                             <a className="text-muted m-3" href="#!">Forgot password?</a>
                                         </div>
 
                                         <div className="d-flex align-items-center justify-content-center pb-4">
                                             <p className="mb-0 me-2">Don't have an account?</p>
-                                            <Link to={'/signup'}><span className="btn btn-outline-danger">Create new</span></Link>
+                                            <Link to={'/signup'}><button1 className="btn">Create new</button1></Link>
                                         </div>
                                     </form>
 

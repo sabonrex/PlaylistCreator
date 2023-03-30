@@ -93,3 +93,13 @@ h1 {
     background-color: rgb(255, 255, 255);
   }
  
+button1 {
+  background-color: rgb(104, 247, 158); 
+  color: black; 
+  border: 2px solid #4CAF50;
+}
+
+button1:hover {
+  background-color: #4CAF50;
+  color: rgb(27, 243, 171);
+}
