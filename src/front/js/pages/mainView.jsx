@@ -1,17 +1,16 @@
 import React, { useContext } from "react";
 
-import { CarouselFooter } from "../component/carouselFooter.jsx";
 import { Context } from "../store/appContext";
 
 import "../../styles/index.css";
 
 export const MainView = () => {
-  const { store, actions } = useContext(Context);
+  const { actions } = useContext(Context);
 
   const fetchPlaylist = () => actions.fetchPlaylist();
 
   return (
-    <div className="container text-center py-5 my-5">
+    <div className="container text-center py-4 my-4">
       <h1 className="jumbo-text my-5">
         Find Your{" "}
         <span style={{ color: "#BAFF4F", fontWeight: "bold" }}>Music</span>
