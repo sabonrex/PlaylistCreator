@@ -12,20 +12,6 @@ from api.utils import generate_sitemap, APIException
 
 from flask_jwt_extended import create_access_token
 
-    
-          
-            
-    
-
-          
-          
-            
-    
-
-          
-    
-    @@ -58,14 +59,19 @@ def handle_hello():
-  
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
@@ -82,7 +68,7 @@ def randomlist_callback():
 
         
     
-    @@ -91,19 +97,45 @@ def randomlist_callback():
+
   
     auth_token = request.args['code']
     code_payload = {
@@ -117,9 +103,9 @@ def index():
     auth_url = "{}/?{}".format(SPOTIFY_AUTH_URL, url_args)
     return redirect(auth_url)
 
-@api.route("/callback/q")
-def callback():
-    # Auth Step 4: Requests refresh and access tokens
+# @api.route("/callback/q")
+# def callback():
+#     # Auth Step 4: Requests refresh and access tokens
 
     
         
@@ -128,35 +114,35 @@ def callback():
 
         
     
-    @@ -129,12 +161,14 @@ def callback():
+
   
-    auth_token = request.args['code']
-    code_payload = {
-        "grant_type": "authorization_code",
-        "code": str(auth_token),
-        "redirect_uri": REDIRECT_URI,
-        'client_id': CLIENT_ID,
-        'client_secret': CLIENT_SECRET,
-    }
-    post_request = requests.post(SPOTIFY_TOKEN_URL, data=code_payload)
-    # Auth Step 5: Tokens are Returned to Application
-    response_data = json.loads(post_request.text)
-    access_token = response_data["access_token"]
-    refresh_token = response_data["refresh_token"]
-    token_type = response_data["token_type"]
-    expires_in = response_data["expires_in"]
-    # Auth Step 6: Use the access token to access Spotify API
-    authorization_header = {"Authorization": "Bearer {}".format(access_token)}
+#     auth_token = request.args['code']
+#     code_payload = {
+#         "grant_type": "authorization_code",
+#         "code": str(auth_token),
+#         "redirect_uri": REDIRECT_URI,
+#         'client_id': CLIENT_ID,
+#         'client_secret': CLIENT_SECRET,
+#     }
+#     post_request = requests.post(SPOTIFY_TOKEN_URL, data=code_payload)
+#     # Auth Step 5: Tokens are Returned to Application
+#     response_data = json.loads(post_request.text)
+#     access_token = response_data["access_token"]
+#     refresh_token = response_data["refresh_token"]
+#     token_type = response_data["token_type"]
+#     expires_in = response_data["expires_in"]
+#     # Auth Step 6: Use the access token to access Spotify API
+#     authorization_header = {"Authorization": "Bearer {}".format(access_token)}
 
-    # Get profile data
-    user_profile_api_endpoint = "{}/me".format(SPOTIFY_API_URL)
-    profile_response = requests.get(user_profile_api_endpoint, headers=authorization_header)
-    profile_data = json.loads(profile_response.text)
+#     # Get profile data
+#     user_profile_api_endpoint = "{}/me".format(SPOTIFY_API_URL)
+#     profile_response = requests.get(user_profile_api_endpoint, headers=authorization_header)
+#     profile_data = json.loads(profile_response.text)
 
-    # Get user playlist data
-    playlist_api_endpoint = "{}/playlists".format(profile_data["href"])
-    playlists_response = requests.get(playlist_api_endpoint, headers=authorization_header)
-    playlist_data = json.loads(playlists_response.text)
+#     # Get user playlist data
+#     playlist_api_endpoint = "{}/playlists".format(profile_data["href"])
+#     playlists_response = requests.get(playlist_api_endpoint, headers=authorization_header)
+#     playlist_data = json.loads(playlists_response.text)
 @api.route("/callback/q")
 def callback():
     # Auth Step 4: Requests refresh and access tokens
