@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
@@ -8,7 +8,7 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import { Login } from "./pages/login.jsx";
 import { Signup } from "./pages/signup.jsx";
-import injectContext from "./store/appContext";
+import injectContext, { Context }  from "./store/appContext";
 
 import { Navibar } from "./component/navbar.jsx";
 import { CarouselFooter } from "./component/carouselFooter.jsx";
@@ -16,13 +16,14 @@ import { CarouselFooter } from "./component/carouselFooter.jsx";
 import { playlist } from "../js/component/testDataAlbuns";
 
 const Layout = () => {
+  const { store } = useContext(Context);
   return (
     <>
       <Navibar />
       <div className="h-100 w-100" style={{ backgroundColor: "#1D2343" }}>
         <Outlet />
       </div>
-      <CarouselFooter tracks={playlist} />
+      <CarouselFooter tracks={store.randomPlaylist} />
     </>
   );
 };
