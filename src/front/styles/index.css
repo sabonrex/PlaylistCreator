@@ -37,7 +37,7 @@ button.discover-button:hover {
     opacity: 0.9;
 }
 
-nav h1 {
+h1 {
     color: #BAFF4F;
     border-color: #1D2343;
 }
@@ -92,3 +92,4 @@ nav h1 {
     height: 400px; 
     background-color: rgb(255, 255, 255);
   }
+ 
