@@ -83,3 +83,12 @@ nav h1 {
     font-weight: 600;
     color: rgb(34, 34, 34);
   }
+  
+  form {
+    border-radius: 25px;
+    border: 5px solid #37dfd6;
+    padding: 20px; 
+    width: 500px;
+    height: 400px; 
+    background-color: rgb(255, 255, 255);
+  }
