@@ -13,6 +13,11 @@ h1.jumbo-text {
   font-size: calc(4rem + 2.5vw);
   font-weight: lighter;
 }
+h2.jumbo-text {
+  color: #DC6B5E;
+  font-size: calc(3rem + 2.5vw);
+  font-weight: lighter;
+}
 
 button.discover-button {
   display: inline-block;

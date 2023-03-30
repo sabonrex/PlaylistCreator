@@ -14,7 +14,7 @@ export const Navibar = () => {
 
 				<div className="d-flex col-3 justify-content-center">
 					<Nav.Link className="navv" href="/">Home</Nav.Link>
-					<Nav.Link className="navv" href="#favorite">Favourites</Nav.Link>	
+					<Nav.Link className="navv" href="/favourites">Favourites</Nav.Link>	
 				</div>
 						
 				<nav className="d-flex col-3 justify-content-end align-items-center">
