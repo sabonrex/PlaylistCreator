@@ -190,6 +190,9 @@ def add_user():
 
     request_user = request.json
 
+    print(request_user)
+
+    user.username = request_user["username"]
     user.email = request.json.get("email", None)
     user.password = request_user["password"]
 
