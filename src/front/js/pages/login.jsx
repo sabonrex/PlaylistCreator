@@ -42,7 +42,7 @@ export const Login = () => {
     console.log("response: ", jsonResp)
 
     if (resp.status == 201) {
-        window.sessionStorage.setItem("token", jsonResp.token);
+        window.sessionStorage.setItem("token", jsonResp.access_token);
         navigate("/favourites");
     }
 
