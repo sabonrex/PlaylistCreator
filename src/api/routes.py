@@ -46,7 +46,7 @@ SPOTIFY_API_BASE_URL = "https://api.spotify.com"
 API_VERSION = "v1"
 SPOTIFY_API_URL = "{}/{}".format(SPOTIFY_API_BASE_URL, API_VERSION)
 # Server-side Parameters
-CLIENT_SIDE_URL = "https://3001-sabonrex-playlistcreato-mkniel1kd1y.ws-eu92.gitpod.io/api"
+CLIENT_SIDE_URL = "https://3001-sabonrex-playlistcreato-vssaa19alph.ws-eu92.gitpod.io/api"
 # PORT = 3001
 REDIRECT_URI = "{}/callback/q".format(CLIENT_SIDE_URL)
 REDIRECT_RANDOM_LIST_URI = "{}/randomlistcallback/q".format(CLIENT_SIDE_URL)
@@ -108,6 +108,30 @@ def randomlist_callback():
     random_list_data = json.loads(list_response.text)
 
     return f"<p>{random_list_data}</p>"
+
+
+
+def transform_tracks(track):
+    return {
+        "id": track["id"],
+        "title": track["name"],
+        "artist": track["artists"][0]["name"],
+        "album": track["album"]["name"],
+        "image_url": track["album"]["images"][1]["url"],
+        "track_number": track["track_number"],
+        "duration_ms": track["duration_ms"]
+    }
+
+
+@api.route("/spotify/random")
+def get_random_list_of_songs():
+    token = spotify_api.get_access_token()
+    random_list = spotify_api.get_random_list()
+    tracks = random_list["tracks"]
+    converted_tracks = list(map(transform_tracks, tracks))
+
+    return jsonify({"data": converted_tracks}), 200
+
 
 @api.route("/spotifyauth/")
 def index():
