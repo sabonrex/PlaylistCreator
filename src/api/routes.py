@@ -107,12 +107,12 @@ def randomlist_callback():
 def transform_tracks(track):
     return {
         "id": track["id"],
-        "name": track["name"],
-        "track_number": track["track_number"],
+        "title": track["name"],
+        "artist": track["artists"][0]["name"],
+        "album": track["album"]["name"],
         "image_url": track["album"]["images"][1]["url"],
-        "album_name": track["artists"][0]["name"],
+        "track_number": track["track_number"],
         "duration_ms": track["duration_ms"]
-
     }
 
 

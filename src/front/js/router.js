@@ -11,17 +11,18 @@ import { Signup } from "./pages/signup.jsx";
 import injectContext from "./store/appContext";
 
 import { Navibar } from "./component/navbar.jsx";
-import { Footer } from "./component/footer";
 import { CarouselFooter } from "./component/carouselFooter.jsx";
+
+import { playlist } from "../js/component/testDataAlbuns";
 
 const Layout = () => {
   return (
     <>
       <Navibar />
-      <div className="h-100 w-100 py-5" style={{ backgroundColor: "#1D2343" }}>
+      <div className="h-100 w-100" style={{ backgroundColor: "#1D2343" }}>
         <Outlet />
       </div>
-      <CarouselFooter />
+      <CarouselFooter tracks={playlist} />
     </>
   );
 };

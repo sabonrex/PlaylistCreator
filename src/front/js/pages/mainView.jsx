@@ -1,8 +1,11 @@
 import React, { useState, useContext } from "react";
 
+import { CarouselFooter } from "../component/carouselFooter.jsx";
+
 import { Context } from "../store/appContext";
 import { Playlists } from "../component/playlistSelect.jsx";
 import { playlistData } from "../component/testDataPlaylist";
+import { playlist } from "../component/testDataAlbuns";
 
 import "../../styles/index.css";
 import { Button } from "react-bootstrap";
@@ -10,7 +13,10 @@ import { Button } from "react-bootstrap";
 export const MainView = () => {
   const { actions, store } = useContext(Context);
 
-  const fetchPlaylist = () => actions.fetchPlaylist();
+  const fetchPlaylist = () => {
+    actions.fetchPlaylist();
+    console.log(store.randomPlaylist)
+  }
 
   return (
     <>
@@ -24,8 +30,7 @@ export const MainView = () => {
         </button>
         <SavePlaylistButton />
       </div>
-       <Favorites favorites={favoritesData} />
-      <Playlists playlist={playlistData} />
+      <CarouselFooter tracks={store.randomPlaylist} />
     </>
   );
 };
