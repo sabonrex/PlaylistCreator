@@ -6,7 +6,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown'
 
 export const Navibar = () => {
 	return (
-		<nav className="navbar navbar-light bg-DarkBlue px-5" style={{borderBottom: "2px solid #D74390"}}>
+		<nav className="navbar navbar-light bg-DarkBlue px-5" style={{borderBottom: "3px solid #D74390"}}>
 			<div className="container-fluid align-items-center">
 				<div className="col-3 justify-content-start py-0">	
 					<Nav.Link href="/"><h1>Aleatorium</h1></Nav.Link>
