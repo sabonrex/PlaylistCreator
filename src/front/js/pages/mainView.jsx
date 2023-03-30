@@ -1,18 +1,12 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 
 import { CarouselFooter } from "../component/carouselFooter.jsx";
-
 import { Context } from "../store/appContext";
-import { Playlists } from "../component/playlistSelect.jsx";
-import { playlistData } from "../component/testDataPlaylist";
-import { playlist } from "../component/testDataAlbuns";
 
 import "../../styles/index.css";
 
-const BACKEND_URL = process.env.BACKEND_URL;
-
 export const MainView = () => {
-  const [playlist, setPlaylist] = useState(null);
+  const { store, actions } = useContext(Context);
 
   const fetchPlaylist = () => actions.fetchPlaylist();
 
@@ -28,7 +22,7 @@ export const MainView = () => {
         </button>
       </div>
       <CarouselFooter tracks={store.randomPlaylist} />
-    </>
+    </section>
   );
 };
 
