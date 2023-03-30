@@ -61,6 +61,12 @@ const getState = ({ getStore, getActions, setStore }) => {
           window.alert("Something went wrong");
         }
       },
+      getSpotifyTrack: () => {
+        const store = getStore();
+        // in the future, return the last song the user was hearing. For now, return a song
+        if (store.randomPlaylist.length === 0) return "7sqii6BhIDpJChYpU3WjwS";
+        else return store.randomPlaylist[0]["id"]
+      }
     },
   };
 };

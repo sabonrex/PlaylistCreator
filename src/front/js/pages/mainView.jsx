@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 
 import { Context } from "../store/appContext";
+import { EmbeddedSpotify } from "../component/embeddedSpotifyTrack.jsx";
 
 import "../../styles/index.css";
 
@@ -8,6 +9,7 @@ export const MainView = () => {
   const { actions } = useContext(Context);
 
   const fetchPlaylist = () => actions.fetchPlaylist();
+  const spotifyTrackId = actions.getSpotifyTrack();
 
   return (
     <div className="container text-center py-4 my-4">
@@ -18,6 +20,7 @@ export const MainView = () => {
       <button className="discover-button my-5" onClick={fetchPlaylist}>
         Discover your Playlist
       </button>
+      <EmbeddedSpotify spotidyId={spotifyTrackId}/>
     </div>
   );
 };

@@ -1,8 +1,7 @@
 import React from "react";
 import { Carousel } from "react-bootstrap";
 
-export const CarouselComponent = ({ tracks }) => {
-    const itemsPerSlide = 4;
+export const CarouselComponent = ({ tracks, itemsPerSlide }) => {
   
     const slides = tracks.reduce((accumulator, track, index) => {
       if (index % itemsPerSlide === 0) {
