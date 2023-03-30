@@ -4,7 +4,7 @@ import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./pages/home";
 import { MainView } from "./pages/mainView.jsx";
-import { Demo } from "./pages/demo";
+import { Favourites } from "./pages/favourites.jsx";
 import { Single } from "./pages/single";
 import { Login } from "./pages/login.jsx";
 import { Signup } from "./pages/signup.jsx";
@@ -12,8 +12,6 @@ import injectContext, { Context }  from "./store/appContext";
 
 import { Navibar } from "./component/navbar.jsx";
 import { CarouselFooter } from "./component/carouselFooter.jsx";
-
-import { playlist } from "../js/component/testDataAlbuns";
 
 const Layout = () => {
   const { store } = useContext(Context);
@@ -41,7 +39,7 @@ const Router = () => {
           <Routes>
             <Route element={<Layout />} path="">
               <Route element={<MainView />} path="/" />
-              <Route element={<Demo />} path="/demo" />
+              <Route element={<Favourites />} path="/favourites" />
               <Route element={<Signup />} path="/signup" />
               <Route element={<Login />} path="/login" />
               <Route element={<Single />} path="/single/:theid" />

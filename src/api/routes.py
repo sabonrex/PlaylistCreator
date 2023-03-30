@@ -190,6 +190,9 @@ def add_user():
 
     request_user = request.json
 
+    print(request_user)
+
+    user.username = request_user["username"]
     user.email = request.json.get("email", None)
     user.password = request_user["password"]
 
@@ -211,16 +214,19 @@ def add_user():
 
 @api.route("/login", methods=["POST"])
 def login():
-    email = request.json.get("email", None)
+    username = request.json.get("username", None)
     password = request.json.get("password", None)
 
-    user = Users.query.filter_by(email=email).first()
+    user = Users.query.filter_by(username=username).first()
+
+    if user is None:
+         return jsonify({"msg": "The user does not exist"}), 401
 
     if password != user.password:
-        return jsonify({"msg": "Bad email or password"}), 401
+        return jsonify({"msg": "The password doesn't match"}), 403
 
-    access_token = create_access_token(identity=email)
-    return jsonify(access_token=access_token)
+    access_token = create_access_token(identity=username)
+    return jsonify(access_token=access_token), 201
 
 
 # route to check if the user exists and is authenticated

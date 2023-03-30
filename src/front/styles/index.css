@@ -13,6 +13,11 @@ h1.jumbo-text {
   font-size: calc(4rem + 2.5vw);
   font-weight: lighter;
 }
+h2.jumbo-text {
+  color: #DC6B5E;
+  font-size: calc(3rem + 2.5vw);
+  font-weight: lighter;
+}
 
 button.discover-button {
   display: inline-block;
@@ -39,11 +44,17 @@ button.discover-button:hover {
 
 nav h1 {
   color: #BAFF4F;
-  border-color: #1D2343;
+  font-weight: bold;
+  letter-spacing: 0.125rem;
+  line-height: normal;
+  margin: 0;
 }
 
 .navv{
-  color: #548b00;
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #BAFF4F;
   transition: opacity .15s ease-in-out;
 }
 
