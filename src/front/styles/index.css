@@ -72,7 +72,7 @@ nav h1 {
   box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
   padding-top: 30px;
   padding-bottom: 20px;
-  border-radius: 8px;
+  border-bottom: 8px;
   background-color: white;
 }
   
@@ -93,4 +93,26 @@ label {
   font-size: 14px;
   font-weight: 600;
   color: rgb(34, 34, 34);
+}
+
+form {
+  border-radius: 25px;
+  border: 5px solid #37dfd6;
+  padding: 20px; 
+  width: 500px;
+  height: 400px; 
+  background-color: rgb(255, 255, 255);
+}
+h2 {
+  color: #BAFF4F;
+  font-weight: 900;
+  letter-spacing: 0.125rem;
+  line-height: normal;
+  margin: 0;
+}
+
+.form-control{
+  border-width: 0 0 5px 0; /* top right bottom left */
+  border-style: solid;
+  border-color: #f00 #0f0 rgb(241, 4, 190) #ff0;
 }
