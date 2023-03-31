@@ -23,12 +23,12 @@ export const LoginRender = ({handleSubmit, handleChange}) => {
 
                                     <form name="login" onSubmit={handleSubmit}>
                                         <div className="form-outline mb-4">
-                                            <label className="form-label" htmlFor="email">Username</label>
+                                            <label className="form-label" htmlFor="username">Username</label>
                                             <input 
-                                                type="email" 
-                                                id="email" 
+                                                type="text" 
+                                                id="username" 
                                                 className="form-control" 
-                                                placeholder="Insert your email"
+                                                placeholder="Insert your username"
                                                 onChange={handleChange} />
                                         </div>
 

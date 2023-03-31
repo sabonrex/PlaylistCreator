@@ -1,27 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./pages/home";
 import { MainView } from "./pages/mainView.jsx";
-import { Demo } from "./pages/demo";
+import { Favourites } from "./pages/favourites.jsx";
 import { Single } from "./pages/single";
 import { Login } from "./pages/login.jsx";
 import { Signup } from "./pages/signup.jsx";
-import injectContext from "./store/appContext";
+import injectContext, { Context }  from "./store/appContext";
 
 import { Navibar } from "./component/navbar.jsx";
-import { Footer } from "./component/footer";
 import { CarouselFooter } from "./component/carouselFooter.jsx";
 
 const Layout = () => {
+  const { store } = useContext(Context);
   return (
     <>
       <Navibar />
-      <div className="h-100 w-100 py-5" style={{ backgroundColor: "#1D2343" }}>
+      <div className="h-100 w-100" style={{ backgroundColor: "#1D2343" }}>
         <Outlet />
       </div>
-      <CarouselFooter />
+      <CarouselFooter tracks={store.randomPlaylist} />
     </>
   );
 };
@@ -39,7 +39,7 @@ const Router = () => {
           <Routes>
             <Route element={<Layout />} path="">
               <Route element={<MainView />} path="/" />
-              <Route element={<Demo />} path="/demo" />
+              <Route element={<Favourites />} path="/favourites" />
               <Route element={<Signup />} path="/signup" />
               <Route element={<Login />} path="/login" />
               <Route element={<Single />} path="/single/:theid" />

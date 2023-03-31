@@ -23,22 +23,23 @@ export const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const signupUrl = store.apiUrl + "signup"
+    const signupUrl = store.apiUrl + "/api/signup";
 
     const requestNewUser = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: inputVal.email,
-          password: inputVal.password,
-        }),
-      };
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: inputVal.username,
+        email: inputVal.email,
+        password: inputVal.password,
+      }),
+    };
 
     const resp = await fetch(signupUrl, requestNewUser).catch(() => false);
 
     if (!resp) return window.alert("There's been a problem with the request");
 
-    window.alert("User created");
+    //window.alert("User created");
     navigate("/login")
 
   }

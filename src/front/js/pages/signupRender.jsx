@@ -19,6 +19,20 @@ export const SignupRender = ({ handleChange, handleSubmit }) => {
                   </div>
 
                   <form name="signup" onSubmit={handleSubmit}>
+                    
+                    <div className="form-outline mb-4">
+                      <label className="form-label" htmlFor="username">
+                        Username
+                      </label>
+                      <input
+                        type="text"
+                        id="username"
+                        className="form-control"
+                        placeholder="Insert new username"
+                        onChange={handleChange}
+                      />
+                    </div>
+
                     <div className="form-outline mb-4">
                       <label className="form-label" htmlFor="email">
                         Email

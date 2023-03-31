@@ -10,7 +10,7 @@ export const Login = () => {
   const [inputVal, setInputVal] = useState({});
   const navigate = useNavigate();
 
-  // control the variables email and password
+  // control the variables username and password
   const handleChange = (e) => {
     setInputVal({
         ...inputVal,
@@ -22,13 +22,13 @@ export const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const loginUrl = store.apiUrl + "login"
+    const loginUrl = store.apiUrl + "/api/login";
 
     const requestUser = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: inputVal.email,
+          username: inputVal.username,
           password: inputVal.password,
         }),
     };
@@ -37,13 +37,13 @@ export const Login = () => {
     if (!resp) return window.alert("There's been a problem with the request");
 
     const jsonResp = await resp.json()
-    if ([400, 401, 402, 403].includes(resp.status)) return window.alert(jsonResp.msg);
+    if (resp.status >= 400 && resp.status < 500) return window.alert(jsonResp.msg);
     
     console.log("response: ", jsonResp)
 
     if (resp.status == 201) {
-        window.sessionStorage.setItem("token", jsonResp.token);
-        navigate("/private");
+        window.sessionStorage.setItem("token", jsonResp.access_token);
+        navigate("/favourites");
     }
 
   }
