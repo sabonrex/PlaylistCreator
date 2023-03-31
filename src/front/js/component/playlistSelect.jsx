@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useContext } from "react";
 import {
   Accordion,
   Button,
@@ -14,17 +14,20 @@ import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faEllipsisVertical, faListUl } from "@fortawesome/free-solid-svg-icons";
 
+import { Context } from "../store/appContext";
+
 import { playlistData } from "./testDataPlaylist";
 import { msToMin } from "./utils/msToMin";
 
 export const Playlists = () => {
-  return (
+    const {store, actions} = useContext(Context)
+
+    return (
       <Container>
           <Row>
           <Col md={{ span: 8, offset: 2 }}>
               <Accordion>
-                  {playlistData.map((entry, index) =>
-                                  
+                  {store.playlistStore.map((entry, index) =>                 
                       <Accordion.Item key={index} eventKey={index}>
                           <Accordion.Header className="d-flex">
                               <Button className="me-3" variant="success"><FontAwesomeIcon icon={faPlay} /></Button>
@@ -34,7 +37,8 @@ export const Playlists = () => {
                           <Accordion.Body>
                               <ListGroup variant="flush">
                                   {entry.list.tracks.map((trackDetails, index) =>
-                                  <ListGroupItem action>
+                                  <ListGroupItem action key="placeholder">
+                                    {console.log()}
                                   <Row>
                                   <Col xs="1" className="d-flex justify-content-start my-auto">
                                     <Dropdown>
@@ -43,8 +47,8 @@ export const Playlists = () => {
                                         </DropdownToggle>
 
                                         <Dropdown.Menu>
-                                            <Dropdown.Item href="#">Remove from playlist</Dropdown.Item>
-                                            <Dropdown.Item href="#">Add to favorites</Dropdown.Item>
+                                            <Dropdown.Item onClick={() => (actions.removeFromPlaylist(trackDetails.name, entry.playlistName))}>Remove from playlist</Dropdown.Item>
+                                            <Dropdown.Item onClick={() => (actions.addToFavorites(trackDetails, "favoritesStore"))}>Add to favorites</Dropdown.Item>
                                         </Dropdown.Menu>
                                     </Dropdown>
                                     </Col>   

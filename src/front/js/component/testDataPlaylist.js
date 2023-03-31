@@ -1,7 +1,8 @@
 // const randomListURL = "https://api.spotify.com/v1/recommendations?seed_artists=6WH1V41LwGDGmlPUhSZLHO&seed_genres=electronic&seed_tracks=33zDGjUK3BiqgFxoIpUWLy"
 
-export const playlistData = [{"playlistName": "test 1", "list": 
-{
+export const playlistData = [ 
+  {"playlistName": "test 1", "list" :
+  {
     "seeds": [
       {
         "afterFilteringSize": 417,
@@ -422,7 +423,7 @@ export const playlistData = [{"playlistName": "test 1", "list":
     ]
   }},
 
-  {"playlistName": "test 2", "list":
+  {"playlistName": "test 2", "list" :
   {
     "tracks": [
       {
@@ -2315,8 +2316,8 @@ export const playlistData = [{"playlistName": "test 1", "list":
     ]
   }},
 
-{"playlistName": "test 3", "list":
-{
+  {"playlistName": "test 3", "list" :
+  {
     "tracks": [
       {
         "album": {
@@ -3496,4 +3497,5 @@ export const playlistData = [{"playlistName": "test 1", "list":
         "href": null
       }
     ]
-  }}]
+  }}
+]

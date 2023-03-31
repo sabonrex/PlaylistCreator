@@ -1,4 +1,4 @@
-export const favoritesData = [
+export const favoritesData = 
     {
         "tracks": [
           {
@@ -5264,32 +5264,6 @@ export const favoritesData = [
             "type": "track",
             "uri": "spotify:track:1B2nrrZKqMnfJpEF6tfbNo"
           }
-        ],
-        "seeds": [
-          {
-            "initialPoolSize": 0,
-            "afterFilteringSize": 0,
-            "afterRelinkingSize": 0,
-            "id": "experimental",
-            "type": "GENRE",
-            "href": null
-          },
-          {
-            "initialPoolSize": 500,
-            "afterFilteringSize": 500,
-            "afterRelinkingSize": 500,
-            "id": "6WH1V41LwGDGmlPUhSZLHO",
-            "type": "ARTIST",
-            "href": "https://api.spotify.com/v1/artists/6WH1V41LwGDGmlPUhSZLHO"
-          },
-          {
-            "initialPoolSize": 500,
-            "afterFilteringSize": 500,
-            "afterRelinkingSize": 500,
-            "id": "4adILYvDL37jb0GxYTzqIE",
-            "type": "TRACK",
-            "href": "https://api.spotify.com/v1/tracks/4adILYvDL37jb0GxYTzqIE"
-          }
         ]
       }
-    ];
+;

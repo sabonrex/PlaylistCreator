@@ -1,13 +1,18 @@
-import React, { Component } from "react";
+import React, { Component, useContext } from "react";
 import { Accordion, AccordionButton, Button, Card, Col, Container, Dropdown, ListGroup, ListGroupItem, Row, Stack } from "react-bootstrap";
 import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faEllipsisVertical, faListUl } from "@fortawesome/free-solid-svg-icons";
 
+import { Context } from "../store/appContext";
+
+import { playlistData } from "./testDataPlaylist";
 import { favoritesData } from "./testDataFavorites";
 import { msToMin } from "./utils/msToMin";
 
-export const Favorites = ({ favorites }) => {
+export const Favorites = () => {
+    const {store, actions} = useContext(Context)
+    
     return (
         <Container>
             <Row>
@@ -16,8 +21,8 @@ export const Favorites = ({ favorites }) => {
                     <Card.Header as="h5">Favorites</Card.Header>
                     <Card.Body>
                         <ListGroup variant="flush">
-                        {favorites[0].tracks.map((trackDetails, index) =>                            
-                            <ListGroupItem action>
+                            {Object.values(store.favoritesStore).map(entry => entry.map((trackDetails, index) =>
+                            <ListGroupItem action key={trackDetails.name}>
                             <Row>
                                 <Col xs="1" className="d-flex justify-content-start my-auto">
                                     <Dropdown>
@@ -26,8 +31,14 @@ export const Favorites = ({ favorites }) => {
                                         </DropdownToggle>
 
                                         <Dropdown.Menu>
-                                            <Dropdown.Item href="#">Remove from favorites</Dropdown.Item>
-                                            <Dropdown.Item href="#">Add to playlist...</Dropdown.Item>
+                                            <Dropdown.Item onClick={() => 
+                                                (actions.removeFromFavorites(trackDetails.name))}>Remove from favorites</Dropdown.Item>
+                                            {store.playlistStore.map(entry => 
+                                                <Dropdown.Item onClick={() => 
+                                                    (actions.addToPlaylist("playlistStore", trackDetails, entry.playlistName))}>
+                                                        Add to {entry.playlistName} playlist
+                                                </Dropdown.Item>
+                                            )}                                   
                                         </Dropdown.Menu>
                                     </Dropdown>
                                     </Col>  
@@ -51,7 +62,7 @@ export const Favorites = ({ favorites }) => {
                                     </Col>   
                                 </Row>
                                 </ListGroupItem>
-                            )}
+                                ))}
                         </ListGroup>                
                     </Card.Body>
                 </Card>
