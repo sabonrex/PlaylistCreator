@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 
 import { Playlists } from "../component/playlistSelect.jsx";
-import { playlistData } from "../component/testDataPlaylist.js";
+import { Favorites } from "../component/favoriteSelect.jsx";
 import { Context } from "../store/appContext";
 
 import "../../styles/index.css";
@@ -17,7 +17,8 @@ export const Favourites = () => {
         Your Favourite{" "}
         <span style={{ color: "#BAFF4F", fontWeight: "bold" }}>Music</span>
       </h2>
-      <Playlists playlist={playlistData} />
+      <Playlists />
+      <Favorites />
       <button className="discover-button my-5" onClick={fetchPlaylist}>
         Discover your Playlist
       </button>

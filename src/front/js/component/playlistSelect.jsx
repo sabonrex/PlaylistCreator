@@ -16,14 +16,13 @@ import { faPlay, faEllipsisVertical, faListUl } from "@fortawesome/free-solid-sv
 
 import { Context } from "../store/appContext";
 
-import { playlistData } from "./testDataPlaylist";
 import { msToMin } from "./utils/msToMin";
 
 export const Playlists = () => {
     const {store, actions} = useContext(Context)
 
     return (
-      <Container>
+      <Container className = "pb-3">
           <Row>
           <Col md={{ span: 8, offset: 2 }}>
               <Accordion>

@@ -110,8 +110,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log("db: ", favoritesData),
           console.log("store: ", store.favoritesStore)
         )
-      }
-
+      },
 
       getSpotifyTrack: () => {
         const store = getStore();
