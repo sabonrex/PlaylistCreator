@@ -1,3 +1,6 @@
+import { playlistData } from "../component/testDataPlaylist";
+import { favoritesData } from "../component/testDataFavorites";
+
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
@@ -16,6 +19,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         },
       ],
       randomPlaylist: [],
+      playlistStore: [],
+      favoritesStore: []
     },
     actions: {
       // Use getActions to call a function within a fuction
@@ -49,6 +54,11 @@ const getState = ({ getStore, getActions, setStore }) => {
         //reset the global store
         setStore({ demo: demo });
       },
+
+      loadSomeData: (key, passedData) => {
+				setStore({[key] : passedData})
+			},
+      
       fetchPlaylist: async () => {
         const store = getStore();
         try {
@@ -61,6 +71,48 @@ const getState = ({ getStore, getActions, setStore }) => {
           window.alert("Something went wrong");
         }
       },
+
+      addToPlaylist: (key, song, targetPlaylist) => {
+        const store = getStore();
+        const indexLookup = store.playlistStore.findIndex(plIndex => plIndex.playlistName === targetPlaylist)
+        return (
+          playlistData[indexLookup].list.tracks.push(song),
+          setStore({[key]: playlistData}), 
+          console.log(`${song} is added to ${targetPlaylist}`),
+          console.log("store: ", store.playlistStore[indexLookup].list.tracks),
+          console.log("db: ", playlistData[indexLookup].list.tracks)
+        )
+      },
+
+      removeFromPlaylist: (key, songIndex, targetPlaylist) => {
+        const store = getStore();
+        const indexLookup = store.playlistStore.findIndex(plIndex => plIndex.playlistName === targetPlaylist)
+        return (
+          playlistData[indexLookup].list.tracks.splice(songIndex, 1),
+          setStore({[key]: playlistData})
+        )
+      },
+
+      addToFavorites: (key, song) => {
+        const store = getStore();
+        return (
+          favoritesData.tracks.unshift(song),
+          setStore({[key]: favoritesData})          
+        )
+      },
+
+      removeFromFavorites: (key, song, index) => {
+        const store = getStore();
+        return (
+          favoritesData.tracks.splice(index, 1),
+          console.log(`${song} is removed from Favorites`),
+          setStore({[key]: favoritesData}),
+          console.log("db: ", favoritesData),
+          console.log("store: ", store.favoritesStore)
+        )
+      }
+
+
       getSpotifyTrack: () => {
         const store = getStore();
         // in the future, return the last song the user was hearing. For now, return a song

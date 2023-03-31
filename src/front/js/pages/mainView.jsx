@@ -1,5 +1,10 @@
 import React, { useContext } from "react";
 
+import { Playlists } from "../component/playlistSelect.jsx";
+import { playlistData } from "../component/testDataPlaylist";
+import { Favorites } from "../component/favoriteSelect.jsx";
+import { favoritesData } from "../component/testDataFavorites.js";
+
 import { Context } from "../store/appContext";
 import { EmbeddedSpotify } from "../component/embeddedSpotifyTrack.jsx";
 
@@ -12,6 +17,20 @@ export const MainView = () => {
   const spotifyTrackId = actions.getSpotifyTrack();
 
   return (
+    <>
+      <div className="container text-center py-5 my-5">
+        <h1 className="jumbo-text my-5">
+          Find Your{" "}
+          <span style={{ color: "#BAFF4F", fontWeight: "bold" }}>Music</span>
+        </h1>
+        <button className="discover-button my-5" onClick={fetchPlaylist}>
+          Discover your Playlist
+        </button>
+        <SavePlaylistButton />
+      </div>
+      <Playlists />
+      <Favorites />
+    </>
     <div className="container text-center py-4 my-4">
       <h1 className="jumbo-text my-5">
         Find Your{" "}
