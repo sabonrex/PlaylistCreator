@@ -100,7 +100,7 @@ form {
   border: 5px solid #37dfd6;
   padding: 20px; 
   width: 500px;
-  height: 400px; 
+  height: 5%; 
   background-color: rgb(255, 255, 255);
 }
 h2 {
@@ -116,4 +116,11 @@ h2 {
   border-style: solid;
   border-color: #f00 #0f0 rgb(241, 4, 190) #ff0;
   border-radius:  0px;
+  padding-block: 2px 0 0 0;
+}
+
+.form-label {
+  font-size: 15px;
+  padding-top: 20px;
+  padding-bottom: 5px;
 }

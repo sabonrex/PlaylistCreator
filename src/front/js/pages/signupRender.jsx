@@ -67,7 +67,7 @@ export const SignupRender = ({ handleChange, handleSubmit }) => {
                         Register
                       </button>
                       <Link to={"/login"}>
-                        <span className="btn btn-lg">
+                        <span className="btn btn-outline-success btn-lg gradient-custom-2 m-2">
                           Login
                         </span>
                       </Link>

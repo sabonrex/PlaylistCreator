@@ -42,14 +42,14 @@ export const LoginRender = ({handleSubmit, handleChange}) => {
                                                 onChange={handleChange} />
                                         </div>
 
-                                        <div className="text-center pt-1 mb-5 pb-1">
-                                            <button className="btn btn-primary btn-lg gradient-custom-2 m-3" type="submit">Login</button>
+                                        <div className="text-center pt-1 mb-5 p-1">
+                                            <button className="btn btn-success btn-lg gradient-custom-2 m-3" type="submit">Login</button>
                                             <a className="text-muted m-3" href="#!">Forgot password?</a>
                                         </div>
 
                                         <div className="d-flex align-items-center justify-content-center pb-4">
                                             <p className="mb-0 me-2">Don't have an account?</p>
-                                            <Link to={'/signup'}><span className="btn btn-outline-danger">Create new</span></Link>
+                                            <Link to={'/signup'}><span className="btn btn-outline-success">Create new</span></Link>
                                         </div>
                                     </form>
 
