@@ -94,7 +94,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         )
       },
 
-      addToFavorites: (song, key) => {
+      addToFavorites: (key, song) => {
         const store = getStore();
         return (
           favoritesData.tracks.unshift(song),
@@ -102,10 +102,14 @@ const getState = ({ getStore, getActions, setStore }) => {
         )
       },
 
-      removeFromFavorites: (song) => {
+      removeFromFavorites: (key, song, index) => {
         const store = getStore();
         return (
-          console.log(`${song} is removed from Favorites`)
+          favoritesData.tracks.splice(index, 1),
+          console.log(`${song} is removed from Favorites`),
+          setStore({[key]: favoritesData}),
+          console.log("db: ", favoritesData),
+          console.log("store: ", store.favoritesStore)
         )
       }
 

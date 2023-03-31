@@ -48,7 +48,7 @@ export const Playlists = () => {
 
                                         <Dropdown.Menu>
                                             <Dropdown.Item onClick={() => (actions.removeFromPlaylist(trackDetails.name, entry.playlistName))}>Remove from playlist</Dropdown.Item>
-                                            <Dropdown.Item onClick={() => (actions.addToFavorites(trackDetails, "favoritesStore"))}>Add to favorites</Dropdown.Item>
+                                            <Dropdown.Item onClick={() => (actions.addToFavorites("favoritesStore", trackDetails))}>Add to favorites</Dropdown.Item>
                                         </Dropdown.Menu>
                                     </Dropdown>
                                     </Col>   
