@@ -112,7 +112,8 @@ h2 {
 }
 
 .form-control{
-  border-width: 0 0 5px 0; /* top right bottom left */
+  border-width: 0 0 2px 0; /* top right bottom left */
   border-style: solid;
   border-color: #f00 #0f0 rgb(241, 4, 190) #ff0;
+  border-radius:  0px;
 }
