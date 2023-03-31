@@ -84,13 +84,12 @@ const getState = ({ getStore, getActions, setStore }) => {
         )
       },
 
-      removeFromPlaylist: (key, song, targetPlaylist) => {
+      removeFromPlaylist: (key, songIndex, targetPlaylist) => {
         const store = getStore();
         const indexLookup = store.playlistStore.findIndex(plIndex => plIndex.playlistName === targetPlaylist)
         return (
-          console.log((store.playlistStore[indexLookup].list.tracks.indexOf(song))),
-          console.log(`${song} is removed from ${targetPlaylist}`),
-          console.log(store.playlistStore[indexLookup].list.tracks)
+          playlistData[indexLookup].list.tracks.splice(songIndex, 1),
+          setStore({[key]: playlistData})
         )
       },
 
