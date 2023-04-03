@@ -2,6 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 import json
+import random
 from flask import Flask, request, jsonify, url_for, Blueprint, redirect, g, render_template
 import requests
 from urllib.parse import quote
@@ -104,26 +105,42 @@ def randomlist_callback():
     return f"<p>{random_list_data}</p>"
 
 
-def transform_tracks(track):
-    return {
-        "id": track["id"],
-        "title": track["name"],
-        "artist": track["artists"][0]["name"],
-        "album": track["album"]["name"],
-        "image_url": track["album"]["images"][1]["url"],
-        "track_number": track["track_number"],
-        "duration_ms": track["duration_ms"]
-    }
-
-
 @api.route("/spotify/random")
 def get_random_list_of_songs():
     token = spotify_api.get_access_token()
     random_list = spotify_api.get_random_list()
     tracks = random_list["tracks"]
-    converted_tracks = list(map(transform_tracks, tracks))
+    converted_tracks = list(map(spotify_api.transform_tracks, tracks))
 
-    return jsonify({"data": converted_tracks}), 200
+    return jsonify({"data": converted_tracks}), 201
+
+@api.route("/spotify/random/q", methods=["POST"])
+def get_list_of_songs_query_based():
+    token = spotify_api.get_access_token()
+    # get the query from the request
+    query = request.json
+    searchDict = {"track": query["title"]}
+    # create a random offset number
+    itemsFound = spotify_api.search(searchDict)["tracks"]["total"]
+    if itemsFound < 20:
+         return jsonify({"msg": "Get a better keyword. We cannot even find 20 songs!"}), 400
+    randomOffset = random.randint(0, itemsFound - 20)
+    # the real deal random list based on random offset
+    random_queried_list = spotify_api.search(searchDict, "track", randomOffset)
+    # creating the response object
+    url = random_queried_list["tracks"]["href"]
+    itemsFound = random_queried_list["tracks"]["total"]
+    tracks = random_queried_list["tracks"]["items"]
+    converted_tracks = list(map(spotify_api.transform_tracks, tracks))
+    response = {
+        "metadata": {
+            "url": url,
+            "tracksFound": itemsFound,
+            "offset": randomOffset
+        },
+        "tracks": converted_tracks}
+    
+    return jsonify(response), 201
 
 
 @api.route("/spotifyauth/")
@@ -189,8 +206,6 @@ def add_user():
     user = Users()
 
     request_user = request.json
-
-    print(request_user)
 
     user.username = request_user["username"]
     user.email = request.json.get("email", None)

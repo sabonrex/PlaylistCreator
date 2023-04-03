@@ -88,6 +88,18 @@ class SpotifyAPI(object):
             return {}
         return r.json()
 
+    def transform_tracks(self, track):
+        return {
+            "id": track["id"],
+            "title": track["name"],
+            "artist": track["artists"][0]["name"],
+            "album": track["album"]["name"],
+            "image_url": track["album"]["images"][1]["url"],
+            "track_number": track["track_number"],
+            "duration_ms": track["duration_ms"],
+            "popularity": track["popularity"]
+        }
+
     def get_random_list(self):
         endpoint = "https://api.spotify.com/v1/recommendations?seed_artists=6WH1V41LwGDGmlPUhSZLHO&seed_genres=electronic&seed_tracks=33zDGjUK3BiqgFxoIpUWLy"
         headers = self.get_resource_header()
@@ -111,11 +123,12 @@ class SpotifyAPI(object):
             return {}
         return r.json()
 
-    def search(self, query=None, operator=None, operator_query=None, search_type='artist'):
+    def searchOriginal(self, query=None, operator=None, operator_query=None, search_type='track'):
         if query == None:
             raise Exception("A query is required")
         if isinstance(query, dict):
             query = " ".join([f"{k}:{v}" for k, v in query.items()])
+            print(query)
         if operator != None and operator_query != None:
             if operator.lower() == "or" or operator.lower() == "not":
                 operator = operator.upper()
@@ -124,3 +137,22 @@ class SpotifyAPI(object):
         query_params = urlencode({"q": query, "type": search_type.lower()})
         print(query_params)
         return self.base_search(query_params)
+
+    def search(self, query=None, search_type='track', offset=0):
+        # this search should receive a dictionary
+        # it can have artist, track, year
+        if query == None:
+            raise Exception("A query is required")
+
+        if isinstance(query, dict) == False:  
+            raise Exception("The query should be a dictionary")
+
+        query = " ".join([f"{k}:{v}" for k, v in query.items()])
+
+        query_params = urlencode({
+            "q": query, 
+            "type": search_type.lower(),
+            "offset": offset})
+
+        return self.base_search(query_params)
+        

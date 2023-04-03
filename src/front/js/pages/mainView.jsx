@@ -7,6 +7,7 @@ import { favouritesData } from "../component/testDataFavourites.js";
 import { Button } from "react-bootstrap";
 
 import { Context } from "../store/appContext";
+import { SaveFavouriteButton } from "../component/favouriteButton.jsx";
 import { EmbeddedSpotify } from "../component/embeddedSpotifyTrack.jsx";
 
 import "../../styles/index.css";
@@ -17,22 +18,9 @@ export const MainView = () => {
   const fetchPlaylist = () => actions.fetchPlaylist();
   const spotifyTrackId = actions.getSpotifyTrack();
 
-  const SavePlaylistButton = () => {
-    const { store } = useContext(Context);
-    return (
-      <Button
-        onClick={() => {
-          console.log("Saving playlist");
-          console.log(store.randomPlaylist);
-        }}
-      >
-        Save
-      </Button>
-    )}
-
   return (
     <>
-      <div className="container text-center py-5 my-5">
+      <div className="container text-center py-4 my-4">
         <h1 className="jumbo-text my-5">
           Find Your{" "}
           <span style={{ color: "#BAFF4F", fontWeight: "bold" }}>Music</span>
@@ -56,5 +44,9 @@ export const MainView = () => {
       <EmbeddedSpotify spotidyId={spotifyTrackId}/>
     </div>
   </>
+        <SaveFavouriteButton />
+        <EmbeddedSpotify spotidyId={spotifyTrackId}/>
+      </div>
+    </>
   );
 };
