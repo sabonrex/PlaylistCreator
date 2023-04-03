@@ -1,4 +1,4 @@
-export const favoritesData = 
+export const favouritesData = 
     {
         "tracks": [
           {

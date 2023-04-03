@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 
 import { Playlists } from "../component/playlistSelect.jsx";
 import { playlistData } from "../component/testDataPlaylist";
-import { Favorites } from "../component/favoriteSelect.jsx";
-import { favoritesData } from "../component/testDataFavorites.js";
+import { Favourites } from "../component/favouriteSelect.jsx";
+import { favouritesData } from "../component/testDataFavourites.js";
 import { Button } from "react-bootstrap";
 
 import { Context } from "../store/appContext";
@@ -41,9 +41,9 @@ export const MainView = () => {
           Discover your Playlist
         </button>
         <SavePlaylistButton />
+        <Playlists />
+        <Favourites />
       </div>
-      <Playlists />
-      <Favorites />
 
     <div className="container text-center py-4 my-4">
       <h1 className="jumbo-text my-5">

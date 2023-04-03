@@ -1,5 +1,5 @@
 import { playlistData } from "../component/testDataPlaylist";
-import { favoritesData } from "../component/testDataFavorites";
+import { favouritesData } from "../component/testDataFavourites";
 
 const getState = ({ getStore, getActions, setStore }) => {
   return {
@@ -20,7 +20,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       ],
       randomPlaylist: [],
       playlistStore: [],
-      favoritesStore: []
+      favouritesStore: []
     },
     actions: {
       // Use getActions to call a function within a fuction
@@ -74,41 +74,50 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       addToPlaylist: (key, song, targetPlaylist) => {
         const store = getStore();
+
         const indexLookup = store.playlistStore.findIndex(plIndex => plIndex.playlistName === targetPlaylist)
+
         return (
           playlistData[indexLookup].list.tracks.push(song),
-          setStore({[key]: playlistData}), 
-          console.log(`${song} is added to ${targetPlaylist}`),
-          console.log("store: ", store.playlistStore[indexLookup].list.tracks),
-          console.log("db: ", playlistData[indexLookup].list.tracks)
+          setStore({[key]: playlistData})
+        )
+      },
+
+      moveToPlaylist: (key, song, songIndex, originalPlaylist, targetPlaylist) => {
+        const store = getStore();
+
+        const originalIndexLookup = store.playlistStore.findIndex(plIndex => plIndex.playlistName === originalPlaylist) 
+        const targetIndexLookup = store.playlistStore.findIndex(plIndex => plIndex.playlistName === targetPlaylist)
+
+        return (
+          playlistData[originalIndexLookup].list.tracks.splice(songIndex, 1),
+          playlistData[targetIndexLookup].list.tracks.push(song),
+          setStore({[key]: playlistData})
         )
       },
 
       removeFromPlaylist: (key, songIndex, targetPlaylist) => {
         const store = getStore();
+
         const indexLookup = store.playlistStore.findIndex(plIndex => plIndex.playlistName === targetPlaylist)
+
         return (
           playlistData[indexLookup].list.tracks.splice(songIndex, 1),
           setStore({[key]: playlistData})
         )
       },
 
-      addToFavorites: (key, song) => {
-        const store = getStore();
+      addToFavourites: (key, song) => {
         return (
-          favoritesData.tracks.unshift(song),
-          setStore({[key]: favoritesData})          
+          favouritesData.tracks.unshift(song),
+          setStore({[key]: favouritesData})          
         )
       },
 
-      removeFromFavorites: (key, song, index) => {
-        const store = getStore();
+      removeFromFavourites: (key, index) => {
         return (
-          favoritesData.tracks.splice(index, 1),
-          console.log(`${song} is removed from Favorites`),
-          setStore({[key]: favoritesData}),
-          console.log("db: ", favoritesData),
-          console.log("store: ", store.favoritesStore)
+          favouritesData.tracks.splice(index, 1),
+          setStore({[key]: favouritesData})
         )
       },
 

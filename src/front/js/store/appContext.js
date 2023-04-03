@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import getState from "./flux.js";
 
 import { playlistData } from "../component/testDataPlaylist";
-import { favoritesData } from "../component/testDataFavorites";
+import { favouritesData } from "../component/testDataFavourites";
 
 // Don't change, here is where we initialize our context, by default it's just going to be null.
 export const Context = React.createContext(null);
@@ -26,7 +26,7 @@ const injectContext = PassedComponent => {
 
 		useEffect(() => {			
 			state.actions.loadSomeData("playlistStore", playlistData),
-			state.actions.loadSomeData("favoritesStore", favoritesData)			
+			state.actions.loadSomeData("favouritesStore", favouritesData)			
 		}, []);
 
 		// The initial value for the context is not null anymore, but the current state of this component,
