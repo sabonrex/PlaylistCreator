@@ -4,7 +4,7 @@ import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./pages/home";
 import { MainView } from "./pages/mainView.jsx";
-import { Favourites } from "./pages/favourites.jsx";
+import { FavouritesView } from "./pages/favourites.jsx";
 import { Single } from "./pages/single";
 import { Login } from "./pages/login.jsx";
 import { Signup } from "./pages/signup.jsx";
@@ -39,7 +39,7 @@ const Router = () => {
           <Routes>
             <Route element={<Layout />} path="">
               <Route element={<MainView />} path="/" />
-              <Route element={<Favourites />} path="/favourites" />
+              <Route element={<FavouritesView />} path="/favourites" />
               <Route element={<Signup />} path="/signup" />
               <Route element={<Login />} path="/login" />
               <Route element={<Single />} path="/single/:theid" />

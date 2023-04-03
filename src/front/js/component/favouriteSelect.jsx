@@ -6,23 +6,24 @@ import { faPlay, faEllipsisVertical, faListUl } from "@fortawesome/free-solid-sv
 
 import { Context } from "../store/appContext";
 
-import { playlistData } from "./testDataPlaylist";
-import { favoritesData } from "./testDataFavorites";
 import { msToMin } from "./utils/msToMin";
 
-export const Favorites = () => {
-    const {store, actions} = useContext(Context)
-    
+export const Favourites = () => {
+    const {store, actions} = useContext(Context);
+
     return (
         <Container>
             <Row>
             <Col md={{ span: 8, offset: 2 }}>
                 <Card className="mb-5">
-                    <Card.Header as="h5">Favorites</Card.Header>
+
+                {Object.values(store.favouritesStore).map(entry =>
+                    <>
+                    <Card.Header as="h5">Favourites - <em>{entry.length} songs</em></Card.Header>
                     <Card.Body>
-                        <ListGroup variant="flush">
-                            {Object.values(store.favoritesStore).map(entry => entry.map((trackDetails, index) =>
-                            <ListGroupItem action key={trackDetails.name}>
+                        <ListGroup variant="flush">                             
+                            {entry.map((trackDetails, index) => (
+                            <ListGroupItem action key={trackDetails.id}>
                             <Row>
                                 <Col xs="1" className="d-flex justify-content-start my-auto">
                                     <Dropdown>
@@ -32,13 +33,17 @@ export const Favorites = () => {
 
                                         <Dropdown.Menu>
                                             <Dropdown.Item onClick={() => 
-                                                (actions.removeFromFavorites("favoritesStore", trackDetails.name, index))}>
-                                                    Remove from favorites
+                                                (actions.removeFromFavourites("favouritesStore", trackDetails.name, index))}>
+                                                    Remove from favourites
                                                 </Dropdown.Item>
+                                            <Dropdown.Item>
+                                                Add to new playlist
+                                            </Dropdown.Item>
+
                                             {store.playlistStore.map(entry => 
                                                 <Dropdown.Item onClick={() => 
                                                     (actions.addToPlaylist("playlistStore", trackDetails, entry.playlistName))}>
-                                                        Add to {entry.playlistName} playlist
+                                                        Add to "{entry.playlistName}"
                                                 </Dropdown.Item>
                                             )}                                   
                                         </Dropdown.Menu>
@@ -63,10 +68,11 @@ export const Favorites = () => {
                                         {msToMin(trackDetails.duration_ms)}
                                     </Col>   
                                 </Row>
-                                </ListGroupItem>
-                                ))}
+                                </ListGroupItem>))}
+                                    
                         </ListGroup>                
                     </Card.Body>
+                    </> )}
                 </Card>
             </Col>
             </Row>

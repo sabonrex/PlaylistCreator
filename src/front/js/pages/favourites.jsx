@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 
-import { Playlists } from "../component/playlistSelect.jsx";
-import { Favorites } from "../component/favoriteSelect.jsx";
 import { Context } from "../store/appContext";
+import { Playlists } from "../component/playlistSelect.jsx";
+import { Favourites } from "../component/favouriteSelect.jsx";
 
 import "../../styles/index.css";
 
-export const Favourites = () => {
+export const FavouritesView = () => {
   const { actions } = useContext(Context);
 
   const fetchPlaylist = () => actions.fetchPlaylist();
@@ -18,7 +18,7 @@ export const Favourites = () => {
         <span style={{ color: "#BAFF4F", fontWeight: "bold" }}>Music</span>
       </h2>
       <Playlists />
-      <Favorites />
+      <Favourites />
       <button className="discover-button my-5" onClick={fetchPlaylist}>
         Discover your Playlist
       </button>
