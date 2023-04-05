@@ -22,7 +22,7 @@ class Users(db.Model):
             "username": self.username,
             "email": self.email,
             "spotify_token": self.spotify_token,
-            "token_expires_at": self.token_expires_at
+            #"token_expires_at": self.token_expires_at
         }
 
 # tracks DataTable. More attributes to be added to classify the songs according to spotify if needed
@@ -32,7 +32,8 @@ class Tracks(db.Model):
     title = db.Column(db.String(250), unique=False, nullable=False)
     artist = db.Column(db.String(250), unique=False, nullable=False)
     album = db.Column(db.String(120), unique=False, nullable=False)
-    #length = db.Column(db.DateTime(), nullable=False)
+    image_url = db.Column(db.String(500), unique=True, nullable=False)
+    duration_ms = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
         return f'<Track {self.title} - {self.artist}>'
@@ -44,7 +45,8 @@ class Tracks(db.Model):
             "title": self.title,
             "artist": self.artist,
             "album": self.album,
-            "length": self.length
+            "duration_ms": self.length,
+            "image_url": self.image_url
         }
 
 # playlists DataTable to save some generated random list
