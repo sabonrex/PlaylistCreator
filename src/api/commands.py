@@ -1,6 +1,7 @@
 
 import click
-from .models import db, Users
+from .models import db, Users, Tracks
+from .tracksJson import testTracksData as data
 
 """
 In this file, you can add as many commands as you want using the @app.cli.command decorator
@@ -29,5 +30,30 @@ def setup_commands(app):
             print("User: ", user.email, " created.")
 
         print("All test users created")
+
+        ### Insert the code to populate others tables if needed
+
+    @app.cli.command("insert-tracks") # name of our command
+    @click.argument("count") # argument of out command
+    def insert_test_tracks(count):
+
+        if int(count) >= 20:
+            print("only 20 songs available in json object")
+            return None
+
+        print("Populating Test Tracks")
+        for x in range(1, int(count) + 1):
+            track = Tracks()
+            track.spotify_id = data[x]["id"]
+            track.title = data[x]["title"]
+            track.artist = data[x]["artist"]
+            track.album = data[x]["album"]
+            track.duration_ms = data[x]["duration_ms"]
+            track.image_url = data[x]["image_url"]
+            db.session.add(track)
+            db.session.commit()
+            print("track", data[x]["title"], "added")
+
+        print("All test tracks added")
 
         ### Insert the code to populate others tables if needed
