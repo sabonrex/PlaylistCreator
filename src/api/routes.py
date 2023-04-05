@@ -256,36 +256,57 @@ def get_user_favourite_tracks():
 
 @api.route("/favourite/track", methods=["POST"])
 @jwt_required()
-def add_favourit_track():
+def add_favourite_track():
     # Access the identity of the current user with get_jwt_identity
     user_username = get_jwt_identity()
     user = Users.query.filter_by(username=user_username).first()
 
-    # Check if track exists in database
-    track_id = request.json.get("track_id", None)
+    # Check if request has at least the spotify id
     spotify_id = request.json.get("spotify_id",None)
+    if spotify_id == None:
+         return jsonify({"msg": "There is no spotify_id field"}), 400
+    
+    # Check if track exists in database
     track = Tracks.query.filter_by(spotify_id=spotify_id).first()
     if track == None:
+
+        # mandatory keys in request in the case it is not in the DB
+        mandatory_request_keys = ['spotify_id', 'title', 'artist', 'album', 'image_url', 'duration_ms']
+        if not all(key in request.json.keys() for key in mandatory_request_keys):
+            return jsonify({"msg": "There is a missing mandatory field in the request"}), 400
+        # creating a new track in DB    
         new_track = Tracks()
-        track.spotify_id = request.json.get("spotify_id", None)
-        track.title = request.json.get("title", None)
-        track.artist = request.json.get("artist", None)
-        track.album = request.json.get("album", None)
-        track.image_url = request.json.get("image_url", None)
-        track.duration_ms = request.json.get("duration_ms", None)
+        new_track.spotify_id = request.json.get("spotify_id")
+        new_track.title = request.json.get("title")
+        new_track.artist = request.json.get("artist")
+        new_track.album = request.json.get("album")
+        new_track.image_url = request.json.get("image_url")
+        new_track.duration_ms = request.json.get("duration_ms")
+        track = new_track
         db.session.add(new_track)
 
     # Create and populate new favourite instance
     favourite = Favourites()
     favourite.user_id = user.id
-    favourite.track_id = request.json.get("track_id")
+    favourite.track_id = track.id
     
     # Insert new favourite track in database
     db.session.add(favourite)
     db.session.commit()
 
-    response = {
-        "msg": f'New Favourite added to <User {user.username}>'
-    }
+    response = {"msg": f'New Favourite added to <User {user.username}>'}
 
     return jsonify(response), 201
+
+
+
+@api.route("/favourite/track/test", methods=["POST"])
+def testing_things():
+    print(request.json.keys())
+    mandatory_request_keys = ['spotify_id', 'title', 'artist', 'album', 'image_url', 'duration_ms']
+    if not all(key in request.json.keys() for key in mandatory_request_keys):
+        answer = "uepa"
+    else:
+        answer = "present"
+
+    return f'<h1>{answer}</h1>'
