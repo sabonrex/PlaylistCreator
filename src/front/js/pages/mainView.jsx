@@ -1,11 +1,5 @@
 import React, { useContext } from "react";
 
-import { Playlists } from "../component/playlistSelect.jsx";
-import { playlistData } from "../component/testDataPlaylist";
-import { Favourites } from "../component/favouriteSelect.jsx";
-import { favouritesData } from "../component/testDataFavourites.js";
-import { Button } from "react-bootstrap";
-
 import { Context } from "../store/appContext";
 import { SaveFavouriteButton } from "../component/favouriteButton.jsx";
 import { EmbeddedSpotify } from "../component/embeddedSpotifyTrack.jsx";
