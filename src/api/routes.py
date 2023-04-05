@@ -245,11 +245,47 @@ def login():
 
 
 # route to check if the user exists and is authenticated
-@api.route("/check", methods=["GET"])
+@api.route("/user/favourite/track", methods=["GET"])
 @jwt_required()
-def protected():
+def get_user_favourite_tracks():
     # Access the identity of the current user with get_jwt_identity
-    current_email = get_jwt_identity()
-    user = Users.query.filter_by(email=current_email).first()
+    user_username = get_jwt_identity()
+    user = Users.query.filter_by(username=user_username).first()
 
     return jsonify(user.serialize()), 200
+
+@api.route("/favourite/track", methods=["POST"])
+@jwt_required()
+def add_favourit_track():
+    # Access the identity of the current user with get_jwt_identity
+    user_username = get_jwt_identity()
+    user = Users.query.filter_by(username=user_username).first()
+
+    # Check if track exists in database
+    track_id = request.json.get("track_id", None)
+    spotify_id = request.json.get("spotify_id",None)
+    track = Tracks.query.filter_by(spotify_id=spotify_id).first()
+    if track == None:
+        new_track = Tracks()
+        track.spotify_id = request.json.get("spotify_id", None)
+        track.title = request.json.get("title", None)
+        track.artist = request.json.get("artist", None)
+        track.album = request.json.get("album", None)
+        track.image_url = request.json.get("image_url", None)
+        track.duration_ms = request.json.get("duration_ms", None)
+        db.session.add(new_track)
+
+    # Create and populate new favourite instance
+    favourite = Favourites()
+    favourite.user_id = user.id
+    favourite.track_id = request.json.get("track_id")
+    
+    # Insert new favourite track in database
+    db.session.add(favourite)
+    db.session.commit()
+
+    response = {
+        "msg": f'New Favourite added to <User {user.username}>'
+    }
+
+    return jsonify(response), 201
