@@ -22,7 +22,7 @@ export const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const loginUrl = store.apiUrl + "/api/login";
+    const loginUrl = store.apiUrl + "/api/auth/login";
 
     const requestUser = {
         method: "POST",
