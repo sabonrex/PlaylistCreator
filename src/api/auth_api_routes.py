@@ -5,7 +5,7 @@ from api.models import db, Users
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import JWTManager
 
-auth_api = Blueprint('auth', __name__)
+auth_api = Blueprint('auth_api', __name__)
 
 # route to signup a user and add it to the database
 @auth_api.route("/signup", methods=["POST"])
