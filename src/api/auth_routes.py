@@ -2,13 +2,14 @@ from flask import jsonify, request, Blueprint
 
 from api.models import db, Users
 
+
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import JWTManager
 
-auth_api = Blueprint('auth_api', __name__)
+auth = Blueprint('auth', __name__)
 
 # route to signup a user and add it to the database
-@auth_api.route("/signup", methods=["POST"])
+@auth.route("/signup", methods=["POST"])
 def add_user():
     user = Users()
     
@@ -33,7 +34,7 @@ def add_user():
 
 
 # route to check if the user exists and creates is authentication token
-@auth_api.route("/login", methods=["POST"])
+@auth.route("/login", methods=["POST"])
 def login():
     username = request.json.get("username", None)
     password = request.json.get("password", None)

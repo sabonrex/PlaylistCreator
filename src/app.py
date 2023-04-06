@@ -9,7 +9,10 @@ from flask_cors import CORS
 from api.utils import APIException, generate_sitemap
 from api.models import db
 from api.routes import api
-from api.auth_api_routes import auth_api
+from api.auth_routes import auth
+from api.tracks_routes import tracks_api
+from api.playlists_routes import playlists_api
+from api.favourites_routes import favourites_api
 from api.admin import setup_admin
 from api.commands import setup_commands
 
@@ -51,7 +54,10 @@ setup_commands(app)
 
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
-app.register_blueprint(auth_api, url_prefix="/api/auth")
+app.register_blueprint(auth, url_prefix="/api/auth")
+app.register_blueprint(tracks_api, url_prefix="/api/tracks")
+app.register_blueprint(playlists_api, url_prefix="/api/playlists")
+app.register_blueprint(favourites_api, url_prefix="/api/user/favourites")
 
 
 # Handle/serialize errors like a JSON object
