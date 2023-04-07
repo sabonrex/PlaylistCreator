@@ -47,3 +47,10 @@ def move_playlist():
     playlists = Playlists.query.first()
     response = {"msg": "Still working on it"}
     return jsonify(response), 200
+
+# PUT route to rename a playlist
+@playlists_api.route("/track/rename", methods=["GET"])
+def rename_playlist():
+    playlists = Playlists.query.first()
+    response = {"msg": "Still working on it"}
+    return jsonify(response), 200

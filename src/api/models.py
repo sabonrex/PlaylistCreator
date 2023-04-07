@@ -27,6 +27,12 @@ class Users(db.Model):
             # "token_expires_at": self.token_expires_at
         }
 
+# relational table to create many-to-many relationshiop between Tracks and Playlists
+playlist_tracks = db.Table('playlist_tracks',
+    db.Column('playlist_id', db.Integer, db.ForeignKey('playlists.id'), primary_key=True),
+    db.Column('track_id', db.Integer, db.ForeignKey('tracks.id'), primary_key=True)
+)
+
 
 # tracks DataTable. More attributes to be added to classify the songs according to spotify if needed
 class Tracks(db.Model):
@@ -92,45 +98,23 @@ class Tracks(db.Model):
 # playlists DataTable to save some generated random list
 class Playlists(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(250), unique=False, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    track_id = db.Column(db.Integer, db.ForeignKey('tracks.id'))
+    tracks = db.relationship('Tracks', secondary=playlist_tracks, backref='playlists')
 
     def __repr__(self):
-        return f'<Playlist {self.id}>'
+        return f'<Playlist {self.name}>'
 
     def serialize(self):
         return {
-            "playlist_id": self.id,
+            "id": self.id,
+            "name": self.name,
             "user_id": self.user_id,
-            "track_id": self.track_id
+            "track_id": self.tracks
         }
     # define a method to select a playlist
 
 # favourites DataTable to save favourite tracks and playlists
-
-
-"""
-class Favourites(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    track_id = db.Column(db.Integer, db.ForeignKey('tracks.id'), nullable=True)
-    playlist_id = db.Column(db.Integer, db.ForeignKey(
-        'playlists.id'), nullable=True)
-
-    def __repr__(self):
-        return f'<Favourite {self.id}>'
-
-    def serialize(self):
-        return {
-            "favourite_id": self.id,
-            "user_id": self.user_id,
-            "track_id": self.track_id,
-            "playlist_id": self.playlist_id
-        }
-    
-"""
-
-
 class Favourites(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
