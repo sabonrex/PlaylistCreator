@@ -21,7 +21,7 @@ export const CarouselComponent = ({ tracks, itemsPerSlide }) => {
                     <div className="row d-flex justify-content-center align-items-top pb-3" style={{ height: "100%", backgroundColor: "#1D2343" }} >
                         {slide.map((track) => (
                         <div key={track.id} className="col-sm-2">
-                            <div className="card shadow" style={{ backgroundColor: "#DC6B5E", borderRadius: "10px"}} >
+                            <div  onClick={handlePlay} className="card shadow" style={{ backgroundColor: "#DC6B5E", borderRadius: "10px"}} >
                                 <img
                                     className="card-img-top"
                                     src={track.image_url}
@@ -42,3 +42,4 @@ export const CarouselComponent = ({ tracks, itemsPerSlide }) => {
         </div>
     );
   };
+
