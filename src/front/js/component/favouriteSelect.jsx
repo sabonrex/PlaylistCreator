@@ -1,12 +1,11 @@
 import React, { Component, useContext, useState } from "react";
-import { Accordion, AccordionButton, Button, Card, Col, Container, Dropdown, ListGroup, ListGroupItem, Row, Stack } from "react-bootstrap";
+import { Accordion, AccordionButton, Button, Card, Col, Container, Dropdown, ListGroup, ListGroupItem, Row, Stack, ThemeProvider } from "react-bootstrap";
 import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import Form from 'react-bootstrap/Form';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faEllipsisVertical, faListUl } from "@fortawesome/free-solid-svg-icons";
-
 import { Context } from "../store/appContext";
 
 import { msToMin } from "./utils/msToMin";
@@ -26,10 +25,11 @@ export const Favourites = () => {
                         <ListGroup variant="flush">                             
                             {entry.map((trackDetails, index) => (
                             <ListGroupItem action key={trackDetails.id}>
-                            <Row className="d-flex align-items-center responsive_font">
-                                <Col xs="1">
+                            
+                            <Row className="d-flex align-items-center">
+                                <Col xs="2" sm="1" md="1" lg="1">
                                     <Dropdown autoClose={dropdownState}>
-                                        <DropdownToggle variant="outline-success">
+                                        <DropdownToggle className="ms-1 me-auto" variant="outline-success">
                                             <FontAwesomeIcon icon={faEllipsisVertical} />
                                         </DropdownToggle>
 
@@ -54,26 +54,26 @@ export const Favourites = () => {
                                     </Dropdown>
                                 </Col>
 
-                                <Col xs="1" className="d-flex justify-content-center">
+                                <Col lg="1" className="track_num justify-content-center">
                                     {index + 1}
                                 </Col>
 
-                                <Col xs="2">
-                                    <img src={trackDetails.album.images[2].url}></img>
+                                <Col xs="4" sm="3" md="2" lg="2">
+                                    <img className="img-responsive me-1" src={trackDetails.album.images[2].url}></img>
                                 </Col>
 
-                                <Col xs="4">
-                                    <div className="text-start ps-2">
+                                <Col xs="6" sm="8" md="5" lg="3">
+                                    <div className="text-start">
                                         <div className="fw-bold">{trackDetails.name}</div>
                                         {trackDetails.artists[0].name}
                                     </div>
                                 </Col>
 
-                                <Col xs="3" className="text-end">
+                                <Col md="4" lg="4" className="album_name text-end">
                                     <em>{trackDetails.album.name}</em>
                                 </Col>
 
-                                <Col xs="1" className="d-flex justify-content-center">
+                                <Col lg="1" className="track_length ms-auto">
                                     {msToMin(trackDetails.duration_ms)}
                                 </Col>   
                             </Row>
@@ -87,11 +87,17 @@ export const Favourites = () => {
 
     return (
         <Container>
-            <Row>
-                <Col md={{ span: 10, offset: 1 }}>
-                    {favouritesComponentBuilder}
-                </Col>
-            </Row>
+            <ThemeProvider breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
+            minBreakpoint="xs">
+                <Row>
+                    <Col
+                        md={{ span: 10, offset: 1 }}
+                        lg={{ span: 10, offset: 1 }}>
+                        {favouritesComponentBuilder}
+                    </Col>
+                </Row>
+            </ThemeProvider>
         </Container>
+
     );
 }

@@ -9,6 +9,7 @@ import {
   ListGroupItem,
   Row,
   Stack,
+  ThemeProvider
 } from "react-bootstrap";
 import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
@@ -47,11 +48,12 @@ export const Playlists = () => {
                         <ListGroup variant="flush">
                             {entry.list.tracks.map((trackDetails, index) =>
                                 <ListGroupItem action key={trackDetails.id}>
-                                <Row Row className="d-flex align-items-center responsive_font">
-                                <Col xs="1">
+
+                                <Row Row className="d-flex align-items-center">
+                                <Col xs="2" sm="1" md="1" lg="1">
                                     <Dropdown autoClose={dropdownState}>
 
-                                        <DropdownToggle variant="outline-success" >
+                                        <DropdownToggle className="ms-1 me-auto" variant="outline-success">
                                             <FontAwesomeIcon icon={faEllipsisVertical} />
                                         </DropdownToggle>
                                         <Dropdown.Menu>
@@ -88,26 +90,26 @@ export const Playlists = () => {
                                     </Dropdown>
                                 </Col>   
 
-                                    <Col xs="1" className="d-flex justify-content-center">
+                                    <Col lg="1" className="track_num justify-content-center">
                                         {index + 1}
                                     </Col>
 
-                                    <Col xs="2 pe-1">
-                                        <img src={trackDetails.album.images[2].url}></img>
+                                    <Col xs="4" sm="3" md="2" lg="2">
+                                        <img className="img-responsive me-1" src={trackDetails.album.images[2].url}></img>
                                     </Col>
 
-                                    <Col xs="4">
+                                    <Col xs="6" sm="8" md="5" lg="3">
                                         <div className="text-start">
                                             <div className="fw-bold" >{trackDetails.name}</div>
                                             {trackDetails.artists[0].name}
                                         </div>
                                     </Col>
 
-                                    <Col xs="3" className="text-end">
+                                    <Col md="4" lg="4" className="album_name text-end">
                                         <em>{trackDetails.album.name}</em>
                                     </Col>
 
-                                    <Col xs="1" className="d-flex justify-content-center">
+                                    <Col lg="1" className="track_length ms-auto">
                                         {msToMin(trackDetails.duration_ms)}
                                     </Col>   
 
@@ -122,12 +124,17 @@ export const Playlists = () => {
     )
 
     return (
-        <Container className = "pb-3">
-            <Row>
-                <Col md={{ span: 10, offset: 1 }}>
-                    {playlistComponentBuilder}
-                </Col>
-            </Row>
+        <Container>
+            <ThemeProvider breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
+            minBreakpoint="xs">
+                <Row>
+                    <Col
+                        md={{ span: 10, offset: 1 }}
+                        lg={{ span: 10, offset: 1 }}>
+                        {playlistComponentBuilder}
+                    </Col>
+                </Row>
+            </ThemeProvider>
         </Container>
     );
 };

@@ -129,6 +129,21 @@ h2 {
   font-weight: bold;
 }
 
-.responsive_text {
-  font-size: 1.5vw;
+.dopdown-toggle {
+  border: none !important;
+}
+.dropdown-toggle::after {
+  display: none;
+}
+
+@media only screen and (max-width: 767px) {
+  .album_name {
+      display: none;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  .track_length, .track_num {
+      display: none;
+  }
 }
