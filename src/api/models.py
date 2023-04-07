@@ -41,12 +41,12 @@ class Tracks(db.Model):
 
     def serialize(self):
         return {
-            "track_id": self.id,
+            "id": self.id,
             "spotify_id": self.spotify_id,
             "title": self.title,
             "artist": self.artist,
             "album": self.album,
-            "duration_ms": self.length,
+            "duration_ms": self.duration_ms,
             "image_url": self.image_url
         }
 

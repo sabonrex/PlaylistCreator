@@ -12,13 +12,9 @@ tracks_api = Blueprint('tracks_api', __name__)
 # GET route to get all tracks available in the DB or a sample of them
 @tracks_api.route("", methods=["GET"])
 def get_all_tracks():
-    tracks = Tracks.query.limit(20).all()
-    
-    response = {
-        "msg": "Still working on it"
-    }
-
-    return jsonify(response), 200
+    tracks = Tracks.query.limit(5).all()
+    tracks_list = list(map(lambda track: track.serialize(), tracks))
+    return jsonify(tracks_list), 200
 
 # GET route to get a track based on the ID from the DB
 @tracks_api.route("/id", methods=["GET"])
