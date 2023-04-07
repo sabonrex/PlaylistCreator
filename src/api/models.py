@@ -2,6 +2,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+
 # users DataTable with info about spotify token to use in future features
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -26,6 +27,7 @@ class Users(db.Model):
             # "token_expires_at": self.token_expires_at
         }
 
+
 # tracks DataTable. More attributes to be added to classify the songs according to spotify if needed
 class Tracks(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -49,6 +51,43 @@ class Tracks(db.Model):
             "duration_ms": self.duration_ms,
             "image_url": self.image_url
         }
+    
+    @classmethod
+    def tracks_len(cls):
+        number_of_tracks = cls.query.count()
+        return number_of_tracks
+
+    @classmethod
+    def read(cls, limit=10, offset=0):
+        return cls.query.limit(limit).offset(offset).all()
+    
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    @staticmethod
+    def check_request(json_request):
+        mandatory_request_keys = ['spotify_id', 'title', 'artist', 'album', 'image_url', 'duration_ms']
+        if not all(key in json_request.keys() for key in mandatory_request_keys):
+            return False
+        else:
+            return True
+    
+    @classmethod
+    def create(cls, spotify_id, title, artist, album, image_url, duration_ms):
+        new_track = cls()
+        new_track.spotify_id = spotify_id
+        new_track.title = title
+        new_track.artist = artist
+        new_track.album = album
+        new_track.image_url = image_url
+        new_track.duration_ms = duration_ms
+
+        db.session.add(new_track)
+        db.session.commit()
+
+        return new_track
+    
 
 # playlists DataTable to save some generated random list
 class Playlists(db.Model):
