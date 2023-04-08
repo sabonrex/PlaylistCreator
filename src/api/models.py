@@ -109,8 +109,7 @@ class Playlists(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "user_id": self.user_id,
-            "track_id": self.tracks
+            "user_id": self.user_id
         }
     # define a method to select a playlist
 

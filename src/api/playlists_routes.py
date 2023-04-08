@@ -10,15 +10,12 @@ from flask_jwt_extended import jwt_required
 playlists_api = Blueprint('playlists_api', __name__)
 
 # GET route to get all playlists available in the DB or a sample of them. Not important for most features
+# this route is probably not important. We need to get specific user favourites playlists
 @playlists_api.route("", methods=["GET"])
 def get_all_playlists():
     playlists = Playlists.query.limit(20).all()
-
-    response = {
-        "msg": "Still working on it"
-    }
-
-    return jsonify(response), 200
+    playlists_list = list(map(lambda playlist: playlist.serialize(), playlists))
+    return jsonify(playlists_list), 200
 
 # GET route to get a playlist based on the ID from the DB. Not important at the moment
 @playlists_api.route("/id", methods=["GET"])
