@@ -13,6 +13,10 @@ export const CarouselComponent = ({ tracks, itemsPerSlide }) => {
       return accumulator;
     }, []);
   
+const handlePlay = (e) =>{
+    document.querySelector("iframe").src = `https://open.spotify.com/embed/track/${e.target.id}`
+}
+
     return (
         <div className="pt-4" style={{borderTop: "3px solid #D74390"}}>
             <Carousel controls={slides.length > 1} indicators={slides.length > 1} interval={3000} >
@@ -20,9 +24,10 @@ export const CarouselComponent = ({ tracks, itemsPerSlide }) => {
                 <Carousel.Item key={index}>
                     <div className="row d-flex justify-content-center align-items-top pb-3" style={{ height: "100%", backgroundColor: "#1D2343" }} >
                         {slide.map((track) => (
-                        <div key={track.id} className="col-sm-2">
+                        <div key={track.id} className="col-sm-2" >
                             <div className="card shadow" style={{ backgroundColor: "#DC6B5E", borderRadius: "10px"}} >
                                 <img
+                                id={track.id} onClick={(e)=>handlePlay(e)}
                                     className="card-img-top"
                                     src={track.image_url}
                                     alt={track.alt}
