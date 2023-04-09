@@ -20,7 +20,7 @@ def get_all_tracks():
     offset = request.args.get('offset', 0, type=int)
     if offset > number_of_tracks: offset = number_of_tracks - limit
     # querying DB to get the tracks
-    tracks = Tracks.read_all()(limit=limit, offset=offset)
+    tracks = Tracks.read_all(limit=limit, offset=offset)
     tracks_list = list(map(lambda track: track.serialize(), tracks))
     # defining the prev and next "page"
     if offset == 0: 
