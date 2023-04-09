@@ -46,16 +46,15 @@ nav h1 {
   color: #BAFF4F;
   font-weight: bold;
   letter-spacing: 0.125rem;
-  line-height: normal;
   margin: 0;
 }
 
-.navv{
-  font-family: 'Nunito', sans-serif;
-  font-size: 1.25rem;
-  font-weight: 500;
-  color: #BAFF4F;
-  transition: opacity .15s ease-in-out;
+.navv {
+  font-family: 'Nunito', sans-serif !important;
+  font-size: 1.25rem !important;
+  font-weight: 500 !important;
+  color: #BAFF4F !important;
+  transition: opacity .15s ease-in-out !important;
 }
 
 
@@ -104,11 +103,11 @@ form {
   height: 5%; 
   background-color: rgb(255, 255, 255);
 }
+
 h2 {
   color: #BAFF4F;
   font-weight: 900;
   letter-spacing: 0.125rem;
-  line-height: normal;
   margin: 0;
 }
 
@@ -129,6 +128,7 @@ h2 {
   font-weight: bold;
 }
 
+
 .dopdown-toggle {
   border: none !important;
 }
@@ -146,4 +146,10 @@ h2 {
   .track_length, .track_num {
       display: none;
   }
+}
+
+.navbar_toggle_button {
+  color: #BAFF4F !important;
+  border-color: #BAFF4F !important;
+  border-width: 2px !important;
 }

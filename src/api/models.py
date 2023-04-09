@@ -34,8 +34,11 @@ class Tracks(db.Model):
     spotify_id = db.Column(db.String(40), unique=True, nullable=False)
     title = db.Column(db.String(250), unique=False, nullable=False)
     artist = db.Column(db.String(250), unique=False, nullable=False)
+    artist_spotify_id = db.Column(db.String(250), unique=False, nullable=False)
     album = db.Column(db.String(120), unique=False, nullable=False)
-    image_url = db.Column(db.String(500), unique=True, nullable=False)
+    genre = db.Column(db.String(120), unique=False, nullable=False)
+    image_url = db.Column(db.String(500), unique=False, nullable=False)
+    image_thumb_url = db.Column(db.String(500), unique=False, nullable=False)
     duration_ms = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
@@ -47,9 +50,12 @@ class Tracks(db.Model):
             "spotify_id": self.spotify_id,
             "title": self.title,
             "artist": self.artist,
+            "artist_spotify_id": self.artist_spotify_id,
             "album": self.album,
+            "genre": self.genre,
             "duration_ms": self.duration_ms,
-            "image_url": self.image_url
+            "image_url": self.image_url,
+            "image_thumb_url": self.image_thumb_url
         }
     
     @classmethod
@@ -67,20 +73,23 @@ class Tracks(db.Model):
 
     @staticmethod
     def check_request(json_request):
-        mandatory_request_keys = ['spotify_id', 'title', 'artist', 'album', 'image_url', 'duration_ms']
+        mandatory_request_keys = ['spotify_id', 'title', 'artist', 'artist_spotify_id', 'album', 'genre', 'image_url', 'image_thumb_url', 'duration_ms']
         if not all(key in json_request.keys() for key in mandatory_request_keys):
             return False
         else:
             return True
     
     @classmethod
-    def create(cls, spotify_id, title, artist, album, image_url, duration_ms):
+    def create(cls, spotify_id, title, artist, artist_spotify_id, album, genre, image_thumb_url, image_url, duration_ms):
         new_track = cls()
         new_track.spotify_id = spotify_id
         new_track.title = title
         new_track.artist = artist
+        new_trac.artist_spotify_id = artist_spotify_id
         new_track.album = album
+        new_track.genre = genre
         new_track.image_url = image_url
+        new_track.image_thumb_url = image_thumb_url
         new_track.duration_ms = duration_ms
 
         db.session.add(new_track)
@@ -91,9 +100,9 @@ class Tracks(db.Model):
 
 # playlists DataTable to save some generated random list
 class Playlists(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer,unique=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    track_id = db.Column(db.Integer, db.ForeignKey('tracks.id'))
+    playlist_name = db.Column(db.String, unique=False, nullable=False)
 
     def __repr__(self):
         return f'<Playlist {self.id}>'
@@ -102,9 +111,8 @@ class Playlists(db.Model):
         return {
             "playlist_id": self.id,
             "user_id": self.user_id,
-            "track_id": self.track_id
+            "playlist_name": self.playlist_name
         }
-    # define a method to select a playlist
 
 # favourites DataTable to save favourite tracks and playlists
 
@@ -135,8 +143,6 @@ class Favourites(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     track_id = db.Column(db.Integer, db.ForeignKey('tracks.id'), nullable=True)
-    playlist_id = db.Column(db.Integer, db.ForeignKey(
-        'playlists.id'), nullable=True)
 
     def __repr__(self):
         return f'<Favourite {self.id}>'
@@ -145,14 +151,12 @@ class Favourites(db.Model):
         return {
             "favourite_id": self.id,
             "user_id": self.user_id,
-            "track_id": self.track_id,
-            "playlist_id": self.playlist_id
+            "track_id": self.track_id
         }
 
     @classmethod
-    def create(cls, user_id, track_id=None, playlist_id=None):
-        favourite = cls(user_id=user_id, track_id=track_id,
-                        playlist_id=playlist_id)
+    def create(cls, user_id, track_id=None):
+        favourite = cls(user_id=user_id, track_id=track_id)
         db.session.add(favourite)
         db.session.commit()
         return favourite
