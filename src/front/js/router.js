@@ -7,6 +7,7 @@ import { MainView } from "./pages/mainView.jsx";
 import { FavouritesView } from "./pages/favourites.jsx";
 import { Single } from "./pages/single";
 import { Login } from "./pages/login.jsx";
+import { Mood } from "./pages/mood.jsx";
 import { Signup } from "./pages/signup.jsx";
 import injectContext, { Context }  from "./store/appContext";
 
