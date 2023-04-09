@@ -27,6 +27,12 @@ class Users(db.Model):
             # "token_expires_at": self.token_expires_at
         }
 
+# relational table to create many-to-many relationshiop between Tracks and Playlists
+playlist_tracks = db.Table('playlist_tracks',
+    db.Column('playlist_id', db.Integer, db.ForeignKey('playlists.id'), primary_key=True),
+    db.Column('track_id', db.Integer, db.ForeignKey('tracks.id'), primary_key=True)
+)
+
 
 # tracks DataTable. More attributes to be added to classify the songs according to spotify if needed
 class Tracks(db.Model):
@@ -58,8 +64,12 @@ class Tracks(db.Model):
         return number_of_tracks
 
     @classmethod
-    def read(cls, limit=10, offset=0):
+    def read_all(cls, limit=10, offset=0):
         return cls.query.limit(limit).offset(offset).all()
+
+    @classmethod
+    def read(cls, id):
+        return cls.query.get_or_404(id)
     
     def delete(self):
         db.session.delete(self)
@@ -92,45 +102,84 @@ class Tracks(db.Model):
 # playlists DataTable to save some generated random list
 class Playlists(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    track_id = db.Column(db.Integer, db.ForeignKey('tracks.id'))
+    name = db.Column(db.String(250), unique=False, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id')) # probably not necessary. Check this!
+    tracks = db.relationship('Tracks', secondary=playlist_tracks, backref='playlists')
 
     def __repr__(self):
-        return f'<Playlist {self.id}>'
-
+        return f'<Playlist {self.name}>'
+    """
+    # Trying to initialize with the random name here instead of create method
+    def __init__(self):
+        self.name = f'Random Playlist {self.id}'
+    """
     def serialize(self):
         return {
-            "playlist_id": self.id,
+            "id": self.id,
+            "name": self.name,
             "user_id": self.user_id,
-            "track_id": self.track_id
+            "tracks": list(map(lambda track: track.serialize(), self.tracks))
         }
-    # define a method to select a playlist
+
+    @classmethod
+    def read_all(cls, limit=10, offset=0):
+        return cls.query.limit(limit).offset(offset).all()
+
+    @classmethod
+    def read(cls, id):
+        return cls.query.get_or_404(id)
+    
+    def rename(self, new_name):
+        playlist = Playlists.query.get_or_404(self.id)
+        playlist.name = new_name
+        db.session.add(playlist)
+        db.session.commit()
+        return playlist.name
+    
+    @classmethod
+    def create(cls):
+        new_playlist = cls()
+        new_playlist.name = f'New Playlist'
+        db.session.add(new_playlist)
+        db.session.commit()
+        new_playlist.rename(f'Random Playlist {new_playlist.id}')
+        return new_playlist
+
+    def get_serialized_tracks(self):
+        return list(map(lambda track: track.serialize(), self.tracks))
+
+    #check if track exists to use before removing track
+    def track_exists(self, track_id):
+        tracks = self.tracks
+        if len(tracks) == 0: return False
+        for track in tracks:
+            if track.id == track_id:
+                return True
+        return False
+
+    def append_track(self, track_id):
+        track = Tracks.query.get_or_404(track_id) #it will throw an error if track does not exist
+        self.tracks.append(track)
+        db.session.add(self)
+        db.session.commit()
+        return self.get_serialized_tracks()
+
+    def remove_track(self, track_id):
+        track = Tracks.query.get_or_404(track_id)
+        if not self.track_exists(track_id): return None
+        self.tracks.remove(track)
+        db.session.commit()
+        return self.get_serialized_tracks()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+
+
+
 
 # favourites DataTable to save favourite tracks and playlists
-
-
-"""
-class Favourites(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    track_id = db.Column(db.Integer, db.ForeignKey('tracks.id'), nullable=True)
-    playlist_id = db.Column(db.Integer, db.ForeignKey(
-        'playlists.id'), nullable=True)
-
-    def __repr__(self):
-        return f'<Favourite {self.id}>'
-
-    def serialize(self):
-        return {
-            "favourite_id": self.id,
-            "user_id": self.user_id,
-            "track_id": self.track_id,
-            "playlist_id": self.playlist_id
-        }
-    
-"""
-
-
 class Favourites(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
