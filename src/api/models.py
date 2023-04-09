@@ -14,6 +14,7 @@ class Users(db.Model):
     spotify_token = db.Column(db.String(500), unique=False)
     # token_created_at = db.Column(db.DateTime(), default=datetime.utcnow)
     # token_expires_at = db.Column(db.DateTime(), default=datetime.utcnow)
+    favourite = db.relationship("Favourites", uselist=False, back_populates="user")
 
     def __repr__(self):
         return f'<User {self.username}>'
@@ -27,10 +28,24 @@ class Users(db.Model):
             # "token_expires_at": self.token_expires_at
         }
 
-# relational table to create many-to-many relationshiop between Tracks and Playlists
+
+# relational table to create many-to-many relationship between Tracks and Playlists
 playlist_tracks = db.Table('playlist_tracks',
     db.Column('playlist_id', db.Integer, db.ForeignKey('playlists.id'), primary_key=True),
     db.Column('track_id', db.Integer, db.ForeignKey('tracks.id'), primary_key=True)
+)
+
+
+# relational table to create many-to-many relationship between Tracks and Favourites
+favourite_tracks = db.Table('favourite_tracks',
+    db.Column('favourite_id', db.Integer, db.ForeignKey('favourites.id'), primary_key=True),
+    db.Column('track_id', db.Integer, db.ForeignKey('tracks.id'), primary_key=True)
+
+
+)# relational table to create many-to-many relationship between Playlists and Favourites
+favourite_playlists = db.Table('favourite_playlists',
+    db.Column('favourite_id', db.Integer, db.ForeignKey('favourites.id'), primary_key=True),
+    db.Column('playlist_id', db.Integer, db.ForeignKey('playlists.id'), primary_key=True)
 )
 
 
@@ -103,7 +118,6 @@ class Tracks(db.Model):
 class Playlists(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250), unique=False, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id')) # probably not necessary. Check this!
     tracks = db.relationship('Tracks', secondary=playlist_tracks, backref='playlists')
 
     def __repr__(self):
@@ -117,7 +131,6 @@ class Playlists(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "user_id": self.user_id,
             "tracks": list(map(lambda track: track.serialize(), self.tracks))
         }
 
@@ -177,25 +190,23 @@ class Playlists(db.Model):
 
 
 
-
-
 # favourites DataTable to save favourite tracks and playlists
 class Favourites(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    track_id = db.Column(db.Integer, db.ForeignKey('tracks.id'), nullable=True)
-    playlist_id = db.Column(db.Integer, db.ForeignKey(
-        'playlists.id'), nullable=True)
+    user = db.relationship("Users", back_populates="favourite")
+    tracks = db.relationship('Tracks', secondary=favourite_tracks, backref='favourites')
+    playlists = db.relationship('Playlists', secondary=favourite_playlists, backref='favourites')
 
     def __repr__(self):
-        return f'<Favourite {self.id}>'
+        return f'<User {self.user.username} favourites>'
 
     def serialize(self):
         return {
             "favourite_id": self.id,
             "user_id": self.user_id,
-            "track_id": self.track_id,
-            "playlist_id": self.playlist_id
+            "tracks": list(map(lambda track: track.serialize(), self.tracks)),
+            "playlists": list(map(lambda playlist: playlist.serialize(), self.playlists))
         }
 
     @classmethod
