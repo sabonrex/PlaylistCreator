@@ -29,7 +29,7 @@ def add_user():
 
 # route to check if the user exists and creates is authentication token
 @auth.route("/login", methods=["POST"])
-def login():
+def handle_login():
     username = request.json.get("username", None)
     password = request.json.get("password", None)
 
@@ -43,3 +43,10 @@ def login():
 
     access_token = create_access_token(identity=username)
     return jsonify(access_token=access_token), 201
+
+
+# route to check if the user exists and creates is authentication token
+@auth.route("/check", methods=["GET"])
+def protected_route():
+    user = Users.get_auth_user()
+    return jsonify(user.serialize()), 200
