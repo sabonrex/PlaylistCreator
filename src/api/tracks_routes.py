@@ -42,12 +42,14 @@ def get_all_tracks():
     }
 
     return jsonify(response), 200
+    
 
 # GET route to get a track based on the ID from the DB
 @tracks_api.route("/<int:id>", methods=["GET"])
 def get_track(id):
     track = Tracks.query.get_or_404(id)
     return jsonify(track.serialize()), 200
+
 
 # POST route to add a new track to the DB
 @tracks_api.route("/", methods=["POST"])
@@ -71,7 +73,8 @@ def add_track():
         "location_url": url_for('tracks_api.get_track', id=track.id),
         }
         
-    return jsonify(response), 200
+    return jsonify(response), 201
+
 
 # DELETE route to delete a track from the DB
 @tracks_api.route("/<int:id>", methods=["DELETE"])
