@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { Playlists } from "../component/playlistSelect.jsx";
 import { Favourites } from "../component/favouriteSelect.jsx";
-import { RandomPlaylistGenerate } from "../component/playlistGenerator.jsx";
+import { RandomPlaylistGenerate } from "../component/playlistGenerateButton.jsx";
 import { EmbeddedSpotify } from "../component/embeddedSpotifyTrack.jsx";
 
 import "../../styles/index.css";

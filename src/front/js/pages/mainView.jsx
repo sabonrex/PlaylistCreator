@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 
 import { Context } from "../store/appContext";
-import { RandomPlaylistGenerate } from "../component/playlistGenerator.jsx";
+import { RandomPlaylistGenerate } from "../component/playlistGenerateButton.jsx";
 import { SaveFavouriteButton } from "../component/favouriteButton.jsx";
 import { EmbeddedSpotify } from "../component/embeddedSpotifyTrack.jsx";
 
