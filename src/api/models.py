@@ -2,6 +2,9 @@ from flask_sqlalchemy import SQLAlchemy
 
 from api.utils import APIException
 
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+
 db = SQLAlchemy()
 
 
@@ -48,6 +51,7 @@ class Users(db.Model):
 
         if username == None: user.update_username(f'User{user.id}')
         if email == None: user.update_email(f'User{user.id}@email.com')
+        Favourites.initialize(user.id)
 
         return user
     
@@ -61,6 +65,14 @@ class Users(db.Model):
         db.session.add(self)
         db.session.commit()
 
+    def read_by_username(username):
+        return Users.query.filter_by(username=username).first()
+
+    @jwt_required()
+    def get_auth_user():
+        username = get_jwt_identity()
+        return Users.read_by_username(username=username)
+
 
 
 # relational table to create many-to-many relationship between Tracks and Playlists
@@ -70,10 +82,12 @@ playlist_tracks = db.Table('playlist_tracks',
 )
 
 
+
 # relational table to create many-to-many relationship between Tracks and Favourites
 favourite_tracks = db.Table('favourite_tracks',
     db.Column('favourite_id', db.Integer, db.ForeignKey('favourites.id'), primary_key=True),
     db.Column('track_id', db.Integer, db.ForeignKey('tracks.id'), primary_key=True)
+
 
 
 )# relational table to create many-to-many relationship between Playlists and Favourites
@@ -81,6 +95,7 @@ favourite_playlists = db.Table('favourite_playlists',
     db.Column('favourite_id', db.Integer, db.ForeignKey('favourites.id'), primary_key=True),
     db.Column('playlist_id', db.Integer, db.ForeignKey('playlists.id'), primary_key=True)
 )
+
 
 
 # tracks DataTable. More attributes to be added to classify the songs according to spotify if needed
@@ -146,7 +161,8 @@ class Tracks(db.Model):
         db.session.commit()
 
         return new_track
-    
+
+
 
 # playlists DataTable to save some generated random list
 class Playlists(db.Model):
@@ -192,7 +208,7 @@ class Playlists(db.Model):
         new_playlist.rename(f'Random Playlist {new_playlist.id}')
         return new_playlist
 
-    def get_serialized_tracks(self):
+    def serialize_tracks(self):
         return list(map(lambda track: track.serialize(), self.tracks))
 
     #check if track exists to use before removing track
@@ -209,14 +225,15 @@ class Playlists(db.Model):
         self.tracks.append(track)
         db.session.add(self)
         db.session.commit()
-        return self.get_serialized_tracks()
+        return self.serialize_tracks()
 
     def remove_track(self, track_id):
-        track = Tracks.query.get_or_404(track_id)
-        if not self.track_exists(track_id): return None
+        track = Tracks.query.get_or_404(track_id)        
+        if not self.track_exists(track_id): 
+            raise APIException("This track is not in this Playlist")
         self.tracks.remove(track)
         db.session.commit()
-        return self.get_serialized_tracks()
+        return self.serialize_tracks()
 
     def delete(self):
         db.session.delete(self)
@@ -244,9 +261,8 @@ class Favourites(db.Model):
         }
 
     @classmethod
-    def create(cls, user_id, track_id=None, playlist_id=None):
-        favourite = cls(user_id=user_id, track_id=track_id,
-                        playlist_id=playlist_id)
+    def initialize(cls, user_id):
+        favourite = cls(user_id=user_id)
         db.session.add(favourite)
         db.session.commit()
         return favourite
@@ -254,6 +270,64 @@ class Favourites(db.Model):
     @classmethod
     def read(cls, favourite_id):
         return cls.query.get_or_404(favourite_id)
+
+    def read_tracks(self):
+        return self.serialize_tracks()
+
+    def read_playlists(self):
+        return self.serialize_playlists()
+
+    def serialize_tracks(self):
+        return list(map(lambda track: track.serialize(), self.tracks))
+    
+    def serialize_playlists(self):
+        return list(map(lambda playlist: playlist.serialize(), self.playlists))
+    
+    def append_track(self, track_id):
+        track = Tracks.read(track_id)
+        self.tracks.append(track)
+        db.session.add(self)
+        db.session.commit()
+        return self.serialize_tracks()
+
+    def append_playlist(self, playlist_id):
+        playlist = Playlists.read(playlist_id)
+        self.playlists.append(playlist)
+        db.session.add(self)
+        db.session.commit()
+        return self.serialize_playlists()
+    
+    def track_exists(self, track_id):
+        tracks = self.tracks
+        if len(tracks) == 0: return False
+        for track in tracks:
+            if track.id == track_id:
+                return True
+        return False
+    
+    def playlist_exists(self, playlist_id):
+        playlists = self.playlists
+        if len(playlists) == 0: return False
+        for playlist in playlists:
+            if playlist.id == playlist_id:
+                return True
+        return False
+
+    def remove_track(self, track_id):
+        track = Tracks.query.get_or_404(track_id)
+        if not self.track_exists(track_id): 
+            raise APIException("This track is not in user Favourites")
+        self.tracks.remove(track)
+        db.session.commit()
+        return self.serialize_tracks()
+
+    def remove_playlist(self, playlist_id):
+        playlist = Playlists.query.get_or_404(playlist_id)
+        if not self.playlist_exists(playlist_id): 
+            raise APIException("This playlist is not in user Favourites")
+        self.playlists.remove(playlist)
+        db.session.commit()
+        return self.serialize_playlists()
 
     def update(self, track_id=None, playlist_id=None):
         self.track_id = track_id

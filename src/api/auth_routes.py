@@ -33,7 +33,7 @@ def login():
     username = request.json.get("username", None)
     password = request.json.get("password", None)
 
-    user = Users.query.filter_by(username=username).first()
+    user = Users.read_by_username(username)
 
     if user is None:
          return jsonify({"msg": "The user does not exist"}), 401
