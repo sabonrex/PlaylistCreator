@@ -36,7 +36,7 @@ def create_empty_playlist():
         "location_url": url_for('playlists_api.get_playlist', id=new_playlist.id),
         }
 
-    return jsonify(response), 200
+    return jsonify(response), 201
 
 
 # DELETE route to remove a playlist from the DB
@@ -66,7 +66,7 @@ def append_track_to_playlist(playlist_id, track_id):
         "tracks": tracks
         }
 
-    return jsonify(response), 200
+    return jsonify(response), 201
 
 
 # POST route to add new track into a playlist (same as above, diff method)
@@ -79,8 +79,9 @@ def append_track_with_request():
     if track_id == None: return jsonify({"msg": "Missing track_id"})
 
     return append_track_to_playlist(playlist_id, track_id)
+    
 
-# POST route to add new track into a playlist
+# DELETE route to remove a track from a playlist
 @playlists_api.route("/<int:playlist_id>/tracks/<int:track_id>", methods=["DELETE"])
 def remove_track_from_playlist(playlist_id, track_id):
     playlist = Playlists.read(playlist_id)
@@ -96,7 +97,8 @@ def remove_track_from_playlist(playlist_id, track_id):
 
     return jsonify(response), 200
 
-# POST route to add new track into a playlist (same as above, diff method)
+
+# DELETE route to remove a track from a playlist (same as above, diff method)
 @playlists_api.route("/removetrack", methods=["DELETE"])
 def remove_track_from_playlist_with_request():
     playlist_id = request.json.get("playlist_id", None)
@@ -130,6 +132,7 @@ def move_playlist(origin_id, track_id, destiny_id):
     
     return jsonify(response), 200
 
+
 # PUT route to move a track from one playlist to another (change the playlist id in track id)
 @playlists_api.route("/move", methods=["PUT"])
 def move_playlist_with_request():
@@ -144,8 +147,7 @@ def move_playlist_with_request():
     
     return move_playlist(origin_playlist_id, track_id, destiny_playlist_id)
 
-###################################################################################
-# working on renaming. Last one to go
+
 # PUT route to rename a playlist
 @playlists_api.route("/rename", methods=["PUT"])
 def rename_playlist():
