@@ -18,11 +18,11 @@ const handlePlay = (e) =>{
 }
 
     return (
-        <div className="pt-4" style={{borderTop: "3px solid #D74390"}}>
+        <>
             <Carousel controls={slides.length > 1} indicators={slides.length > 1} interval={3000} >
                 {slides.map((slide, index) => (
                 <Carousel.Item key={index}>
-                    <div className="row d-flex justify-content-center align-items-top pb-3" style={{ height: "100%", backgroundColor: "#1D2343" }} >
+                    <div className="row d-flex justify-content-center align-items-top pb-3" style={{ height: "80%", backgroundColor: "#1D2343" }} >
                         {slide.map((track) => (
                         <div key={track.id} className="col-sm-2" >
                             <div className="card shadow" style={{ backgroundColor: "#DC6B5E", borderRadius: "10px"}} >
@@ -34,7 +34,7 @@ const handlePlay = (e) =>{
                                     style={{ borderRadius: "10px"}}
                                 />
                             </div>
-                            <div className="card-body text-light text-center px-1" style={{height: "180px", maxHeight: "250px"}}>
+                            <div className="card-body text-light text-center px-1" style={{height: "64px", maxHeight: "64px"}}>
                                 <h5 className="card-title fs-5">{track.title}</h5>
                                 <p className="card-text">{track.artist}</p>
                             </div>
@@ -44,6 +44,6 @@ const handlePlay = (e) =>{
                 </Carousel.Item>
                 ))}
             </Carousel>
-        </div>
+        </>
     );
   };

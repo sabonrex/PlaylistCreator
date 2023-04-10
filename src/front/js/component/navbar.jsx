@@ -11,7 +11,7 @@ export const Navibar = () => {
 	return (
 		<>
 		<Navbar sticky="top" collapseOnSelect expand="lg" bg="solid" variant="dark" 
-		style={{backgroundColor: "#1D2343", borderBottom: "3px solid #D74390", marginTop: "-20px"}}>
+		style={{backgroundColor: "#1D2343", borderBottom: "3px solid #D74390"}}>
 			<Container>
 				<Nav className="me-auto">
 					<Nav.Link className="navv ms-auto" href="/">
@@ -24,15 +24,15 @@ export const Navibar = () => {
 				</Navbar.Toggle>
 				<Navbar.Collapse id="responsive-navbar-nav">
 
-				<Nav className="text-end mx-auto">
+				<Nav className="text-end ms-auto">
 					<Nav.Link className="navv mt-auto" href="/">Home</Nav.Link>
 					<Nav.Link className="navv ms-4 mt-auto" href="/favourites">Favourites</Nav.Link>
 				</Nav>
 
 				<Nav>
-					<div className="d-flex mt-auto">
+					<div className="d-flex ms-3">
 						<Nav.Link className="navv ms-auto" href="/signup">Sign Up</Nav.Link>
-						<Nav.Item className="navv mt-auto mx-2"><h3>|</h3></Nav.Item>
+						<Nav.Item className="navv mx-2 mt-2"><h4>/</h4></Nav.Item>
 						<Nav.Link className="navv" href="/login">Log In</Nav.Link>
 					</div>	
 				</Nav>

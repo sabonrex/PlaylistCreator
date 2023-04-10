@@ -17,11 +17,13 @@ const Layout = () => {
   const { store } = useContext(Context);
   return (
     <>
+    <div className="d-flex h-100 w-100" style={{ backgroundColor: "#1D2343", flexDirection: "column" }}>
       <Navibar />
-      <div className="h-100 w-100" style={{ backgroundColor: "#1D2343" }}>
-        <Outlet />
-      </div>
+        
+          <Outlet />
+        
       <CarouselFooter tracks={store.randomPlaylist} />
+    </div>  
     </>
   );
 };
@@ -42,7 +44,6 @@ const Router = () => {
               <Route element={<FavouritesView />} path="/favourites" />
               <Route element={<Signup />} path="/signup" />
               <Route element={<Login />} path="/login" />
-              <Route element={<Single />} path="/single/:theid" />
               <Route element={<h1>Not found!</h1>} path="*" />
             </Route>
           </Routes>
@@ -51,5 +52,7 @@ const Router = () => {
     </div>
   );
 };
+
+
 
 export default injectContext(Router);

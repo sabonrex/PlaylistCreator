@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 
 import { Context } from "../store/appContext";
+import { RandomPlaylistGenerate } from "../component/playlistGenerator.jsx";
 import { SaveFavouriteButton } from "../component/favouriteButton.jsx";
 import { EmbeddedSpotify } from "../component/embeddedSpotifyTrack.jsx";
 
@@ -9,7 +10,6 @@ import "../../styles/index.css";
 export const MainView = () => {
   const { actions } = useContext(Context);
 
-  const fetchPlaylist = () => actions.fetchPlaylist();
   const spotifyTrackId = actions.getSpotifyTrack();
 
   return (
@@ -19,11 +19,10 @@ export const MainView = () => {
           Find Your{" "}
           <span style={{ color: "#BAFF4F", fontWeight: "bold" }}>Music</span>
         </h1>
-        <button className="discover-button my-5" onClick={fetchPlaylist}>
-          Discover your Playlist
-        </button>
+
+        <RandomPlaylistGenerate />
+
         <SaveFavouriteButton />
-        <EmbeddedSpotify spotidyId={spotifyTrackId}/>
       </div>
     </>
   );
