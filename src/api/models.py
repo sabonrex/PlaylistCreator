@@ -1,5 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 
+from api.utils import APIException
+
 db = SQLAlchemy()
 
 
@@ -24,9 +26,41 @@ class Users(db.Model):
             "user_id": self.id,
             "username": self.username,
             "email": self.email,
-            "spotify_token": self.spotify_token,
+            # "spotify_token": self.spotify_token,
             # "token_expires_at": self.token_expires_at
         }
+
+    # Here we should add password encrypton or inside Users Model
+
+    @classmethod
+    def create(cls, password, username=None, email=None):
+        user = cls()
+        if username == None and email == None:
+            raise APIException("You must provide at least a username or an email")
+
+        user.username="temporary username" if username == None else username
+        user.email = "temporary@email" if email == None else email
+        user.password = password
+        user.is_active = True
+
+        db.session.add(user)
+        db.session.commit()
+
+        if username == None: user.update_username(f'User{user.id}')
+        if email == None: user.update_email(f'User{user.id}@email.com')
+
+        return user
+    
+    def update_username(self, new_username):
+        self.username = new_username
+        db.session.add(self)
+        db.session.commit()
+
+    def update_email(self, new_email):
+        self.email = new_email
+        db.session.add(self)
+        db.session.commit()
+
 
 
 # relational table to create many-to-many relationship between Tracks and Playlists
@@ -219,7 +253,7 @@ class Favourites(db.Model):
 
     @classmethod
     def read(cls, favourite_id):
-        return cls.query.filter_by(id=favourite_id).first()
+        return cls.query.get_or_404(favourite_id)
 
     def update(self, track_id=None, playlist_id=None):
         self.track_id = track_id

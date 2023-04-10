@@ -11,23 +11,17 @@ auth = Blueprint('auth', __name__)
 # route to signup a user and add it to the database
 @auth.route("/signup", methods=["POST"])
 def add_user():
-    user = Users()
+    username = request.json.get("username", None)
+    email = request.json.get("email", None)
     
-    request_user = request.json
+    password = request.json.get("password", None)
+    if password == None: return jsonify({"msg": "Missing password key"})
 
-    user.username = request_user["username"]
-    user.email = request.json.get("email", None)
-    user.password = request_user["password"]
-
-    # Here we should add password encrypton
-
-    user.is_active = True
-
-    db.session.add(user)
-    db.session.commit()
+    new_user = Users.create(password, username=username, email=email)
 
     response = {
-        "msg": "User successfully created"
+        "msg": "User successfully created",
+        "user": new_user.serialize()
     }
 
     return jsonify(response), 201
