@@ -1,17 +1,18 @@
+import { alignPropType } from "react-bootstrap/esm/types";
 import "../../styles/index.css";
 
 
 
 <body>
-  <div class="episodes">
-    <button class="episode" data-spotify-id="spotify:episode:7makk4oTQel546B0PZlDM5">
-      My Path to Spotify: Women in Engineering
+  <div class="tracksmood">
+    <button class="track" data-spotify-id="spotify:track:genre:happy">
+      Happy 
     </button>
-    <button class="episode" data-spotify-id="spotify:episode:43cbJh4ccRD7lzM2730YK3">
-      What is Backstage?
+    <button class="track" data-spotify-id="spotify:track:genre:sad">
+      Sad
     </button>
-    <button class="episode" data-spotify-id="spotify:episode:6I3ZzCxRhRkNqnQNo8AZPV">
-      Introducing Nerd Out@Spotify
+    <button class="track" data-spotify-id="spotify:track:genre:hardcore">
+      Angery
     </button>
   </div>
 
@@ -27,10 +28,10 @@ import "../../styles/index.css";
         uri: 'spotify:episode:7makk4oTQel546B0PZlDM5'
       };
       const callback = (EmbedController) => {
-        document.querySelectorAll('.episode').forEach(
-          episode => {
-            episode.addEventListener('click', () => {
-              EmbedController.loadUri(episode.dataset.spotifyId)
+        document.querySelectorAll('.track').forEach(
+          track => {
+            track.addEventListener('click', () => {
+              EmbedController.loadUri(track.dataset.spotifyId)
             });
           })
       };
@@ -39,3 +40,7 @@ import "../../styles/index.css";
   </script>
 </body>
 </html>
+
+curl -X "GET" "https://api.spotify.com/v1/search?q=genre%3Sad&type=track"
+curl -X "GET" "https://api.spotify.com/v1/search?q=genre%3Happy&type=track"
+curl -X "GET" "https://api.spotify.com/v1/search?q=genre%3Hardcore&type=track"

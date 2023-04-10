@@ -147,3 +147,23 @@ h2 {
       display: none;
   }
 }
+
+.tracksmood {
+  display: flex;
+  flex-direction: column;
+}
+
+.track {
+  min-width: max-content;
+  margin-bottom: .8rem;
+  padding: .8rem 1rem;
+  border-radius: 10px;
+  border: 0;
+  background: #191414;
+  color: #fff;
+  cursor: pointer;
+}
+
+.track:hover {
+  background: #1Db954;
+}
