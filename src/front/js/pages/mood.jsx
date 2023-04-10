@@ -5,17 +5,16 @@ import "../../styles/index.css";
 
 <body>
   <div class="tracksmood">
-    <button class="track" data-spotify-id="spotify:track:genre:happy">
+    <button class="track" data-spotify-id="spotify.com/search/genre%3Asad/tracks">
       Happy 
     </button>
-    <button class="track" data-spotify-id="spotify:track:genre:sad">
+    <button class="track" data-spotify-id="spotify:track:genre:sad:play">
       Sad
     </button>
     <button class="track" data-spotify-id="spotify:track:genre:hardcore">
       Angery
     </button>
   </div>
-
   <div id="embed-iframe"></div>
   <script src="https://open.spotify.com/embed/track/iframe-api/v1" async>
   </script>
@@ -39,8 +38,8 @@ import "../../styles/index.css";
     };
   </script>
 </body>
-</html>
 
-curl -X "GET" "https://api.spotify.com/v1/search?q=genre%3Sad&type=track"
-curl -X "GET" "https://api.spotify.com/v1/search?q=genre%3Happy&type=track"
-curl -X "GET" "https://api.spotify.com/v1/search?q=genre%3Hardcore&type=track"
+
+//curl -X "GET" "https://api.spotify.com/v1/search?q=genre%3Sad&type=track"
+//curl -X "GET" "https://api.spotify.com/v1/search?q=genre%3Happy&type=track"
+//curl -X "GET" "https://api.spotify.com/v1/search?q=genre%3Hardcore&type=track"
