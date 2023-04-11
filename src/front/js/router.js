@@ -2,10 +2,9 @@ import React, { useContext } from "react";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
-import { Home } from "./pages/home";
+import { DemoAuth } from "./pages/demo";
 import { MainView } from "./pages/mainView.jsx";
 import { FavouritesView } from "./pages/favourites.jsx";
-import { Single } from "./pages/single";
 import { Login } from "./pages/login.jsx";
 import { Signup } from "./pages/signup.jsx";
 import injectContext, { Context }  from "./store/appContext";
@@ -42,7 +41,7 @@ const Router = () => {
               <Route element={<FavouritesView />} path="/favourites" />
               <Route element={<Signup />} path="/signup" />
               <Route element={<Login />} path="/login" />
-              <Route element={<Single />} path="/single/:theid" />
+              <Route element={<DemoAuth />} path="/private" /> //test route
               <Route element={<h1>Not found!</h1>} path="*" />
             </Route>
           </Routes>
