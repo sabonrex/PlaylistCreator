@@ -20,8 +20,11 @@ export const FavouritesView = () => {
         Your Favourite{" "}
         <span style={{ color: "#BAFF4F", fontWeight: "bold" }}>Music</span>
       </h2>
-      <Playlists />
-      <Favourites />
+      
+      <div className="fav_viewport">
+        <Playlists />
+        <Favourites />
+      </div>
     </div>
   );
 };

@@ -160,5 +160,9 @@ h2 {
 }
 
 .card-title, .card-text {
-  font-size: 1.2vw !important;
+  font-size: 1.3vh !important;
+}
+
+.fav_viewport {
+  margin-bottom: 16vh;
 }

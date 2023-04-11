@@ -88,7 +88,7 @@ export const Favourites = () => {
     )
 
     return (
-        <Container>
+        <Container className="pb-5">
             <ThemeProvider breakpoints={['xxxl', 'xxl', 'xl', 'lg', 'md', 'sm', 'xs', 'xxs']}
             minBreakpoint="xs">
                 <Row>
