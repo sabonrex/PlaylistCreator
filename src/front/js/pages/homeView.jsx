@@ -5,6 +5,7 @@ import { SaveFavouriteButton } from "../component/favouriteButton.jsx";
 import { EmbeddedSpotify } from "../component/embeddedSpotifyTrack.jsx";
 
 import "../../styles/index.css";
+import { AuthComponent } from "../auth/authComponent.jsx";
 
 export const MainView = () => {
   const { actions } = useContext(Context);
@@ -22,9 +23,12 @@ export const MainView = () => {
         <button className="discover-button my-5" onClick={fetchPlaylist}>
           Discover your Playlist
         </button>
-        <SaveFavouriteButton />
-        <EmbeddedSpotify spotidyId={spotifyTrackId}/>
+        <AuthComponent>
+          <SaveFavouriteButton />
+        </AuthComponent>
+        <EmbeddedSpotify spotidyId={spotifyTrackId} />
       </div>
     </>
   );
 };
+

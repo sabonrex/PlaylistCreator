@@ -3,10 +3,19 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { Playlists } from "../component/playlistSelect.jsx";
 import { Favourites } from "../component/favouriteSelect.jsx";
+import { AuthPage } from "../auth/authPage.jsx";
 
 import "../../styles/index.css";
 
 export const FavouritesView = () => {
+  return (
+    <AuthPage>
+      <FavouritesPage />
+    </AuthPage>
+  );
+}
+
+export const FavouritesPage = () => {
   const { actions } = useContext(Context);
 
   const fetchPlaylist = () => actions.fetchPlaylist();

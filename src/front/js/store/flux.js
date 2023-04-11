@@ -6,22 +6,11 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       message: null,
       apiUrl: process.env.BACKEND_URL,
-      demo: [
-        {
-          title: "FIRST",
-          background: "white",
-          initial: "white",
-        },
-        {
-          title: "SECOND",
-          background: "white",
-          initial: "white",
-        },
-      ],
       randomPlaylist: [],
       playlistStore: [],
       favouritesStore: []
     },
+
     actions: {
       // Use getActions to call a function within a fuction
       exampleFunction: () => {
@@ -39,20 +28,6 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.log("Error loading message from backend", error);
         }
-      },
-      changeColor: (index, color) => {
-        //get the store
-        const store = getStore();
-
-        //we have to loop the entire demo array to look for the respective index
-        //and change its color
-        const demo = store.demo.map((elm, i) => {
-          if (i === index) elm.background = color;
-          return elm;
-        });
-
-        //reset the global store
-        setStore({ demo: demo });
       },
 
       loadSomeData: (key, passedData) => {
