@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 
 import { Context } from "../store/appContext";
-import { SaveFavouriteButton } from "../component/favouriteButton.jsx";
+import { SaveFavouriteButton } from "../component/saveFavouriteButton.jsx";
 import { EmbeddedSpotify } from "../component/embeddedSpotifyTrack.jsx";
 
 import "../../styles/index.css";
