@@ -3,8 +3,8 @@ import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
 import { DemoAuth } from "./pages/demo";
-import { MainView } from "./pages/mainView.jsx";
-import { FavouritesView } from "./pages/favourites.jsx";
+import { MainView } from "./pages/homeView.jsx";
+import { FavouritesView } from "./pages/favouritesView.jsx";
 import { Login } from "./pages/login.jsx";
 import { Signup } from "./pages/signup.jsx";
 import injectContext, { Context }  from "./store/appContext";
