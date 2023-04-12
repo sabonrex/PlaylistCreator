@@ -1,15 +1,16 @@
 import React, { useContext } from "react";
 
 import { Context } from "../store/appContext";
-import { RandomPlaylistGenerate } from "../component/playlistGenerateButton.jsx";
-import { SaveFavouriteButton } from "../component/favouriteButton.jsx";
+import { SaveFavouriteButton } from "../component/saveFavouriteButton.jsx";
 import { EmbeddedSpotify } from "../component/embeddedSpotifyTrack.jsx";
 
 import "../../styles/index.css";
+import { AuthComponent } from "../auth/authComponent.jsx";
 
 export const MainView = () => {
   const { actions } = useContext(Context);
 
+  const fetchPlaylist = () => actions.fetchPlaylist();
   const spotifyTrackId = actions.getSpotifyTrack();
 
   return (
@@ -19,11 +20,15 @@ export const MainView = () => {
           Find Your{" "}
           <span style={{ color: "#BAFF4F", fontWeight: "bold" }}>Music</span>
         </h1>
-
-        <RandomPlaylistGenerate />
-
-        <SaveFavouriteButton />
+        <button className="discover-button my-5" onClick={fetchPlaylist}>
+          Discover your Playlist
+        </button>
+        <AuthComponent>
+          <SaveFavouriteButton />
+        </AuthComponent>
+        <EmbeddedSpotify spotidyId={spotifyTrackId} />
       </div>
     </>
   );
 };
+
