@@ -40,7 +40,7 @@ const handlePlay = (e) =>{
                             style={{ height: "100%", backgroundColor: "#1D2343" }} >
                                 {slide.map((track) => (
                                 <div key={track.id} className="col-2" >
-                                    <div className=”grow” className="card shadow" style={{ backgroundColor: "#DC6B5E", borderRadius: "10px"}} >
+                                    <div className="card shadow" style={{ backgroundColor: "#DC6B5E", borderRadius: "10px"}} >
                                         <img
                                         id={track.id} onClick={(e)=>handlePlay(e)}
                                             className="card-img-top"
