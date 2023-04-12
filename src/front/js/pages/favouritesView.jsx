@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 
 import { Context } from "../store/appContext";
-import { Playlists } from "../component/playlistSelect.jsx";
-import { Favourites } from "../component/favouriteSelect.jsx";
+import { FavouritePlayists } from "../component/favouritePlaylists.jsx";
+import { FavouriteTracks } from "../component/favouriteTracks.jsx";
 import { AuthPage } from "../auth/authPage.jsx";
 
 import "../../styles/index.css";
@@ -26,8 +26,8 @@ export const FavouritesPage = () => {
         Your Favourite{" "}
         <span style={{ color: "#BAFF4F", fontWeight: "bold" }}>Music</span>
       </h2>
-      <Playlists />
-      <Favourites />
+      <FavouritePlayists />
+      <FavouriteTracks />
       <button className="discover-button my-5" onClick={fetchPlaylist}>
         Discover your Playlist
       </button>

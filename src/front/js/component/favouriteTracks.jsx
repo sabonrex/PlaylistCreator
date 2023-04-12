@@ -1,16 +1,13 @@
-import React, { Component, useContext, useState } from "react";
-import { Accordion, AccordionButton, Button, Card, Col, Container, Dropdown, ListGroup, ListGroupItem, Row, Stack, ThemeProvider } from "react-bootstrap";
+import React, { useContext, useState } from "react";
+import { Card, Col, Container, Dropdown, ListGroup, ListGroupItem, Row, ThemeProvider } from "react-bootstrap";
 import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
-import Form from 'react-bootstrap/Form';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Popover from 'react-bootstrap/Popover';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay, faEllipsisVertical, faListUl } from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { Context } from "../store/appContext";
 
 import { msToMin } from "./utils/msToMin";
 
-export const Favourites = () => {
+export const FavouriteTracks = () => {
     const {store, actions} = useContext(Context);
     const [dropdownState, setDropdownState] = useState(false)
 

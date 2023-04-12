@@ -18,9 +18,7 @@ const Layout = () => {
     <>
     <div className="d-flex h-100 w-100" style={{ backgroundColor: "#1D2343", flexDirection: "column" }}>
       <Navibar />
-        
           <Outlet />
-        
       <CarouselFooter tracks={store.randomPlaylist} />
     </div>  
     </>
