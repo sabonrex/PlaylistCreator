@@ -9,8 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       apiUrl: process.env.BACKEND_URL,
       randomPlaylist: [],
       playlistStore: [],
-      favouritesStore: [],
-      defaultFooter: <h3 style={{color: "#BAFF4F"}}>No playlist selected!</h3>
+      favouritesStore: []
     },
 
     actions: {

@@ -24,9 +24,11 @@ const injectContext = PassedComponent => {
 			})
 		);
 
-		useEffect(() => {			
-			state.actions.loadSomeData("playlistStore", playlistData),
-			state.actions.loadSomeData("favouritesStore", favouritesData)			
+		useEffect(() => {
+			fetch("https://3001-sabonrex-playlistcreato-mkniel1kd1y.ws-eu93.gitpod.io/api/tracks")
+			.then(response => response.json())
+			.then(response => state.actions.loadSomeData("favouritesStore", response.tracks))
+			state.actions.loadSomeData("playlistStore", playlistData)		
 		}, []);
 
 		// The initial value for the context is not null anymore, but the current state of this component,

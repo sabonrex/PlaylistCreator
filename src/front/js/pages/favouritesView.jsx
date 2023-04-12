@@ -4,6 +4,7 @@ import { Context } from "../store/appContext";
 import { Playlists } from "../component/playlistSelect.jsx";
 import { Favourites } from "../component/favouriteSelect.jsx";
 import { AuthPage } from "../auth/authPage.jsx";
+import { RandomPlaylistGenerate } from "../component/playlistGenerateButton.jsx";
 
 import "../../styles/index.css";
 
@@ -26,6 +27,7 @@ export const FavouritesPage = () => {
         Your Favourite{" "}
         <span style={{ color: "#BAFF4F", fontWeight: "bold" }}>Music</span>
       </h2>
+      <RandomPlaylistGenerate />
       <Playlists />
       <Favourites />
       <button className="discover-button my-5" onClick={fetchPlaylist}>
