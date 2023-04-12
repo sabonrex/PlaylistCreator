@@ -1,3 +1,4 @@
+import React from "react";
 import { playlistData } from "../component/testDataPlaylist";
 import { favouritesData } from "../component/testDataFavourites";
 
@@ -8,7 +9,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       apiUrl: process.env.BACKEND_URL,
       randomPlaylist: [],
       playlistStore: [],
-      favouritesStore: []
+      favouritesStore: [],
+      defaultFooter: <h3 style={{color: "#BAFF4F"}}>No playlist selected!</h3>
     },
 
     actions: {
@@ -42,6 +44,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           if (!response.ok) throw new Error("Something went wrong");
           const jsonResponse = await response.json();
           setStore({ randomPlaylist: jsonResponse?.data || [] });
+          setStore({ defaultFooter: null})
         } catch {
           window.alert("Something went wrong");
         }
