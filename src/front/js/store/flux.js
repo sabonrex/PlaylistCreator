@@ -1,6 +1,8 @@
 import React from "react";
-import { playlistData } from "../component/testDataPlaylist";
-import { favouritesData } from "../component/testDataFavourites";
+
+import { playlistData } from "../component/testData/testDataPlaylist";
+import { favouritesData } from "../component/testData/testDataFavourites";
+import { getToken } from "../auth/getToken";
 
 const getState = ({ getStore, getActions, setStore }) => {
   return {
@@ -8,6 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       message: null,
       apiUrl: process.env.BACKEND_URL,
       randomPlaylist: [],
+      userId: null, // may not be necessary, or we can use the token instead
       playlistStore: [],
       favouritesStore: [],
       defaultFooter: <h3 style={{color: "#BAFF4F"}}>No playlist selected!</h3>
@@ -35,6 +38,47 @@ const getState = ({ getStore, getActions, setStore }) => {
       loadSomeData: (key, passedData) => {
 				setStore({[key] : passedData})
 			},
+
+      fetchFavouritePlayists: async () => {
+        const store = getStore();
+        const token = getToken();
+        const endpoint = store.apiUrl + "/api/user/favourites/playlists";
+
+        try {
+          const response = await fetch(endpoint, {
+            method: "GET",
+            headers: {
+              "Authorization": `Bearer ${token}`,
+              "Content-Type": "application/json"
+            }
+          });
+          const jsonResponse = await response.json();
+          console.log(jsonResponse);
+          return jsonResponse;
+        } catch(error) {
+          console.error(error)
+        }
+      },
+
+      fetchFavouriteTracks: async () => {
+        const store = getStore();
+        const token = getToken();
+        const endpoint = store.apiUrl + "/api/user/favourites/tracks";
+
+        try {
+          const response = await fetch(endpoint, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+          });
+          const jsonResponse = await response.json()
+          return jsonResponse
+        } catch(error) {
+          console.error(error)
+        }
+      },
       
       fetchPlaylist: async () => {
         const store = getStore();
@@ -43,7 +87,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (!response.ok) throw new Error("Something went wrong");
           const jsonResponse = await response.json();
-          setStore({ randomPlaylist: jsonResponse?.data || [] });
+          setStore({ randomPlaylist: jsonResponse || [] });
           setStore({ defaultFooter: null})
         } catch {
           window.alert("Something went wrong");
