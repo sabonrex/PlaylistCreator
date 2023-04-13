@@ -71,6 +71,9 @@ class Users(db.Model):
     @jwt_required()
     def get_auth_user():
         username = get_jwt_identity()
+        user = Users.read_by_username(username=username)
+        if user == None: 
+            return jsonify({"msg": "user not authenticated yet"}), 404
         return Users.read_by_username(username=username)
 
 
@@ -101,12 +104,15 @@ favourite_playlists = db.Table('favourite_playlists',
 # tracks DataTable. More attributes to be added to classify the songs according to spotify if needed
 class Tracks(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    spotify_id = db.Column(db.String(40), unique=True, nullable=False)
+    spotify_id = db.Column(db.String(50), unique=True, nullable=False)
+    artist_spotify_id = db.Column(db.String(50), unique=True, nullable=False)
     title = db.Column(db.String(250), unique=False, nullable=False)
     artist = db.Column(db.String(250), unique=False, nullable=False)
     album = db.Column(db.String(120), unique=False, nullable=False)
     image_url = db.Column(db.String(500), unique=False, nullable=False)
+    image_thumb_url = db.Column(db.String(500), unique=False, nullable=False)
     duration_ms = db.Column(db.Integer, nullable=False)
+    genre = db.Column(db.String(250), unique=False, nullable=True)
 
     def __repr__(self):
         return f'<Track {self.title} - {self.artist}>'
@@ -117,9 +123,11 @@ class Tracks(db.Model):
             "spotify_id": self.spotify_id,
             "title": self.title,
             "artist": self.artist,
+            "artist_spotify_id": self.artist_spotify_id,
             "album": self.album,
             "duration_ms": self.duration_ms,
-            "image_url": self.image_url
+            "image_url": self.image_url,
+            "image_thumb_url": self.image_thumb_url
         }
     
     @classmethod
@@ -141,20 +149,22 @@ class Tracks(db.Model):
 
     @staticmethod
     def check_request(json_request):
-        mandatory_request_keys = ['spotify_id', 'title', 'artist', 'album', 'image_url', 'duration_ms']
+        mandatory_request_keys = ['spotify_id', 'title', 'artist', 'artist_spotify_id', 'album', 'image_url', 'image_thumb_url', 'duration_ms']
         if not all(key in json_request.keys() for key in mandatory_request_keys):
             return False
         else:
             return True
     
     @classmethod
-    def create(cls, spotify_id, title, artist, album, image_url, duration_ms):
+    def create(cls, spotify_id, title, artist, artist_spotify_id, album, image_url, image_thumb_url, duration_ms):
         new_track = cls()
         new_track.spotify_id = spotify_id
         new_track.title = title
         new_track.artist = artist
+        new_track.artist_spotify_id = artist_spotify_id
         new_track.album = album
         new_track.image_url = image_url
+        new_track.image_thumb_url = image_thumb_url
         new_track.duration_ms = duration_ms
 
         db.session.add(new_track)
@@ -261,9 +271,8 @@ class Favourites(db.Model):
         }
 
     @classmethod
-    def create(cls, user_id, track_id=None, playlist_id=None):
-        favourite = cls(user_id=user_id, track_id=track_id,
-                        playlist_id=playlist_id)
+    def initialize(cls, user_id):
+        favourite = cls(user_id=user_id)
         db.session.add(favourite)
         db.session.commit()
         return favourite

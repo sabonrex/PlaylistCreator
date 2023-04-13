@@ -62,11 +62,13 @@ def add_track():
     spotify_id = json_request.get("spotify_id")
     title = json_request.get("title")
     artist = json_request.get("artist")
+    artist_spotify_id = json_request.get("artist_spotify_id")
     album = json_request.get("album")
     image_url = json_request.get("image_url")
+    image_thumb_url = json_request.get("image_thumb_url")
     duration_ms = json_request.get("duration_ms")
     # create new track using class method
-    track = Tracks.create(spotify_id, title, artist, album, image_url, duration_ms)
+    track = Tracks.create(spotify_id, title, artist, artist_spotify_id, album, image_url, image_thumb_url, duration_ms)
     
     response = {
         "msg": "New track created successfully",

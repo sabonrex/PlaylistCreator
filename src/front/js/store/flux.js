@@ -93,7 +93,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
           if (!response.ok) throw new Error("Something went wrong");
           const jsonResponse = await response.json();
-          setStore({ randomPlaylist: jsonResponse?.data || [] });
+          setStore({ randomPlaylist: jsonResponse || [] });
           setStore({ defaultFooter: null})
         } catch {
           window.alert("Something went wrong");

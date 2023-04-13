@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import { Container } from "react-bootstrap";
 
 import { CarouselComponent } from "./carouselComponent.jsx";
 import { EmbeddedSpotify } from "./embeddedSpotifyTrack.jsx";

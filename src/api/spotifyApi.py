@@ -90,11 +90,13 @@ class SpotifyAPI(object):
 
     def transform_tracks(self, track):
         return {
-            "id": track["id"],
+            "spotify_id": track["id"],
             "title": track["name"],
             "artist": track["artists"][0]["name"],
+            "artist_spotify_id": track["artists"][0]["id"],
             "album": track["album"]["name"],
             "image_url": track["album"]["images"][1]["url"],
+            "image_thumb_url": track["album"]["images"][2]["url"],
             "track_number": track["track_number"],
             "duration_ms": track["duration_ms"],
             "popularity": track["popularity"]

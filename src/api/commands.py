@@ -20,14 +20,10 @@ def setup_commands(app):
     def insert_test_data(count):
         print("Creating test users")
         for x in range(1, int(count) + 1):
-            user = Users()
-            user.username = "test_user" + str(x)
-            user.email = "test_user" + str(x) + "@test.com"
-            user.password = "123456"
-            user.is_active = True
-            db.session.add(user)
-            db.session.commit()
-            print("User: ", user.email, " created.")
+            test_username = "test_user" + str(x)
+            test_email = "test_user" + str(x) + "@test.com"
+            Users.create("123456", username=test_username, email=test_email)
+            print("User: ", test_email, " created.")
 
         print("All test users created")
 
@@ -44,12 +40,14 @@ def setup_commands(app):
         print("Populating Test Tracks")
         for x in range(1, int(count) + 1):
             track = Tracks()
-            track.spotify_id = data[x]["id"]
+            track.spotify_id = data[x]["spotify_id"]
             track.title = data[x]["title"]
             track.artist = data[x]["artist"]
+            track.artist_spotify_id = data[x]["artist_spotify_id"]
             track.album = data[x]["album"]
             track.duration_ms = data[x]["duration_ms"]
             track.image_url = data[x]["image_url"]
+            track.image_thumb_url = data[x]["image_thumb_url"]
             db.session.add(track)
             db.session.commit()
             print("track", data[x]["title"], "added")

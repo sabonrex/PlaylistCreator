@@ -39,7 +39,7 @@ def get_random_list_of_songs():
     tracks = random_list["tracks"]
     converted_tracks = list(map(spotify_api.transform_tracks, tracks))
 
-    return jsonify({"data": converted_tracks}), 201
+    return jsonify(converted_tracks), 201
 
 @api.route("/spotify/random/q", methods=["POST"])
 def get_list_of_songs_query_based():

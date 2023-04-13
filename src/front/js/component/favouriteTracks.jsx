@@ -39,7 +39,7 @@ export const FavouriteTracks = () => {
                                 </Col>
 
                                 <Col xs="4" sm="3" md="2" lg="2">
-                                    <img className="img-responsive me-1" src={track.image_url}></img>
+                                    <img className="img-responsive me-1" src={track.image_thumb_url}></img>
                                 </Col>
 
                                 <Col xs="6" sm="8" md="5" lg="3">
