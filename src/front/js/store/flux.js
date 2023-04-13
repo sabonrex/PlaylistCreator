@@ -13,6 +13,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       userId: null, // may not be necessary, or we can use the token instead
       playlistStore: [],
       favouritesStore: [],
+      favouritePlaylistsStore: [],
+      favouriteTracksStore: [],
       defaultFooter: <h3 style={{color: "#BAFF4F"}}>No playlist selected!</h3>
     },
 
@@ -39,6 +41,16 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({[key] : passedData})
 			},
 
+      loadUserFavourites: async () => {
+        const actions = getActions();
+
+        const favouriteTracks = await actions.fetchFavouriteTracks();
+        const favouritePlaylists = await actions.fetchFavouritePlayists();
+
+        setStore({favouriteTracksStore : favouriteTracks});
+        setStore({favouritePlaylistsStore : favouritePlaylists});
+      },
+
       fetchFavouritePlayists: async () => {
         const store = getStore();
         const token = getToken();
@@ -52,8 +64,8 @@ const getState = ({ getStore, getActions, setStore }) => {
               "Content-Type": "application/json"
             }
           });
+          if (!response.ok) return [] 
           const jsonResponse = await response.json();
-          console.log(jsonResponse);
           return jsonResponse;
         } catch(error) {
           console.error(error)
@@ -73,6 +85,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 "Content-Type": "application/json"
             }
           });
+          if (!response.ok) return []
           const jsonResponse = await response.json()
           return jsonResponse
         } catch(error) {
