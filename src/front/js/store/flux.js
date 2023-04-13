@@ -52,18 +52,12 @@ const getState = ({ getStore, getActions, setStore }) => {
               "Content-Type": "application/json"
             }
           });
-
-          if (!response.ok) throw new Error("Something went wrong");
-
           const jsonResponse = await response.json();
           console.log(jsonResponse);
-          //setStore({ randomPlaylist: jsonResponse || [] });
-          //setStore({ defaultFooter: null})
-        } catch {
-          window.alert("Something went wrong");
+          return jsonResponse;
+        } catch(error) {
+          console.error(error)
         }
-
-        return jsonResponse;
       },
 
       fetchFavouriteTracks: async () => {
