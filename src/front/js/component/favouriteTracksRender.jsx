@@ -17,7 +17,7 @@ export const FavouriteTracksRender = ({ listOfTracks }) => {
             <Card.Body>
                 <ListGroup variant="flush">                             
                     {listOfTracks?.map((track, index) => (
-                        <ListGroupItem action key={track.id}>
+                        <ListGroup.Item action={false} key={track.id}>
                             <Row className="d-flex align-items-center">
 
                                 <Col lg="1" className="track_num justify-content-center">
@@ -71,7 +71,7 @@ export const FavouriteTracksRender = ({ listOfTracks }) => {
                                 </Col>
                                     
                             </Row>
-                        </ListGroupItem>))}     
+                        </ListGroup.Item>))}     
                 </ListGroup>                
             </Card.Body>
         </Card>
