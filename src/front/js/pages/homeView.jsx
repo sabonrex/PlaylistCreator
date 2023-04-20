@@ -11,7 +11,6 @@ export const MainView = () => {
   const { actions } = useContext(Context);
 
   const fetchPlaylist = () => actions.fetchPlaylist();
-  const spotifyTrackId = actions.getSpotifyTrack();
 
   return (
     <>
@@ -26,7 +25,7 @@ export const MainView = () => {
         <AuthComponent>
           <SaveFavouriteButton />
         </AuthComponent>
-        <EmbeddedSpotify spotidyId={spotifyTrackId} />
+        <EmbeddedSpotify />
       </div>
     </>
   );

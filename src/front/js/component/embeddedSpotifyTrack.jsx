@@ -1,14 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Row, Col } from "react-bootstrap";
 
-export const EmbeddedSpotify = ({ spotifyId }) => {
+import { Context } from "../store/appContext";
+
+export const EmbeddedSpotify = () => {
+
+  const { store } = useContext(Context)
+
+    if (store.nowPlaying === null) {
+      return (
+        <div>
+          <h1 style={{color: "white"}}>No song selected!</h1>
+        </div>
+      )
+    }
     return (
       <Row className="d-flex justify-content-center align-items-top pb-3">
         <Col md={{ span: 10}}>
           <iframe 
             className="spotify_embed"
             style={{ borderRadius:"12px" }}
-            src={`https://open.spotify.com/embed/track/${spotifyId}?utm_source=generator`}
+            src={`https://open.spotify.com/embed/track/${store.nowPlaying}?utm_source=generator`}
             width="100%" height="85" 
             allowFullScreen="" 
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
