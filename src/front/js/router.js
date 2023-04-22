@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 
@@ -12,8 +12,11 @@ import injectContext, { Context }  from "./store/appContext";
 import { Navibar } from "./component/navbar.jsx";
 import { CarouselFooter } from "./component/carouselFooter.jsx";
 
+
+
 const Layout = () => {
   const { store } = useContext(Context);
+
   return (
     <>
     <div className="d-flex h-100 w-100" style={{ backgroundColor: "#1D2343", flexDirection: "column" }}>

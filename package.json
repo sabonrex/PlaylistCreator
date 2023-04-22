@@ -82,6 +82,8 @@
 		"react-bootstrap": "^2.7.2",
 		"react-dom": "^16.8.4",
 		"react-polyfills": "0.0.1",
-		"react-router-dom": "^6.3.0"
+		"react-router-dom": "^6.3.0",
+		"react-spotify-embed": "^2.0.3",
+		"spotify-web-api-js": "^1.5.2"
 	}
 }

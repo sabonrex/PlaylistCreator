@@ -15,7 +15,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       favouritesStore: [],
       favouritePlaylistsStore: [],
       favouriteTracksStore: [],
-      nowPlaying: null
+      nowPlaying: null,
+      IFrameAPI: null
     },
 
     actions: {
@@ -167,7 +168,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         return (
           setStore({"nowPlaying": trackID})
         )
-      },
+      }
     },
   };
 };

@@ -2,13 +2,13 @@ import React, { useContext } from "react";
 
 import { Context } from "../store/appContext";
 import { SaveFavouriteButton } from "../component/saveFavouriteButton.jsx";
-import { EmbeddedSpotify } from "../component/embeddedSpotifyTrack.jsx";
+import EmbeddedSpotify from "../component/embeddedSpotifyTrack.jsx";
 
 import "../../styles/index.css";
 import { AuthComponent } from "../auth/authComponent.jsx";
 
 export const MainView = () => {
-  const { actions } = useContext(Context);
+  const { store, actions } = useContext(Context);
 
   const fetchPlaylist = () => actions.fetchPlaylist();
 
