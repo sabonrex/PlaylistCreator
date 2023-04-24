@@ -5,7 +5,7 @@ import { Context } from "../store/appContext";
 
 export const CarouselComponent = ({ tracks, itemsPerSlide }) => {
     
-    const { store } = useContext(Context)
+    const { store, actions } = useContext(Context)
 
     const slides = tracks.reduce((accumulator, track, index) => {
       if (index % itemsPerSlide === 0) {
@@ -17,32 +17,23 @@ export const CarouselComponent = ({ tracks, itemsPerSlide }) => {
     }, []);
   
 const handlePlay = (e) =>{
-    document.querySelector("iframe").src = `https://open.spotify.com/embed/track/${e.target.id}`
+    actions.setNowPlaying(e)
 }
 
     return (
         <>
         <Row className="d-flex justify-content-center align-items-top pb-3">
             <Col md={{ span: 10 }}>
-            <Accordion defaultActiveKey="0">
-                <Accordion.Item eventKey="0">
-                    <Accordion.Header>
-                        Now Playing
-                    </Accordion.Header>
-
-                    <Accordion.Body style={{ backgroundColor: "#1D2343" }}>
-                        {store.defaultFooter}
-
                         <Carousel controls={slides.length > 1} indicators={slides.length > 1} interval={3000} >
                         {slides.map((slide, index) => (
                         <Carousel.Item key={index}>
                             <div className="row d-flex justify-content-center align-items-top pb-3" 
                             style={{ height: "100%", backgroundColor: "#1D2343" }} >
                                 {slide.map((track) => (
-                                <div key={track.id} className="col-2" >
+                                <div key={track.id} className="col-2" onClick={() => handlePlay(track.spotify_id)}>
                                     <div className="card shadow" style={{ backgroundColor: "#DC6B5E", borderRadius: "10px"}} >
                                         <img
-                                        id={track.id} onClick={(e)=>handlePlay(e)}
+                                        id={track.id}
                                             className="card-img-top"
                                             src={track.image_url}
                                             alt={track.alt}
@@ -59,9 +50,6 @@ const handlePlay = (e) =>{
                         </Carousel.Item>
                         ))}
                         </Carousel>
-                    </Accordion.Body>
-                </Accordion.Item>
-            </Accordion>
             </Col>
         </Row>
         </>

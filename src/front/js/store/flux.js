@@ -15,7 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       favouritesStore: [],
       favouritePlaylistsStore: [],
       favouriteTracksStore: [],
-      defaultFooter: <h3 style={{color: "#BAFF4F"}}>No playlist selected!</h3>
+      nowPlaying: null
     },
 
     actions: {
@@ -161,6 +161,12 @@ const getState = ({ getStore, getActions, setStore }) => {
         // in the future, return the last song the user was hearing. For now, return a song
         if (store.randomPlaylist.length === 0) return "7sqii6BhIDpJChYpU3WjwS";
         else return store.randomPlaylist[0]["id"]
+      },
+
+      setNowPlaying: (trackID) => {
+        return (
+          setStore({"nowPlaying": trackID})
+        )
       }
     },
   };
