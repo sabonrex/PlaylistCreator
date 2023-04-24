@@ -25,7 +25,7 @@ export const MainView = () => {
         <AuthComponent>
           <SaveFavouriteButton />
         </AuthComponent>
-        <EmbeddedSpotify />
+        <EmbeddedSpotify trackId={store.nowPlaying}/>
       </div>
     </>
   );

@@ -15,8 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       favouritesStore: [],
       favouritePlaylistsStore: [],
       favouriteTracksStore: [],
-      nowPlaying: null,
-      IFrameAPI: null
+      nowPlaying: null
     },
 
     actions: {
