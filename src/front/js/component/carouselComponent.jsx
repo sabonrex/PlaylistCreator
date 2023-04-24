@@ -16,40 +16,51 @@ export const CarouselComponent = ({ tracks, itemsPerSlide }) => {
       return accumulator;
     }, []);
   
-const handlePlay = (e) =>{
+const handlePlay = (e) => {
     actions.setNowPlaying(e)
+}
+
+const handleDBAdd = (e) => {
+    actions.addToDB(e)
 }
 
     return (
         <>
         <Row className="d-flex justify-content-center align-items-top pb-3">
             <Col md={{ span: 10 }}>
-                        <Carousel controls={slides.length > 1} indicators={slides.length > 1} interval={3000} >
-                        {slides.map((slide, index) => (
-                        <Carousel.Item key={index}>
-                            <div className="row d-flex justify-content-center align-items-top pb-3" 
-                            style={{ height: "100%", backgroundColor: "#1D2343" }} >
-                                {slide.map((track) => (
-                                <div key={track.id} className="col-2" onClick={() => handlePlay(track.spotify_id)}>
-                                    <div className="card shadow" style={{ backgroundColor: "#DC6B5E", borderRadius: "10px"}} >
-                                        <img
-                                        id={track.id}
-                                            className="card-img-top"
-                                            src={track.image_url}
-                                            alt={track.alt}
-                                            style={{ borderRadius: "10px"}}
-                                        />
+                <Carousel controls={slides.length > 1} indicators={slides.length > 1} interval={3000} >
+                {slides.map((slide, index) => (
+                    <Carousel.Item key={index}>
+
+                        <div className="row d-flex justify-content-center align-items-top pb-3" 
+                            style={{ height: "100%", backgroundColor: "#1D2343" }}>
+                            
+                            {slide.map((track) => (
+
+                                <div className="col-2">
+                                    <div type="button" className="btn btn-primary" onClick={() => handleDBAdd(track)}>
+                                        Add to DB
                                     </div>
-                                    <div className="card-body text-light text-center px-1" style={{height: "72px", maxHeight: "72px"}}>
-                                        <h5 className="card-title fs-5">{track.title}</h5>
-                                        <p className="card-text">{track.artist}</p>
+                                    <div key={track.id} onClick={() => handlePlay(track.spotify_id)}>
+                                        <div className="card shadow" style={{ backgroundColor: "#DC6B5E", borderRadius: "10px"}}>
+                                            <img id={track.id}
+                                                className="card-img-top"
+                                                src={track.image_url}
+                                                alt={track.alt}
+                                                style={{ borderRadius: "10px"}}>
+                                            </img>                                        
+                                        </div>
+                                        <div className="card-body text-light text-center px-1" style={{height: "72px", maxHeight: "72px"}}>
+                                            <h5 className="card-title fs-5">{track.title}</h5>
+                                            <p className="card-text">{track.artist}</p>
+                                        </div>
                                     </div>
                                 </div>
-                                ))}
-                            </div>
-                        </Carousel.Item>
-                        ))}
-                        </Carousel>
+                            ))}
+                        </div>
+                    </Carousel.Item>
+                    ))}
+                </Carousel>
             </Col>
         </Row>
         </>

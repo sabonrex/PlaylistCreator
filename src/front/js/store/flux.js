@@ -41,6 +41,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({[key] : passedData})
 			},
 
+      addToDB: async (passedData) => {
+        console.log(passedData)
+      
+        const resp = await fetch(process.env.BACKEND_URL + "/api/tracks", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(passedData)
+        })
+        const data = await resp.json();
+
+        if (data.msg == `A track named ${passedData.title} with the ID ${passedData.spotify_id} is already in the database`) {
+          alert(`${passedData.title} by ${passedData.artist} is already in the database`)
+        }
+      },
+
       loadUserFavourites: async () => {
         const actions = getActions();
 

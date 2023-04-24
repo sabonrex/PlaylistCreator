@@ -1,4 +1,5 @@
 from flask import jsonify, request, url_for, Blueprint
+from flask_cors import CORS, cross_origin
 
 from api.models import db, Tracks
 
@@ -53,6 +54,7 @@ def get_track(id):
 
 # POST route to add a new track to the DB
 @tracks_api.route("/", methods=["POST"])
+@cross_origin()
 def add_track():
     # check mandatory keys in request
     if not Tracks.check_request(request.json):
@@ -67,11 +69,16 @@ def add_track():
     image_url = json_request.get("image_url")
     image_thumb_url = json_request.get("image_thumb_url")
     duration_ms = json_request.get("duration_ms")
+
+    # check if a track is already in the DB before adding
+    if db.session.query(Tracks.spotify_id).filter_by(spotify_id=spotify_id).first():
+        return jsonify({"msg": f"A track named {title} with the ID {spotify_id} is already in the database"}), 400
+    
     # create new track using class method
     track = Tracks.create(spotify_id, title, artist, artist_spotify_id, album, image_url, image_thumb_url, duration_ms)
     
     response = {
-        "msg": "New track created successfully",
+        "msg": f"New track added successfully: {title} - {spotify_id}",
         "location_url": url_for('tracks_api.get_track', id=track.id),
         }
         
