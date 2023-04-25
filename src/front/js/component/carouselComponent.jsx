@@ -19,17 +19,12 @@ export const CarouselComponent = ({ tracks, itemsPerSlide }) => {
 
     useEffect(() => {
         if (tracks.length != 0) {
-            actions.addAllToDB(tracks)
+            actions.addToDB(tracks)
         }
     }, [tracks]);
   
     const handlePlay = (e) => {
         actions.setNowPlaying(e)
-    };
-
-    const handleDBAdd = (e) => {
-        actions.addToDB(e)
-        console.log(e)
     };
 
     return (
@@ -46,9 +41,7 @@ export const CarouselComponent = ({ tracks, itemsPerSlide }) => {
                             {slide.map((track) => (
 
                                 <div className="col-2">
-                                    <div type="button" className="btn btn-primary" onClick={() => handleDBAdd(track)}>
-                                        Add to DB
-                                    </div>
+
                                     <div key={track.id} onClick={() => handlePlay(track.spotify_id)}>
                                         <div className="card shadow" style={{ backgroundColor: "#DC6B5E", borderRadius: "10px"}}>
                                             <img id={track.id}
