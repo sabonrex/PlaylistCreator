@@ -33,6 +33,7 @@ def create_empty_playlist():
     
     response = {
         "msg": "New playlist created successfully",
+        "playlist_id": new_playlist.id,
         "location_url": url_for('playlists_api.get_playlist', id=new_playlist.id),
         }
 

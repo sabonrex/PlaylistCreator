@@ -4,14 +4,12 @@ import { Button } from "react-bootstrap";
 import { Context } from "../store/appContext";
 
 export const SaveFavouriteButton = () => {
-    const { store } = useContext(Context);
+    const { store, actions } = useContext(Context);
+    
     return (
       <Button
-        onClick={() => {
-          console.log("Saving playlist");
-          console.log(store.randomPlaylist);
-        }}
+        onClick={() => actions.createPlaylist()}
       >
-        Save
+        Save this playlist
       </Button>
     )}

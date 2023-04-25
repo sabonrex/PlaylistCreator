@@ -47,16 +47,20 @@ const getState = ({ getStore, getActions, setStore }) => {
         fetch(process.env.BACKEND_URL + "/api/tracks", {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*"
+            "Content-Type": "application/json"
           },
           body: JSON.stringify(singleTrack)
         })
         .then(data => data.json())
+        
+        // this section can be removed, only for testing purposes
         .then(data => {
         if (data.msg == `A track named ${singleTrack.title} with the ID ${singleTrack.spotify_id} is already in the database`) {
           console.log(`${singleTrack.title} by ${singleTrack.artist} is already in the database`)
-        } else {console.log(`${singleTrack.title} by ${singleTrack.artist} added to the database`)}})
+        } else {console.log(`${singleTrack.title} by ${singleTrack.artist} added to the database`)}
+        //
+
+        })
       )},
       //
 
@@ -124,6 +128,20 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch {
           window.alert("Something went wrong");
         }
+      },
+
+      createPlaylist: async () => {
+        const store = getStore();
+        
+        fetch(process.env.BACKEND_URL + "/api/playlists/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
+        .then(response => response.json())
+        .then(response => console.log(response))
+        
       },
 
       addToPlaylist: (key, song, targetPlaylist) => {
