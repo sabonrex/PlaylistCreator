@@ -105,7 +105,7 @@ favourite_playlists = db.Table('favourite_playlists',
 class Tracks(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     spotify_id = db.Column(db.String(50), unique=True, nullable=False)
-    artist_spotify_id = db.Column(db.String(50), unique=True, nullable=False)
+    artist_spotify_id = db.Column(db.String(50), unique=False, nullable=False)
     title = db.Column(db.String(250), unique=False, nullable=False)
     artist = db.Column(db.String(250), unique=False, nullable=False)
     album = db.Column(db.String(120), unique=False, nullable=False)

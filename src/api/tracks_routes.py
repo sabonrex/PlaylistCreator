@@ -72,7 +72,7 @@ def add_track():
 
     # check if a track is already in the DB before adding
     if db.session.query(Tracks.spotify_id).filter_by(spotify_id=spotify_id).first():
-        return jsonify({"msg": f"A track named {title} with the ID {spotify_id} is already in the database"}), 400
+        return jsonify({"msg": f"A track named {title} with the ID {spotify_id} is already in the database"}), 200
     
     # create new track using class method
     track = Tracks.create(spotify_id, title, artist, artist_spotify_id, album, image_url, image_thumb_url, duration_ms)

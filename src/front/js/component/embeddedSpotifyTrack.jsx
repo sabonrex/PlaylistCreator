@@ -45,7 +45,6 @@ const EmbeddedSpotify = ({ trackId }) => {
   return (
     <div>
       <div ref={iframeRef}></div>
-      {console.log(trackId)}
     </div>
   );
 }

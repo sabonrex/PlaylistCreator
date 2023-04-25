@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Accordion, Carousel, Col, Row } from "react-bootstrap";
 
 import { Context } from "../store/appContext";
@@ -15,14 +15,22 @@ export const CarouselComponent = ({ tracks, itemsPerSlide }) => {
       accumulator[accumulator.length - 1].push(track);
       return accumulator;
     }, []);
-  
-const handlePlay = (e) => {
-    actions.setNowPlaying(e)
-}
 
-const handleDBAdd = (e) => {
-    actions.addToDB(e)
-}
+
+    useEffect(() => {
+        if (tracks.length != 0) {
+            actions.addAllToDB(tracks)
+        }
+    }, [tracks]);
+  
+    const handlePlay = (e) => {
+        actions.setNowPlaying(e)
+    };
+
+    const handleDBAdd = (e) => {
+        actions.addToDB(e)
+        console.log(e)
+    };
 
     return (
         <>
