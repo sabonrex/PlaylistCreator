@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 
 import { Context } from "../store/appContext";
-import { SaveFavouriteButton } from "../component/saveFavouriteButton.jsx";
+import { AddFavouritePlaylistButton } from "../component/addFavouritePlaylistBtn.jsx";
 import EmbeddedSpotify from "../component/embeddedSpotifyTrack.jsx";
 
 import "../../styles/index.css";
@@ -26,7 +26,7 @@ export const MainView = () => {
           Discover your Playlist
         </button>
         <AuthComponent>
-          <SaveFavouriteButton />
+          <AddFavouritePlaylistButton />
         </AuthComponent>
         <EmbeddedSpotify trackId={store.nowPlaying}/>
       </div>

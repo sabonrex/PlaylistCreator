@@ -1,7 +1,3 @@
-import React, { useContext } from "react";
-
-import { Button } from "react-bootstrap";
-import { Context } from "../store/appContext";
 
 export const SaveFavouriteButton = () => {
     const { store, actions } = useContext(Context);

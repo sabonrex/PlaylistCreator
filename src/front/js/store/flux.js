@@ -118,15 +118,40 @@ const getState = ({ getStore, getActions, setStore }) => {
       
       fetchPlaylist: async () => {
         const store = getStore();
+
         try {
           const response = await fetch(`${store.apiUrl}/api/spotify/random`);
 
           if (!response.ok) throw new Error("Something went wrong");
           const jsonResponse = await response.json();
+          
           setStore({ randomPlaylist: jsonResponse || [] });
           setStore({ defaultFooter: null})
-        } catch {
-          window.alert("Something went wrong");
+
+        } catch(error) {
+          console.error(error);
+        }
+      },
+
+      addUserFavouriteTrack: async (trackId) => {
+        const store = getStore();
+        const token = getToken();
+        const endpoint = `${store.apiUrl}/api/user/favourites/tracks/${trackId}`
+
+        try {
+          const response = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+          });
+
+          const jsonResponse = await response.json()
+          return jsonResponse
+
+        } catch (error) {
+          console.error(error)
         }
       },
 
