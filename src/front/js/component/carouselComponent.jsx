@@ -24,7 +24,10 @@ export const CarouselComponent = ({ tracks, itemsPerSlide }) => {
     }, [tracks]);
   
     const handlePlay = (e) => {
-        actions.setNowPlaying(e)
+        // the track index onClick can be passed & stored in the store, 
+        // and that can be used to advance to next song when current song ends
+        console.log(tracks.indexOf(e))
+        actions.setNowPlaying(e.spotify_id)
     };
 
     return (
@@ -42,7 +45,7 @@ export const CarouselComponent = ({ tracks, itemsPerSlide }) => {
 
                                 <div className="col-2">
 
-                                    <div key={track.id} onClick={() => handlePlay(track.spotify_id)}>
+                                    <div key={track.id} onClick={() => handlePlay(track)}>
                                         <div className="card shadow" style={{ backgroundColor: "#DC6B5E", borderRadius: "10px"}}>
                                             <img id={track.id}
                                                 className="card-img-top"
