@@ -10,7 +10,10 @@ import { AuthComponent } from "../auth/authComponent.jsx";
 export const MainView = () => {
   const { store, actions } = useContext(Context);
 
-  const fetchPlaylist = () => actions.fetchPlaylist();
+  const handleClick = () => {
+    actions.fetchPlaylist(),
+    actions.setSavedPlaylist(false)
+  };
 
   return (
     <>
@@ -19,7 +22,7 @@ export const MainView = () => {
           Find Your{" "}
           <span style={{ color: "#BAFF4F", fontWeight: "bold" }}>Music</span>
         </h1>
-        <button className="discover-button my-3" onClick={fetchPlaylist}>
+        <button className="discover-button my-3" onClick={() => handleClick()}>
           Discover your Playlist
         </button>
         <AuthComponent>

@@ -1,16 +1,16 @@
 import React, { useContext } from "react";
-
 import { Context } from "../store/appContext";
 import { getToken } from "../auth/getToken.js";
 
 export const AddFavouritePlaylistButton = () => {
     const { store } = useContext(Context);
-
+    
     if (store.randomPlaylist.length == 0) return null;
-
+    
     const handleClick = () => {
-      console.log("Saving playlist");
-      console.log(store.randomPlaylist);
+      if (store.currentPlaylistSaved) alert("Already saved this playlist!");
+      actions.saveRandomPlaylist()
+      actions.setSavedPlaylist(true)
     }
 
     return (
@@ -20,6 +20,7 @@ export const AddFavouritePlaylistButton = () => {
     )
 };
 
+// logic to be added when playlist and tracks are set up properly
 const addUserFavouritePlaylist = async (playlistId) => {
   const { store } = useContext(Context);
   const token = getToken();
