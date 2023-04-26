@@ -19,7 +19,7 @@ export const MainView = () => {
           Find Your{" "}
           <span style={{ color: "#BAFF4F", fontWeight: "bold" }}>Music</span>
         </h1>
-        <button className="discover-button my-5" onClick={fetchPlaylist}>
+        <button className="discover-button my-3" onClick={fetchPlaylist}>
           Discover your Playlist
         </button>
         <AuthComponent>

@@ -20,7 +20,8 @@ h2.jumbo-text {
 }
 
 button.discover-button {
-  display: inline-block;
+  display: block;
+  margin: 0 auto;
   height: 4rem;
   width: 400px;
   border: 2px solid #009000;
@@ -32,7 +33,6 @@ button.discover-button {
   font-weight: 500;
   text-align: center;
   text-decoration: none;
-  vertical-align: middle;
   cursor: pointer;
   user-select: none;
   transition: opacity .15s ease-in-out;
@@ -209,4 +209,25 @@ h2 {
   border-color: #DC6B5E;
 }
 
+button.fav-playlist-button {
+  display: block;
+  margin: 0 auto;
+  height: 4rem;
+  width: 400px;
+  border: 2px solid #DC6B5E;
+  border-radius: 3rem;
+  color: #DC6B5E;
+  opacity: 1;
+  background-color: #BAFF4F;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  transition: opacity .15s ease-in-out;
+}
 
+button.fav-playlist-button:hover {
+  opacity: 0.9;
+}
