@@ -1,5 +1,8 @@
+import React, { useContext } from "react";
+import { Context } from "../store/appContext";
+import { Button } from "react-bootstrap";
 
-export const SaveFavouriteButton = () => {
+export const AddFavouritePlaylistButton = () => {
     const { store, actions } = useContext(Context);
     
     const handleClick = () => {
