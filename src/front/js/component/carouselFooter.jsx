@@ -1,11 +1,9 @@
-import React, { useContext } from "react";
-import { Context } from "../store/appContext";
+import React from "react";
 
 import { CarouselComponent } from "./carouselComponent.jsx";
 import "../../styles/carousel.css";
 
 export const CarouselFooter = ({ tracks }) => {
-  const { actions } = useContext(Context);
 
   const styles = {
     borderTop: "3px solid #D74390", 

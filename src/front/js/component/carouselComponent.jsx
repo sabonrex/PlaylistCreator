@@ -3,6 +3,7 @@ import { Carousel, Col, Row } from "react-bootstrap";
 
 import { Context } from "../store/appContext";
 
+import { AuthComponent } from "../auth/authComponent.jsx";
 import { AddFavouriteTrackButton } from "./addFavouriteTrackBtn.jsx";
 
 export const CarouselComponent = ({ tracks, itemsPerSlide }) => {
@@ -41,7 +42,7 @@ export const CarouselComponent = ({ tracks, itemsPerSlide }) => {
                             <div key={track.id} className="col-2" >
                                 <div className="card shadow" style={{ backgroundColor: "#DC6B5E", borderRadius: "10px"}} >
                                     <img
-                                    id={track.id}
+                                        id={track.id}
                                         className="card-img-top"
                                         src={track.image_url}
                                         alt={track.alt}
@@ -56,7 +57,10 @@ export const CarouselComponent = ({ tracks, itemsPerSlide }) => {
                                             <p className="card-text">{track.artist}</p>
                                         </Col>
                                         <Col xs={3} className="text-end">
-                                            <AddFavouriteTrackButton />
+                                            {/*We need to change this when the Tracks are persistent and we have access to the database ID!*/}
+                                            <AuthComponent> 
+                                                <AddFavouriteTrackButton trackId={10} size={"xs"} />
+                                            </AuthComponent> 
                                         </Col>
                                     </Row>
                                 </div>
