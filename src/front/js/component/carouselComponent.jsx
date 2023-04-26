@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { Carousel, Col, Row } from "react-bootstrap";
+import React, { useContext, useEffect } from "react";
+import { Accordion, Carousel, Col, Row } from "react-bootstrap";
 
 import { Context } from "../store/appContext";
 
@@ -18,10 +18,20 @@ export const CarouselComponent = ({ tracks, itemsPerSlide }) => {
       accumulator[accumulator.length - 1].push(track);
       return accumulator;
     }, []);
+
+
+    useEffect(() => {
+        if (tracks.length != 0) {
+            actions.addToDB(tracks)
+        }
+    }, [tracks]);
   
-    const handlePlay = (e) =>{
-        actions.setNowPlaying(e)
-    }
+    const handlePlay = (e) => {
+        // the track index onClick can be passed & stored in the store, 
+        // and that can be used to advance to next song when current song ends
+        console.log(tracks.indexOf(e))
+        actions.setNowPlaying(e.spotify_id)
+    };
 
     return (
         <Row className="d-flex justify-content-center align-items-top">
@@ -39,7 +49,7 @@ export const CarouselComponent = ({ tracks, itemsPerSlide }) => {
                         <div className="row d-flex justify-content-center align-items-top pb-3" 
                         style={{ height: "100%", backgroundColor: "#1D2343" }} >
                             {slide.map((track) => (
-                            <div key={track.id} className="col-2" >
+                            <div key={track.id} className="col-2" onClick={() => handlePlay(track)}>
                                 <div className="card shadow" style={{ backgroundColor: "#DC6B5E", borderRadius: "10px"}} >
                                     <img
                                         id={track.id}
