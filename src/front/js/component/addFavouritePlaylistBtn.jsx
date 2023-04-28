@@ -3,7 +3,7 @@ import { Context } from "../store/appContext";
 import { getToken } from "../auth/getToken.js";
 
 export const AddFavouritePlaylistButton = () => {
-    const { store } = useContext(Context);
+    const { store, actions } = useContext(Context);
     
     if (store.randomPlaylist.length == 0) return null;
     

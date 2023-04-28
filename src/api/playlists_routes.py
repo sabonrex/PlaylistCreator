@@ -66,7 +66,6 @@ def append_track_to_playlist(playlist_id, track_id):
         "msg": "Track added successfully",
         "tracks": tracks
         }
-    print(response)
     return jsonify(response), 201
 
 

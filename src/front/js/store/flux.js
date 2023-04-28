@@ -44,26 +44,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       // maybe this function needs to be outside the store
       addToDB: async (passedData) => {
+        const store = getStore();
+
         Object.values(passedData).forEach(singleTrack =>
-        fetch(process.env.BACKEND_URL + "/api/tracks", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(singleTrack)
-        })
-        
-        // this section can be removed, only for testing purposes
-        // or we can use this to update the store Random Playlist
-        .then(data => data.json())
-        .then(data => {
-        if (data.msg == `A track named ${singleTrack.title} with the ID ${singleTrack.spotify_id} is already in the database`) {
-          console.log(`${singleTrack.title} by ${singleTrack.artist} is already in the database`)
-        } else {console.log(`${singleTrack.title} by ${singleTrack.artist} added to the database`)}
-        })
-        
-      )},
-      //
+          fetch(process.env.BACKEND_URL + "/api/tracks", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(singleTrack)
+          })
+
+          // this feels janky but it works
+          // automatically updates the random playlist with the ID from the DB
+          .then(data => data.json())
+          .then(data => {
+            store.randomPlaylist.find(entry => entry.spotify_id === singleTrack.spotify_id).db_id = data.db_id
+          })
+        )
+      },
 
       loadUserFavourites: async () => {
         const actions = getActions();
@@ -158,7 +157,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       saveRandomPlaylist: async () => {
         const store = getStore();
-        const token = getToken();
         
         // this function will create a new empty playlist each time "save this playlist is clicked"
         const newPlaylist = await fetch(`${process.env.BACKEND_URL}/api/playlists/`, 
@@ -170,23 +168,17 @@ const getState = ({ getStore, getActions, setStore }) => {
           } 
         )
 
-        // and this part SHOULD store those tracks in the playlist, but is giving me headaches right now
         const newPlaylistID = await newPlaylist.json()
 
         Object.values(store.randomPlaylist).forEach(entry => {
-          console.log(`this will eventually add ${entry.spotify_id} to playlist #${newPlaylistID.playlist_id}`)
-          // fetch(`${process.env.BACKEND_URL}/api/playlists/addtrack`, 
-          // {
-          //   method: "POST",
-          //   headers: {
-          //     "Authorization": `Bearer ${token}`,
-          //     "Content-Type": "application/json"
-          //   },
-          //   body: {
-          //     "playlist_id": newPlaylistID.playlist_id,
-          //     "track_id": entry.spotify_id
-          //   }
-          // })
+          fetch(`${process.env.BACKEND_URL}/api/playlists/${newPlaylistID.playlist_id}/tracks/${entry.db_id}`, 
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            }
+          })
+          // uncomment to check if tracks are being added correctly
           // .then(response => response.json())
           // .then(response => console.log(response))             
         })
