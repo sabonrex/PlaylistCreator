@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Accordion, Carousel, Col, Row } from "react-bootstrap";
+import { Carousel, Col, Row } from "react-bootstrap";
 
 import { Context } from "../store/appContext";
 
@@ -8,7 +8,7 @@ import { AddFavouriteTrackButton } from "./addFavouriteTrackBtn.jsx";
 
 export const CarouselComponent = ({ tracks, itemsPerSlide }) => {
     
-    const { store, actions } = useContext(Context)
+    const { actions } = useContext(Context)
 
     const slides = tracks.reduce((accumulator, track, index) => {
       if (index % itemsPerSlide === 0) {
@@ -46,10 +46,12 @@ export const CarouselComponent = ({ tracks, itemsPerSlide }) => {
                 >
                     {slides.map((slide, index) => (
                     <Carousel.Item key={index}>
-                        <div className="row d-flex justify-content-center align-items-top pb-3" 
-                        style={{ height: "100%", backgroundColor: "#1D2343" }} >
+                        <div 
+                            className="row d-flex justify-content-center align-items-top pb-3" 
+                            style={{ height: "100%", backgroundColor: "#1D2343" }} 
+                        >
                             {slide.map((track) => (
-                            <div key={track.id} className="col-2" onClick={() => handlePlay(track)}>
+                            <div key={track.track_id} className="col-2" onClick={() => handlePlay(track)}>
                                 <div className="card shadow" style={{ backgroundColor: "#DC6B5E", borderRadius: "10px"}} >
                                     <img
                                         id={track.id}
