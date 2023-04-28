@@ -48,7 +48,7 @@ def get_all_tracks():
 # GET route to get a track based on the ID from the DB
 @tracks_api.route("/<int:id>", methods=["GET"])
 def get_track(id):
-    track = Tracks.query.get_or_404(id)
+    track = Tracks.read(id)
     return jsonify(track.serialize()), 200
 
 
@@ -74,8 +74,10 @@ def add_track():
     if db.session.query(Tracks.spotify_id).filter_by(spotify_id=spotify_id).first():
         track = db.session.query(Tracks).filter_by(spotify_id=spotify_id).first()
         return jsonify(
-            {"msg": f"Already in DB: {title} - Spotify ID {spotify_id}",
-            "db_id": track.id
+            {
+                "msg": f"Already exists. Avoid duplicates",
+                "track_id": track.id,
+                "spotify_id": track.spotify_id
             }
         ), 200
     
@@ -84,7 +86,6 @@ def add_track():
     
     response = {
         "msg": f"New track added successfully: {title} - {track.id}",
-        "db_id": track.id,
         "location_url": url_for('tracks_api.get_track', id=track.id),
         "track_id": track.id
         }
