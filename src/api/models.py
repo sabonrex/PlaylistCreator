@@ -142,6 +142,16 @@ class Tracks(db.Model):
     @classmethod
     def read(cls, id):
         return cls.query.get_or_404(id)
+
+    @classmethod
+    def read_by_spotify_id(cls, spotify_id):
+        return db.session.query(cls).filter_by(spotify_id=spotify_id).first()
+    
+    @classmethod
+    def exist_by_spotify_id(cls, spotify_id):
+        if db.session.query(cls).filter_by(spotify_id=spotify_id).first():
+            return True
+        else: return False
     
     def delete(self):
         db.session.delete(self)

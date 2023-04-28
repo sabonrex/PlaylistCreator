@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getToken } from "./getToken";
 
 const API_URL = process.env.BACKEND_URL;
@@ -6,15 +6,20 @@ const API_URL_CHECK = API_URL + "/api/auth/check";
 
 // fetch request to check if the user is correctly authenticated and if the token is valid
 const checkUser = async (token) => {
-  const checkResponse = await fetch(API_URL_CHECK, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }).catch(() => false);
+  try {
+    const checkResponse = await fetch(API_URL_CHECK, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    });
 
-  if (!checkResponse || !checkResponse.ok) return false;
+    if (!checkResponse || !checkResponse.ok) return false;
 
-  return true;
+    return true;
+    
+  } catch (error) {
+    return false
+  }
 };
 
 // customized useState hook to get the User Authentication State

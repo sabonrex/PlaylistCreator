@@ -63,7 +63,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           })
         )
       },
-      //
 
       loadUserFavourites: async () => {
         const actions = getActions();
