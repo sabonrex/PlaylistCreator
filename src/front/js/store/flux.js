@@ -54,6 +54,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         })
         
         // this section can be removed, only for testing purposes
+        // or we can use this to update the store Random Playlist
         .then(data => data.json())
         .then(data => {
         if (data.msg == `A track named ${singleTrack.title} with the ID ${singleTrack.spotify_id} is already in the database`) {

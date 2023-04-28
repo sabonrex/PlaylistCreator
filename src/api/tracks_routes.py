@@ -80,6 +80,7 @@ def add_track():
     response = {
         "msg": f"New track added successfully: {title} - {spotify_id}",
         "location_url": url_for('tracks_api.get_track', id=track.id),
+        "track_id": track.id
         }
         
     return jsonify(response), 201
