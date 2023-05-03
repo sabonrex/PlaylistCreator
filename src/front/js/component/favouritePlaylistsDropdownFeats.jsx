@@ -9,14 +9,13 @@ import { Context } from "../store/appContext";
 
 export const FavouritePlaylistDropdownFeats = ({ listOfPlaylists, playlist }) => {
     const { actions } = useContext(Context);
-    const [dropdownState, setDropdownState] = useState(false);
 
     const handleClickMoveTrack = (tracks, index, playlistOrigin, playlistDestiny) => {
         actions.moveToPlaylist("playlistStore", tracks, index, playlistOrigin, playlistDestiny)
     };
 
     return (
-        <Dropdown autoClose={dropdownState}>
+        <Dropdown autoClose>
 
             <DropdownToggle className="ms-1 me-auto" variant="outline-success">
                 <FontAwesomeIcon icon={faEllipsisVertical} />
