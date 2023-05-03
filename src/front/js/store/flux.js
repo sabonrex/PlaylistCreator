@@ -42,27 +42,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({[key] : passedData})
 			},
 
-      // maybe this function needs to be outside the store
-      addToDB: async (passedData) => {
-        const store = getStore();
+      // this function was made redundant
+      // addToDB: async (passedData) => {
+      //   const store = getStore();
 
-        Object.values(passedData).forEach(singleTrack =>
-          fetch(process.env.BACKEND_URL + "/api/tracks", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify(singleTrack)
-          })
+      //   Object.values(passedData).forEach(singleTrack =>
+      //     fetch(process.env.BACKEND_URL + "/api/tracks", {
+      //       method: "POST",
+      //       headers: {
+      //         "Content-Type": "application/json"
+      //       },
+      //       body: JSON.stringify(singleTrack)
+      //     })
 
-          // this feels janky but it works
-          // automatically updates the random playlist with the ID from the DB
-          .then(data => data.json())
-          .then(data => {
-            store.randomPlaylist.find(entry => entry.spotify_id === singleTrack.spotify_id).db_id = data.db_id
-          })
-        )
-      },
+      //     // this feels janky but it works
+      //     // automatically updates the random playlist with the ID from the DB
+      //     .then(data => data.json())
+      //     .then(data => {
+      //       store.randomPlaylist.find(entry => entry.spotify_id === singleTrack.spotify_id).db_id = data.db_id
+      //     })
+      //   )
+      // },
+      //
 
       loadUserFavourites: async () => {
         const actions = getActions();
@@ -127,7 +128,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           
           setStore({ randomPlaylist: jsonResponse || [] });
           setStore({ defaultFooter: null})
-
+          console.log(store.randomPlaylist)
         } catch(error) {
           console.error(error);
         }
@@ -171,7 +172,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const newPlaylistID = await newPlaylist.json()
 
         Object.values(store.randomPlaylist).forEach(entry => {
-          fetch(`${process.env.BACKEND_URL}/api/playlists/${newPlaylistID.playlist_id}/tracks/${entry.db_id}`, 
+          fetch(`${process.env.BACKEND_URL}/api/playlists/${newPlaylistID.playlist_id}/tracks/${entry.track_id}`, 
           {
             method: "POST",
             headers: {
@@ -179,8 +180,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
           })
           // uncomment to check if tracks are being added correctly
-          // .then(response => response.json())
-          // .then(response => console.log(response))             
+          .then(response => response.json())
+          .then(response => console.log(response))             
         })
       },
       
