@@ -52,7 +52,7 @@ export const FavouritePlayistsRender = ({ listOfPlaylists }) => {
                                         </Col>  
                                         
                                         <Col xs="2" sm="1" md="1" lg="1">
-                                            <FavouritePlaylistDropdownFeats playlist={playlist} listOfPlaylists={listOfPlaylists} />
+                                            <FavouritePlaylistDropdownFeats playlist={playlist} listOfPlaylists={listOfPlaylists} track={tracks} />
                                         </Col>
                                         
 

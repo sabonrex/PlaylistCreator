@@ -1,5 +1,3 @@
-import React from "react";
-
 import { playlistData } from "../component/testData/testDataPlaylist";
 import { favouritesData } from "../component/testData/testDataFavourites";
 import { getToken } from "../auth/getToken";
@@ -12,9 +10,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       randomPlaylist: [],
       userId: null, // may not be necessary, or we can use the token instead
       playlistStore: [],
-      favouritesStore: [],
-      favouritePlaylistsStore: [],
-      favouriteTracksStore: [],
+      favPlaylistsStore: [],
+      favTracksStore: [],
       nowPlaying: null,
       currentPlaylistSaved: false
     },
@@ -66,8 +63,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         const favouriteTracks = await actions.fetchFavouriteTracks();
         const favouritePlaylists = await actions.fetchFavouritePlayists();
 
-        setStore({favouriteTracksStore : favouriteTracks});
-        setStore({favouritePlaylistsStore : favouritePlaylists});
+        setStore({favTracksStore : favouriteTracks});
+        setStore({favPlaylistsStore : favouritePlaylists});
       },
 
       fetchFavouritePlayists: async () => {
@@ -204,22 +201,53 @@ const getState = ({ getStore, getActions, setStore }) => {
         )
       },
 
-      removeFromPlaylist: (key, songIndex, targetPlaylist) => {
+      removeFromPlaylist: async (playlist, track) => {
         const store = getStore();
+        const endpoint = `${store.apiUrl}/api/playlists/${playlist.id}/tracks/${track.id}`;
 
-        const indexLookup = store.playlistStore.findIndex(plIndex => plIndex.playlistName === targetPlaylist)
+        const indexP = store.favPlaylistsStore.findIndex(p => p.id == playlist.id);
+        const updatePlaylists = store.favPlaylistsStore;
 
-        return (
-          playlistData[indexLookup].list.tracks.splice(songIndex, 1),
-          setStore({[key]: playlistData})
-        )
+        try {
+          const response = await fetch(endpoint, {
+            method: "DELETE",
+            headers: {"Content-Type": "application/json"}
+          });
+          const jsonResponse = await response.json();
+          updatePlaylists[indexP].tracks = jsonResponse.tracks;
+          setStore({["favPlaylistsStore"]: updatePlaylists}) 
+        } catch(error) {
+          console.error(error);
+        }
       },
 
-      addToFavourites: (key, song) => {
-        return (
-          favouritesData.tracks.unshift(song),
-          setStore({[key]: favouritesData})          
-        )
+      addTrackToFavourites: async (track) => {
+        const store = getStore();
+        const token = getToken();
+        const endpoint = `${store.apiUrl}/api/user/favourites/tracks/${track.id}`;
+        
+        const updateFavouriteTracks = store.favTracksStore;
+        updateFavouriteTracks.push(track);
+
+        try {
+          const response = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+          });
+          const jsonResponse = await response.json()
+          console.log(jsonResponse)
+          
+          const updateFavouriteTracks = store.favTracksStore;
+          updateFavouriteTracks.push(track);
+          setStore({["favTracksStore"]: updateFavouriteTracks}) 
+
+        } catch(error) {
+          console.error(error);
+        }
+
       },
 
       removeFromFavourites: (key, index) => {

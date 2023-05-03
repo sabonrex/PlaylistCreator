@@ -5,7 +5,7 @@ import { FavouritePlayistsRender } from "./favouritePlaylistsRender.jsx";
 
 
 export const FavouritePlayists = () => {
-    const {store, actions} = useContext(Context);
+    const { actions } = useContext(Context);
     const [userFavouritePlaylists, setUserFavouritePlaylists] = useState([]);
 
     const fetchFavouritePlaylists = async () => {

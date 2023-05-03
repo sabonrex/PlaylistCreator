@@ -7,8 +7,22 @@ import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 import { Context } from "../store/appContext";
 
 
-export const FavouritePlaylistDropdownFeats = ({ listOfPlaylists, playlist }) => {
-    const { actions } = useContext(Context);
+export const FavouritePlaylistDropdownFeats = ({ listOfPlaylists, playlist, track }) => {
+    const { store, actions } = useContext(Context);
+
+    const handleTest = () => {
+        console.log(store.favTracksStore)
+        console.log(playlist.tracks)
+        console.log(track)
+    }
+
+    const addTrackToFavTracks = () => {
+        actions.addTrackToFavourites(track)
+    }
+
+    const removeTrackFromPlaylist = () => {
+        actions.removeFromPlaylist(playlist, track)
+    }
 
     const handleClickMoveTrack = (tracks, index, playlistOrigin, playlistDestiny) => {
         actions.moveToPlaylist("playlistStore", tracks, index, playlistOrigin, playlistDestiny)
@@ -22,14 +36,16 @@ export const FavouritePlaylistDropdownFeats = ({ listOfPlaylists, playlist }) =>
             </DropdownToggle>
             <Dropdown.Menu>
 
-                <Dropdown.Item onClick={() => (
-                    actions.addToFavourites("favouritesStore", tracks)
-                    )}> Add to Favourites
+                <Dropdown.Item onClick={handleTest}> 
+                    Testing Function
                 </Dropdown.Item>
 
-                <Dropdown.Item onClick={() => (
-                    actions.removeFromPlaylist("playlistStore", index, playlist.name) 
-                    )}> Remove from this playlist                                               
+                <Dropdown.Item onClick={addTrackToFavTracks}> 
+                    Add to your Favourite Tracks
+                </Dropdown.Item>
+
+                <Dropdown.Item onClick={removeTrackFromPlaylist}> 
+                    Remove from this Playlist                                               
                 </Dropdown.Item>                                                
 
                 {listOfPlaylists.map((playlistName, index) => 
