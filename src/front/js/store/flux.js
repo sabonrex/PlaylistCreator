@@ -188,17 +188,22 @@ const getState = ({ getStore, getActions, setStore }) => {
         )
       },
 
-      moveToPlaylist: (key, song, songIndex, originalPlaylist, targetPlaylist) => {
+      moveToPlaylist: async (track, originalPlaylist, targetPlaylist) => {
         const store = getStore();
+        const actions = getActions();
+        const endpoint = `${store.apiUrl}/api/playlists/${originalPlaylist.id}/tracks/${track.id}/playlists/${targetPlaylist.id}/move`;
 
-        const originalIndexLookup = store.playlistStore.findIndex(plIndex => plIndex.playlistName === originalPlaylist) 
-        const targetIndexLookup = store.playlistStore.findIndex(plIndex => plIndex.playlistName === targetPlaylist)
+        try {
+          fetch(endpoint, {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"}
+          });
+          const newPlayists = await actions.fetchFavouritePlayists();
+          setStore({["favPlaylistsStore"]: newPlayists}) 
+        } catch(error) {
+          console.error(error);
+        }
 
-        return (
-          playlistData[originalIndexLookup].list.tracks.splice(songIndex, 1),
-          playlistData[targetIndexLookup].list.tracks.push(song),
-          setStore({[key]: playlistData})
-        )
       },
 
       removeFromPlaylist: async (playlist, track) => {
@@ -244,6 +249,24 @@ const getState = ({ getStore, getActions, setStore }) => {
           updateFavouriteTracks.push(track);
           setStore({["favTracksStore"]: updateFavouriteTracks}) 
 
+        } catch(error) {
+          console.error(error);
+        }
+
+      },
+
+      removePlaylist: async (playlist) => {
+        const store = getStore();
+        const actions = getActions();
+        const endpoint = `${store.apiUrl}/api/playlists/${playlist.id}`;
+
+        try {
+          fetch(endpoint, {
+            method: "PUT",
+            headers: {"Content-Type": "application/json"}
+          });
+          const newPlayists = await actions.fetchFavouritePlayists();
+          setStore({["favPlaylistsStore"]: newPlayists}) 
         } catch(error) {
           console.error(error);
         }

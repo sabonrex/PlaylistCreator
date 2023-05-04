@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Dropdown } from "react-bootstrap";
 import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,13 +8,7 @@ import { Context } from "../store/appContext";
 
 
 export const FavouritePlaylistDropdownFeats = ({ listOfPlaylists, playlist, track }) => {
-    const { store, actions } = useContext(Context);
-
-    const handleTest = () => {
-        console.log(store.favTracksStore)
-        console.log(playlist.tracks)
-        console.log(track)
-    }
+    const { actions } = useContext(Context);
 
     const addTrackToFavTracks = () => {
         actions.addTrackToFavourites(track)
@@ -24,9 +18,19 @@ export const FavouritePlaylistDropdownFeats = ({ listOfPlaylists, playlist, trac
         actions.removeFromPlaylist(playlist, track)
     }
 
-    const handleClickMoveTrack = (tracks, index, playlistOrigin, playlistDestiny) => {
-        actions.moveToPlaylist("playlistStore", tracks, index, playlistOrigin, playlistDestiny)
-    };
+    const moveTrack = (targetPlaylist) => {
+        actions.moveToPlaylist(track, playlist, targetPlaylist)
+    }
+
+    const DropdownListMoveToPlaylists = listOfPlaylists.map((targetPlaylist, index) => {
+        if (targetPlaylist.name !== playlist.name) {
+            return (
+                <Dropdown.Item key={index} onClick={() => moveTrack(targetPlaylist)}>
+                    Move to "{targetPlaylist.name}"                                                       
+                </Dropdown.Item>
+            )
+        }                                                
+    })
 
     return (
         <Dropdown autoClose>
@@ -34,30 +38,20 @@ export const FavouritePlaylistDropdownFeats = ({ listOfPlaylists, playlist, trac
             <DropdownToggle className="ms-1 me-auto" variant="outline-success">
                 <FontAwesomeIcon icon={faEllipsisVertical} />
             </DropdownToggle>
+
             <Dropdown.Menu>
-
-                <Dropdown.Item onClick={handleTest}> 
-                    Testing Function
-                </Dropdown.Item>
-
                 <Dropdown.Item onClick={addTrackToFavTracks}> 
                     Add to your Favourite Tracks
                 </Dropdown.Item>
 
                 <Dropdown.Item onClick={removeTrackFromPlaylist}> 
-                    Remove from this Playlist                                               
+                    Remove Track from this Playlist                                               
                 </Dropdown.Item>                                                
 
-                {listOfPlaylists.map((playlistName, index) => 
-                    {if (playlistName.name !== playlist.name) {
-                        return (
-                            <Dropdown.Item key={index} onClick={() => handleClickMoveTrack(tracks, index, playlist.name, playlistName.name)}>
-                                Move to "{playlistName.name}"                                                       
-                            </Dropdown.Item>
-                        )}                                                
-                    }
-                )}
+                {DropdownListMoveToPlaylists}
+
             </Dropdown.Menu>
+
         </Dropdown>
     );
 };
