@@ -158,7 +158,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       saveRandomPlaylist: async () => {
         const store = getStore();
-        
+        const token = getToken();
+
         // this function will create a new empty playlist each time "save this playlist is clicked"
         const newPlaylist = await fetch(`${process.env.BACKEND_URL}/api/playlists/`, 
           {
@@ -180,9 +181,23 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
           })
           // uncomment to check if tracks are being added correctly
-          .then(response => response.json())
-          .then(response => console.log(response))             
+          // .then(response => response.json())
+          // .then(response => console.log(response))             
+        });
+
+        const addToFavouritesDB = await fetch(`${process.env.BACKEND_URL}/api/user/favourites/playlists/${newPlaylistID.playlist_id}`,
+        {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
         })
+
+        const jsonResponse = await addToFavouritesDB.json()
+        console.log(jsonResponse)
+
+
       },
       
       addToPlaylist: (key, song, targetPlaylist) => {
