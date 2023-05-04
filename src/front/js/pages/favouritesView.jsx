@@ -6,6 +6,7 @@ import { FavouriteTracks } from "../component/favouriteTracks.jsx";
 import { AuthPage } from "../auth/authPage.jsx";
 
 import "../../styles/index.css";
+import "../../styles/favourites.css";
 
 export const FavouritesView = () => {
   return (

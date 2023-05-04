@@ -1,7 +1,7 @@
 import React from "react";
 import { Accordion, Container, Col, Row, ListGroup, ListGroupItem } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import { faPlay, faTrash} from "@fortawesome/free-solid-svg-icons";
 
 import { FavouritePlaylistDropdownFeats } from "./favouritePlaylistsDropdownFeats.jsx";
 
@@ -18,7 +18,8 @@ export const FavouritePlayistsRender = ({ listOfPlaylists }) => {
                         <Accordion.Header className="d-flex">
                             <div className="btn btn-success me-3" variant="success"><FontAwesomeIcon icon={faPlay} /></div>
                             <strong>{playlist.name}</strong> &nbsp;
-                            <span>- {playlist.tracks.length} songs</span>  
+                            <span>- {playlist.tracks.length} songs</span> 
+                            <div className="delete-button"><FontAwesomeIcon icon={faTrash} /></div>
                         </Accordion.Header>
                             
                         <Accordion.Body>

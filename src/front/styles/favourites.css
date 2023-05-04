@@ -1,0 +1,11 @@
+div.delete-button {
+    color: #DC6B5E;
+    margin-left: 0.5rem;
+    opacity: 0.85;
+    cursor: pointer;
+    transition: opacity .15s ease-in-out;
+  }
+  
+  div.delete-button:hover {
+    opacity: 1;
+  }
