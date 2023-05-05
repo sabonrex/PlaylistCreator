@@ -7,8 +7,18 @@ import { Context } from "../store/appContext";
 
 import { msToMin } from "./utils/msToMin";
 
+
+/* 
+    export const FavouriteTracksRender = () => {
+    const {store, actions} = useContext(Context);
+    
+
+*/
+
 export const FavouriteTracksRender = ({ listOfTracks }) => {
     const {store, actions} = useContext(Context);
+
+    console.log(store.favTracksStore)
 
     return (
         <Container className="col-10 pb-5">
@@ -60,10 +70,12 @@ export const FavouriteTracksRender = ({ listOfTracks }) => {
                                                     }>Add to new playlist:
                                                 </Dropdown.Item>
 
-                                                {store.playlistStore.map(playlist => 
-                                                    <Dropdown.Item onClick={() => 
-                                                        (actions.addToPlaylist("playlistStore", track, playlist.playlistName))
-                                                        }>Add to "{playlist.playlistName}"
+                                                {store.favPlaylistsStore.map((playlist, index) => 
+                                               
+                                                    <Dropdown.Item key = {index} onClick={() => 
+                                                        actions.addToPlaylist(track, playlist.id)
+                                                        // console.log(`add ${track.title} to ${playlist.name}`)
+                                                        }>Add to "{playlist.name}"
                                                     </Dropdown.Item>
                                                 )}                                   
                                             </Dropdown.Menu>

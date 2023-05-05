@@ -38,8 +38,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       loadUserFavourites: async () => {
         const actions = getActions();
 
-        const favouriteTracks = await actions.fetchFavouriteTracks();
         const favouritePlaylists = await actions.fetchFavouritePlayists();
+        const favouriteTracks = await actions.fetchFavouriteTracks();
 
         setStore({favTracksStore : favouriteTracks});
         setStore({favPlaylistsStore : favouritePlaylists});
@@ -170,15 +170,30 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       },
       
-      addToPlaylist: (key, song, targetPlaylist) => {
+      addToPlaylist: async (track, targetPlaylist) => {
         const store = getStore();
+        const token = getToken();
 
-        const indexLookup = store.playlistStore.findIndex(plIndex => plIndex.playlistName === targetPlaylist)
+        const indexLookup = store.favPlaylistsStore.findIndex(plIndex => plIndex.id === targetPlaylist);
+        // this is making a copy of all the playlists in the store
+        const newPlaylistStore = [...store.favPlaylistsStore];
+        // and this updates the playlist with a song from favorites
+        newPlaylistStore[indexLookup].tracks.push(track);
 
-        return (
-          playlistData[indexLookup].list.tracks.push(song),
-          setStore({[key]: playlistData})
-        )
+        console.log(track)
+        // if we can agree on how data is accessed this will update the store & re-render the playlist component
+        // change favoritePlaylistsRender export statement (if it's still using props this won't work)
+        setStore({"favPlaylistsStore": newPlaylistStore});
+
+        const addToDBPlaylist = await fetch(`${process.env.BACKEND_URL}/api/playlists/${targetPlaylist}/tracks/${track.id}`, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+            }
+          })
+        const jsonResponse = await addToDBPlaylist.json()
+        console.log(jsonResponse)
       },
 
       moveToPlaylist: async (track, originalPlaylist, targetPlaylist) => {

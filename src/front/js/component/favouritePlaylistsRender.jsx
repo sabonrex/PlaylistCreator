@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Accordion, Container, Col, Row, ListGroup, ListGroupItem } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faTrash} from "@fortawesome/free-solid-svg-icons";
-
+import { Context } from "../store/appContext.js";
 import { FavouritePlaylistDropdownFeats } from "./favouritePlaylistsDropdownFeats.jsx";
 
 import { msToMin } from "./utils/msToMin";
 
 
-export const FavouritePlayistsRender = ({ listOfPlaylists }) => {
+// export const FavouritePlayistsRender = ({ listOfPlaylists }) => {
+
+// this version gets playlists directly from store instead of passed as props
+// to test 2 versions, comment out statement below & uncomment above
+
+//
+export const FavouritePlayistsRender = () => {
+    const { store } = useContext(Context);
+    const listOfPlaylists = store.favPlaylistsStore;
+//
 
     return (
         <Container className="col-10">
