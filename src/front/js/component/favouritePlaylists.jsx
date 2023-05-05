@@ -1,25 +1,11 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 
 import { Context } from "../store/appContext";
 import { FavouritePlayistsRender } from "./favouritePlaylistsRender.jsx";
 
 
 export const FavouritePlayists = () => {
-    const { actions } = useContext(Context);
-    const [userFavouritePlaylists, setUserFavouritePlaylists] = useState([]);
+    const { store } = useContext(Context);
 
-    const fetchFavouritePlaylists = async () => {
-        try {
-            const playlists = await actions.fetchFavouritePlayists();
-            setUserFavouritePlaylists(() => playlists);
-        } catch(error) {
-            console.error(error);
-        }
-    }
-
-    useEffect(() => {
-        fetchFavouritePlaylists();
-    }, [])
-
-    return <FavouritePlayistsRender listOfPlaylists={userFavouritePlaylists} />      
+    return <FavouritePlayistsRender listOfPlaylists={store.favPlaylistsStore} />      
 };
