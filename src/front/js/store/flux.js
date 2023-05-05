@@ -175,25 +175,40 @@ const getState = ({ getStore, getActions, setStore }) => {
         const token = getToken();
 
         const indexLookup = store.favPlaylistsStore.findIndex(plIndex => plIndex.id === targetPlaylist);
-        // this is making a copy of all the playlists in the store
+        
+        // this is making a copy of the playlists
         const newPlaylistStore = [...store.favPlaylistsStore];
         // and this updates the playlist with a song from favorites
-        newPlaylistStore[indexLookup].tracks.push(track);
 
-        console.log(track)
-        // if we can agree on how data is accessed this will update the store & re-render the playlist component
-        // change favoritePlaylistsRender export statement (if it's still using props this won't work)
-        setStore({"favPlaylistsStore": newPlaylistStore});
+        // check if track already in playlist, to prevent duplicate keys
+        // alternatively, use something other than the track ID for keys in playlist;
+        // that would allow duplicates & make this redundant
+        const playlistCheck = newPlaylistStore[indexLookup].tracks.find(playlistTrack => {
+          if (playlistTrack.id === track.id) {
+            return true;
+          }
+          return false
+        })
 
-        const addToDBPlaylist = await fetch(`${process.env.BACKEND_URL}/api/playlists/${targetPlaylist}/tracks/${track.id}`, {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json"
-            }
-          })
-        const jsonResponse = await addToDBPlaylist.json()
-        console.log(jsonResponse)
+        if (playlistCheck) {
+          alert(`${newPlaylistStore[indexLookup].name} already includes ${track.title}`)
+        } else {
+          newPlaylistStore[indexLookup].tracks.push(track)
+          
+          // if we can agree on how data is accessed this will update the store & re-render the playlist component
+          // change favoritePlaylistsRender export statement (if it's still using props this won't work)
+          setStore({"favPlaylistsStore": newPlaylistStore});
+
+          const addToDBPlaylist = await fetch(`${process.env.BACKEND_URL}/api/playlists/${targetPlaylist}/tracks/${track.id}`, {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${token}`,
+              "Content-Type": "application/json"
+              }
+            })
+          const jsonResponse = await addToDBPlaylist.json()
+          console.log(jsonResponse)
+        }
       },
 
       moveToPlaylist: async (track, originalPlaylist, targetPlaylist) => {
@@ -234,6 +249,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      // this is adding tracks twice & throwing errors; need to figure out why
       addTrackToFavourites: async (track) => {
         const store = getStore();
         const token = getToken();

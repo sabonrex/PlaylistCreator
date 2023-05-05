@@ -8,15 +8,15 @@ import { Context } from "../store/appContext";
 import { msToMin } from "./utils/msToMin";
 
 
-/* 
-    export const FavouriteTracksRender = () => {
-    const {store, actions} = useContext(Context);
-    
 
-*/
+export const FavouriteTracksRender = () => {
+const {store, actions} = useContext(Context);
 
-export const FavouriteTracksRender = ({ listOfTracks }) => {
-    const {store, actions} = useContext(Context);
+const listOfTracks = store.favTracksStore;
+
+
+// export const FavouriteTracksRender = ({ listOfTracks }) => {
+//     const {store, actions} = useContext(Context);
 
     console.log(store.favTracksStore)
 
@@ -66,7 +66,8 @@ export const FavouriteTracksRender = ({ listOfTracks }) => {
                                                 </Dropdown.Item>
                                         
                                                 <Dropdown.Item onClick={() =>
-                                                    (actions.createNewPlaylist("playlistStore", track, "New Playlist"))
+                                                    //(actions.createNewPlaylist("playlistStore", track, "New Playlist"))
+                                                    (console.log("create a new playlist"))
                                                     }>Add to new playlist:
                                                 </Dropdown.Item>
 
