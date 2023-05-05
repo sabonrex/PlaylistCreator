@@ -42,29 +42,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({[key] : passedData})
 			},
 
-      // this function was made redundant
-      // addToDB: async (passedData) => {
-      //   const store = getStore();
-
-      //   Object.values(passedData).forEach(singleTrack =>
-      //     fetch(process.env.BACKEND_URL + "/api/tracks", {
-      //       method: "POST",
-      //       headers: {
-      //         "Content-Type": "application/json"
-      //       },
-      //       body: JSON.stringify(singleTrack)
-      //     })
-
-      //     // this feels janky but it works
-      //     // automatically updates the random playlist with the ID from the DB
-      //     .then(data => data.json())
-      //     .then(data => {
-      //       store.randomPlaylist.find(entry => entry.spotify_id === singleTrack.spotify_id).db_id = data.db_id
-      //     })
-      //   )
-      // },
-      //
-
       loadUserFavourites: async () => {
         const actions = getActions();
 
