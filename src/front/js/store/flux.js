@@ -35,28 +35,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore({[key] : passedData})
 			},
 
-      // maybe this function needs to be outside the store
-      addToDB: async (passedData) => {
-        const store = getStore();
-
-        Object.values(passedData).forEach(singleTrack =>
-          fetch(process.env.BACKEND_URL + "/api/tracks", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify(singleTrack)
-          })
-
-          // this feels janky but it works
-          // automatically updates the random playlist with the ID from the DB
-          .then(data => data.json())
-          .then(data => {
-            store.randomPlaylist.find(entry => entry.spotify_id === singleTrack.spotify_id).db_id = data.db_id
-          })
-        )
-      },
-
       loadUserFavourites: async () => {
         const actions = getActions();
 
@@ -120,7 +98,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           
           setStore({ randomPlaylist: jsonResponse || [] });
           setStore({ defaultFooter: null})
-
+          console.log(store.randomPlaylist)
         } catch(error) {
           console.error(error);
         }
@@ -150,7 +128,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       saveRandomPlaylist: async () => {
         const store = getStore();
-        
+        const token = getToken();
+
         // this function will create a new empty playlist each time "save this playlist is clicked"
         const newPlaylist = await fetch(`${process.env.BACKEND_URL}/api/playlists/`, 
           {
@@ -164,7 +143,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const newPlaylistID = await newPlaylist.json()
 
         Object.values(store.randomPlaylist).forEach(entry => {
-          fetch(`${process.env.BACKEND_URL}/api/playlists/${newPlaylistID.playlist_id}/tracks/${entry.db_id}`, 
+          fetch(`${process.env.BACKEND_URL}/api/playlists/${newPlaylistID.playlist_id}/tracks/${entry.track_id}`, 
           {
             method: "POST",
             headers: {
@@ -174,7 +153,21 @@ const getState = ({ getStore, getActions, setStore }) => {
           // uncomment to check if tracks are being added correctly
           // .then(response => response.json())
           // .then(response => console.log(response))             
+        });
+
+        const addToFavouritesDB = await fetch(`${process.env.BACKEND_URL}/api/user/favourites/playlists/${newPlaylistID.playlist_id}`,
+        {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
         })
+
+        const jsonResponse = await addToFavouritesDB.json()
+        console.log(jsonResponse)
+
+
       },
       
       addToPlaylist: (key, song, targetPlaylist) => {

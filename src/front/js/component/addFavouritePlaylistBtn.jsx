@@ -8,9 +8,9 @@ export const AddFavouritePlaylistButton = () => {
     if (store.randomPlaylist.length == 0) return null;
     
     const handleClick = () => {
-      if (store.currentPlaylistSaved) alert("Already saved this playlist!");
-      actions.saveRandomPlaylist()
-      actions.setSavedPlaylist(true)
+      if (store.currentPlaylistSaved) { alert("Already saved this playlist!")
+      } else {actions.saveRandomPlaylist(),
+      actions.setSavedPlaylist(true)};
     }
 
     return (

@@ -18,13 +18,6 @@ export const CarouselComponent = ({ tracks, itemsPerSlide }) => {
       accumulator[accumulator.length - 1].push(track);
       return accumulator;
     }, []);
-
-
-    useEffect(() => {
-        if (tracks.length != 0) {
-            actions.addToDB(tracks)
-        }
-    }, [tracks]);
   
     const handlePlay = (e) => {
         // the track index onClick can be passed & stored in the store, 
