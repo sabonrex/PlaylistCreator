@@ -8,17 +8,19 @@ import { Context } from "../store/appContext";
 import { msToMin } from "./utils/msToMin";
 
 
-
+// new version of export function that gets favorites directly from store
+//
 export const FavouriteTracksRender = () => {
-const {store, actions} = useContext(Context);
+    const {store, actions} = useContext(Context);
 
-const listOfTracks = store.favTracksStore;
+    const listOfTracks = store.favTracksStore;
+//
 
-
+// original export function
+//
 // export const FavouriteTracksRender = ({ listOfTracks }) => {
 //     const {store, actions} = useContext(Context);
-
-    console.log(store.favTracksStore)
+//
 
     return (
         <Container className="col-10 pb-5">
@@ -66,8 +68,9 @@ const listOfTracks = store.favTracksStore;
                                                 </Dropdown.Item>
                                         
                                                 <Dropdown.Item onClick={() =>
-                                                    //(actions.createNewPlaylist("playlistStore", track, "New Playlist"))
-                                                    (console.log("create a new playlist"))
+                                                    //create an async function in actions that makes a new playlist
+                                                    // and passes this track to it
+                                                    (console.log("TODO: create a new playlist"))
                                                     }>Add to new playlist:
                                                 </Dropdown.Item>
 
@@ -75,7 +78,6 @@ const listOfTracks = store.favTracksStore;
                                                
                                                     <Dropdown.Item key = {index} onClick={() => 
                                                         actions.addToPlaylist(track, playlist.id)
-                                                        // console.log(`add ${track.title} to ${playlist.name}`)
                                                         }>Add to "{playlist.name}"
                                                     </Dropdown.Item>
                                                 )}                                   

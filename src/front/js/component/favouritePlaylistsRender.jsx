@@ -8,17 +8,19 @@ import { FavouritePlaylistDropdownFeats } from "./favouritePlaylistsDropdownFeat
 import { msToMin } from "./utils/msToMin";
 
 
-// export const FavouritePlayistsRender = ({ listOfPlaylists }) => {
-
-// this version gets playlists directly from store instead of passed as props
-// to test 2 versions, comment out statement below & uncomment above
+// new version of export function that gets favorites directly from store
 
 //
 export const FavouritePlayistsRender = () => {
     const { store } = useContext(Context);
+    
     const listOfPlaylists = store.favPlaylistsStore;
 //
 
+// original statement
+//
+// export const FavouritePlayistsRender = ({ listOfPlaylists }) => {
+//
     return (
         <Container className="col-10">
             <Accordion>

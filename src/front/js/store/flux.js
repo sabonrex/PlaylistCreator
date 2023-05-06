@@ -173,6 +173,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       addToPlaylist: async (track, targetPlaylist) => {
         const store = getStore();
         const token = getToken();
+        const endpoint = `${process.env.BACKEND_URL}/api/playlists/${targetPlaylist}/tracks/${track.id}`;
 
         const indexLookup = store.favPlaylistsStore.findIndex(plIndex => plIndex.id === targetPlaylist);
         
@@ -191,15 +192,15 @@ const getState = ({ getStore, getActions, setStore }) => {
         })
 
         if (playlistCheck) {
-          alert(`${newPlaylistStore[indexLookup].name} already includes ${track.title}`)
+          alert(`${newPlaylistStore[indexLookup].name} already includes ${track.title} by ${track.artist}`)
         } else {
           newPlaylistStore[indexLookup].tracks.push(track)
-          
+
           // if we can agree on how data is accessed this will update the store & re-render the playlist component
           // change favoritePlaylistsRender export statement (if it's still using props this won't work)
           setStore({"favPlaylistsStore": newPlaylistStore});
 
-          const addToDBPlaylist = await fetch(`${process.env.BACKEND_URL}/api/playlists/${targetPlaylist}/tracks/${track.id}`, {
+          const addToDBPlaylist = await fetch(endpoint, {
             method: "POST",
             headers: {
               "Authorization": `Bearer ${token}`,
@@ -249,34 +250,42 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      // this is adding tracks twice & throwing errors; need to figure out why
       addTrackToFavourites: async (track) => {
         const store = getStore();
         const token = getToken();
         const endpoint = `${store.apiUrl}/api/user/favourites/tracks/${track.id}`;
         
         const updateFavouriteTracks = store.favTracksStore;
-        updateFavouriteTracks.push(track);
 
-        try {
-          const response = await fetch(endpoint, {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "application/json"
-            }
-          });
-          const jsonResponse = await response.json()
-          console.log(jsonResponse)
-          
-          const updateFavouriteTracks = store.favTracksStore;
+        // check if track already in favorites, to prevent duplicate keys
+        const favouritesCheck = updateFavouriteTracks.find(favouritesTrack => {
+          if (favouritesTrack.id === track.id) {
+            return true;
+          }
+          return false
+        })
+
+        if (favouritesCheck) {
+          alert(`${track.title} by ${track.artist} is already in your favourites`)
+        } else {
           updateFavouriteTracks.push(track);
           setStore({["favTracksStore"]: updateFavouriteTracks}) 
 
-        } catch(error) {
-          console.error(error);
-        }
+          try {
+            const response = await fetch(endpoint, {
+              method: "POST",
+              headers: {
+                  "Authorization": `Bearer ${token}`,
+                  "Content-Type": "application/json"
+              }
+            });
+            const jsonResponse = await response.json()
+            console.log(jsonResponse)
 
+          } catch(error) {
+            console.error(error);
+          }
+        }
       },
 
       removePlaylist: async (playlist) => {
