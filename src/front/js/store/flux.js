@@ -306,11 +306,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       },
 
-      removeFromFavourites: (key, index) => {
-        return (
-          favouritesData.tracks.splice(index, 1),
-          setStore({[key]: favouritesData})
-        )
+      removeFromFavourites: async (track, index) => {
+        const store = getStore();
+        const token = getToken();
+        const endpoint = `${store.apiUrl}/api/user/favourites/tracks/${track.id}`;
+        
+        const updateFavouriteTracks = store.favTracksStore;
+        updateFavouriteTracks.splice(index, 1);
+        setStore({["favTracksStore"]: updateFavouriteTracks}) 
+
+        try {
+          const response = await fetch(endpoint, {
+            method: "DELETE",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+          });
+          const jsonResponse = await response.json()
+          console.log(jsonResponse)
+
+        } catch(error) {
+          console.error(error);
+        }
       },
 
       getSpotifyTrack: () => {

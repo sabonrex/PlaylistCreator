@@ -63,7 +63,7 @@ export const FavouriteTracksRender = () => {
 
                                             <Dropdown.Menu>
                                                 <Dropdown.Item onClick={() => 
-                                                    (actions.removeFromFavourites("favouritesStore", track.name, index))
+                                                    (actions.removeFromFavourites(track, index))
                                                     }>Remove from favourites
                                                 </Dropdown.Item>
                                         
