@@ -7,8 +7,20 @@ import { Context } from "../store/appContext";
 
 import { msToMin } from "./utils/msToMin";
 
-export const FavouriteTracksRender = ({ listOfTracks }) => {
+
+// new version of export function that gets favorites directly from store
+//
+export const FavouriteTracksRender = () => {
     const {store, actions} = useContext(Context);
+
+    const listOfTracks = store.favTracksStore;
+//
+
+// original export function
+//
+// export const FavouriteTracksRender = ({ listOfTracks }) => {
+//     const {store, actions} = useContext(Context);
+//
 
     return (
         <Container className="col-10 pb-5">
@@ -51,19 +63,22 @@ export const FavouriteTracksRender = ({ listOfTracks }) => {
 
                                             <Dropdown.Menu>
                                                 <Dropdown.Item onClick={() => 
-                                                    (actions.removeFromFavourites("favouritesStore", track.name, index))
+                                                    (actions.removeFromFavourites(track, index))
                                                     }>Remove from favourites
                                                 </Dropdown.Item>
                                         
                                                 <Dropdown.Item onClick={() =>
-                                                    (actions.createNewPlaylist("playlistStore", track, "New Playlist"))
+                                                    //create an async function in actions that makes a new playlist
+                                                    // and passes this track to it
+                                                    (console.log("TODO: create a new playlist"))
                                                     }>Add to new playlist:
                                                 </Dropdown.Item>
 
-                                                {store.playlistStore.map(playlist => 
-                                                    <Dropdown.Item onClick={() => 
-                                                        (actions.addToPlaylist("playlistStore", track, playlist.playlistName))
-                                                        }>Add to "{playlist.playlistName}"
+                                                {store.favPlaylistsStore.map((playlist, index) => 
+                                               
+                                                    <Dropdown.Item key = {index} onClick={() => 
+                                                        actions.addToPlaylist(track, playlist.id)
+                                                        }>Add to "{playlist.name}"
                                                     </Dropdown.Item>
                                                 )}                                   
                                             </Dropdown.Menu>
