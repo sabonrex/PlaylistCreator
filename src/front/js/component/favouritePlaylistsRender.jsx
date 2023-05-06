@@ -13,7 +13,7 @@ import { msToMin } from "./utils/msToMin";
 //
 export const FavouritePlayistsRender = () => {
     const { store } = useContext(Context);
-    
+
     const listOfPlaylists = store.favPlaylistsStore;
 //
 
@@ -50,7 +50,7 @@ export const FavouritePlayistsRender = () => {
 
                                         <Col xs="6" sm="8" md="5" lg="3">
                                             <div className="text-start">
-                                                <div className="fw-bold" >{tracks.name}</div>
+                                                <div className="fw-bold" >{tracks.title}</div>
                                                 {tracks.artist}
                                             </div>
                                         </Col>

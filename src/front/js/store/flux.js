@@ -131,8 +131,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const token = getToken();
 
         // this function will create a new empty playlist each time "save this playlist is clicked"
-        const newPlaylist = await fetch(`${process.env.BACKEND_URL}/api/playlists/`, 
-          {
+        const newPlaylist = await fetch(`${process.env.BACKEND_URL}/api/playlists/`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
@@ -155,8 +154,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           // .then(response => console.log(response))             
         });
 
-        const addToFavouritesDB = await fetch(`${process.env.BACKEND_URL}/api/user/favourites/playlists/${newPlaylistID.playlist_id}`,
-        {
+        const addToFavouritesDB = await fetch(`${process.env.BACKEND_URL}/api/user/favourites/playlists/${newPlaylistID.playlist_id}`, {
           method: "POST",
           headers: {
             "Authorization": `Bearer ${token}`,
@@ -166,7 +164,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         const jsonResponse = await addToFavouritesDB.json()
         console.log(jsonResponse)
-
 
       },
       
@@ -179,11 +176,10 @@ const getState = ({ getStore, getActions, setStore }) => {
         
         // this is making a copy of the playlists
         const newPlaylistStore = [...store.favPlaylistsStore];
-        // and this updates the playlist with a song from favorites
 
-        // check if track already in playlist, to prevent duplicate keys
-        // alternatively, use something other than the track ID for keys in playlist;
-        // that would allow duplicates & make this redundant
+        // this checks if track already in playlist, to prevent duplicate keys
+        // (alternatively, use something other than the track ID for keys in playlist;
+        // that would allow duplicates & make this redundant)
         const playlistCheck = newPlaylistStore[indexLookup].tracks.find(playlistTrack => {
           if (playlistTrack.id === track.id) {
             return true;
@@ -191,6 +187,9 @@ const getState = ({ getStore, getActions, setStore }) => {
           return false
         })
 
+         // and this updates the playlist with a song from favorites
+         // one potential problem is that the entire playlistStore updates every time one track changes
+         // i haven't noticed problems yet with 160+ songs, but it might cause problems at some point
         if (playlistCheck) {
           alert(`${newPlaylistStore[indexLookup].name} already includes ${track.title} by ${track.artist}`)
         } else {
