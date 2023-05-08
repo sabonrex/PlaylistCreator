@@ -4,7 +4,6 @@ import { Accordion, Container } from "react-bootstrap";
 import { FavouritePlayistsAccordionHeader } from "./favouritePlaylistAccordionHeader.jsx";
 import { FavouritePlaylistAccordionBody } from "./favouritePlaylistAccordionBody.jsx";
 
-
 // new version of export function that gets favorites directly from store
 // just to make sure it works, I merged using the same change you made, buy inside favouritePlaylist.jsx
 
@@ -16,7 +15,7 @@ import { FavouritePlaylistAccordionBody } from "./favouritePlaylistAccordionBody
 export const FavouritePlayistsRender = ({ listOfPlaylists }) => {
 
     return (
-        <Container className="col-10">
+        <Container className="col-10 pb-5">    
             <Accordion>
                 {listOfPlaylists?.map((playlist) =>                 
                     <Accordion.Item key={playlist.id} eventKey={playlist.id}>
