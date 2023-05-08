@@ -47,7 +47,7 @@ export const FavouritePlaylistAccordionBody = ({ favouritePlaylists, playlist })
         <Accordion.Body className="py-0">
             <ListGroup variant="flush">
                 {favouritePlaylistTracks}
-                <FavouritePlaylistAccordionFeatures />
+                <FavouritePlaylistAccordionFeatures playlist={playlist} />
             </ListGroup>
         </Accordion.Body>
     );

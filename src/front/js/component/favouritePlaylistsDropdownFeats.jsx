@@ -11,15 +11,18 @@ export const FavouritePlaylistDropdownFeats = ({ listOfPlaylists, playlist, trac
     const { actions } = useContext(Context);
 
     const addTrackToFavTracks = () => {
-        actions.addTrackToFavourites(track)
+        actions.addTrackToFavouriteTracksInStore(track);
+        actions.addTrackToFavouriteTracks(track);
     }
 
     const removeTrackFromPlaylist = () => {
-        actions.removeFromPlaylist(playlist, track)
+        actions.removeTrackFromPlaylistInStore(playlist.id, track.id);
+        actions.removeTrackFromPlaylist(playlist.id, track.id);
     }
 
     const moveTrack = (targetPlaylist) => {
-        actions.moveToPlaylist(track, playlist, targetPlaylist)
+        actions.moveTrackBetweenPlaylistsInStore(track, playlist.id, targetPlaylist.id);
+        actions.moveTrackBetweenPlaylists(track, playlist.id, targetPlaylist.id);
     }
 
     const DropdownListMoveToPlaylists = listOfPlaylists.map((targetPlaylist, index) => {

@@ -188,30 +188,61 @@ const getState = ({ getStore, getActions, setStore }) => {
         )
       },
 
-      moveToPlaylist: async (track, originalPlaylist, targetPlaylist) => {
-        const store = getStore();
+      moveTrackBetweenPlaylistsInStore: async (track, originalPlaylistId, targetPlaylistId) => {
         const actions = getActions();
-        const endpoint = `${store.apiUrl}/api/playlists/${originalPlaylist.id}/tracks/${track.id}/playlists/${targetPlaylist.id}/move`;
+
+        actions.removeTrackFromPlaylistInStore(originalPlaylistId, track.id);
+        actions.addTrackToPlaylistInStore(targetPlaylistId, track)
+      },
+
+      moveTrackBetweenPlaylists: async (track, originalPlaylistId, targetPlaylistId) => {
+        const store = getStore();
+        const endpoint = `${store.apiUrl}/api/playlists/${originalPlaylistId}/tracks/${track.id}/playlists/${targetPlaylistId}/move`;
 
         try {
-          fetch(endpoint, {
+          const response = await fetch(endpoint, {
             method: "PUT",
             headers: {"Content-Type": "application/json"}
           });
-          const newPlayists = await actions.fetchFavouritePlayists();
-          setStore({["favPlaylistsStore"]: newPlayists}) 
+          const jsonResponse = await response.json();
+          console.log(jsonResponse.msg);
+          return jsonResponse;
+          
         } catch(error) {
           console.error(error);
         }
 
       },
 
-      removeFromPlaylist: async (playlist, track) => {
+      addTrackToPlaylistInStore: (playlistId, track) => {
         const store = getStore();
-        const endpoint = `${store.apiUrl}/api/playlists/${playlist.id}/tracks/${track.id}`;
 
-        const indexP = store.favPlaylistsStore.findIndex(p => p.id == playlist.id);
-        const updatePlaylists = store.favPlaylistsStore;
+        const indexP = store.favPlaylistsStore.findIndex(p => p.id === playlistId);        
+        const updatedPlaylist = store.favPlaylistsStore[indexP];
+        updatedPlaylist.tracks.push(track)
+        
+        const updateFavouritePlaylists = store.favPlaylistsStore;
+        updateFavouritePlaylists[indexP] = updatedPlaylist;
+        
+        setStore({["favPlaylistsStore"]: updateFavouritePlaylists}) 
+      },
+
+      removeTrackFromPlaylistInStore: (playlistId, trackId) => {
+        const store = getStore();
+
+        const indexP = store.favPlaylistsStore.findIndex(p => p.id === playlistId);        
+        const updatedPlaylist = store.favPlaylistsStore[indexP];
+        updatedPlaylist.tracks = store.favPlaylistsStore[indexP].tracks.filter(t => t.id != trackId);
+        
+        const updateFavouritePlaylists = store.favPlaylistsStore;
+        updateFavouritePlaylists[indexP] = updatedPlaylist;
+        
+        setStore({["favPlaylistsStore"]: updateFavouritePlaylists}) 
+      },
+
+      removeTrackFromPlaylist: async (playlistId, trackId) => {
+        const store = getStore();
+        const endpoint = `${store.apiUrl}/api/playlists/${playlistId}/tracks/${trackId}`;
 
         try {
           const response = await fetch(endpoint, {
@@ -219,20 +250,26 @@ const getState = ({ getStore, getActions, setStore }) => {
             headers: {"Content-Type": "application/json"}
           });
           const jsonResponse = await response.json();
-          updatePlaylists[indexP].tracks = jsonResponse.tracks;
-          setStore({["favPlaylistsStore"]: updatePlaylists}) 
+          console.log(jsonResponse.msg);
+
         } catch(error) {
           console.error(error);
         }
       },
 
-      addTrackToFavourites: async (track) => {
+      addTrackToFavouriteTracksInStore: (track) => {
+        const store = getStore();
+
+        const updatedTracks = store.favTracksStore;
+        updatedTracks.push(track);
+        
+        setStore({["favTracksStore"]: updatedTracks}) 
+      },
+
+      addTrackToFavouriteTracks: async (track) => {
         const store = getStore();
         const token = getToken();
         const endpoint = `${store.apiUrl}/api/user/favourites/tracks/${track.id}`;
-        
-        const updateFavouriteTracks = store.favTracksStore;
-        updateFavouriteTracks.push(track);
 
         try {
           const response = await fetch(endpoint, {
@@ -243,11 +280,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
           });
           const jsonResponse = await response.json()
-          console.log(jsonResponse)
-          
-          const updateFavouriteTracks = store.favTracksStore;
-          updateFavouriteTracks.push(track);
-          setStore({["favTracksStore"]: updateFavouriteTracks}) 
+          console.log(jsonResponse.msg);
 
         } catch(error) {
           console.error(error);
@@ -255,22 +288,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       },
 
-      removePlaylist: async (playlist) => {
+      removePlaylistFromStore: (playlistId) => {
         const store = getStore();
-        const actions = getActions();
-        const endpoint = `${store.apiUrl}/api/playlists/${playlist.id}`;
+
+        const indexP = store.favPlaylistsStore.findIndex(p => p.id == playlistId);
+        const updatingP = store.favPlaylistsStore;
+        updatingP.splice(indexP, 1);
+        
+        setStore({["favPlaylistsStore"]: updatingP}) 
+
+      },
+
+      removePlaylist: async (playlistId) => {
+        const store = getStore();
+        const endpoint = `${store.apiUrl}/api/playlists/${playlistId}`;
 
         try {
-          fetch(endpoint, {
-            method: "PUT",
+          const response = await fetch(endpoint, {
+            method: "DELETE",
             headers: {"Content-Type": "application/json"}
           });
-          const newPlayists = await actions.fetchFavouritePlayists();
-          setStore({["favPlaylistsStore"]: newPlayists}) 
+          const jsonResponse = await response.json();
+          console.log(jsonResponse.msg);
         } catch(error) {
           console.error(error);
         }
-
       },
 
       removeFromFavourites: (key, index) => {
