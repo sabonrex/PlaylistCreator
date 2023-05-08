@@ -39,8 +39,6 @@ export const Login = () => {
     const jsonResp = await resp.json()
     if (resp.status >= 400 && resp.status < 500) return window.alert(jsonResp.msg);
     
-    console.log("response: ", jsonResp)
-
     if (resp.status == 201) {
         window.sessionStorage.setItem("token", jsonResp.access_token);
         navigate("/favourites");
