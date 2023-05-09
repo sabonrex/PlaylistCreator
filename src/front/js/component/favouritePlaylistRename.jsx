@@ -26,14 +26,17 @@ export const FavouritePlaylistRename = (playlistData) => {
     
     return (
         <>
-        <Dropdown show={dropdownOpen} onToggle={handleDropdownToggle}>
+        <Dropdown 
+            show={dropdownOpen} 
+            onToggle={handleDropdownToggle}
+            drop={"down-centered"}>
             <DropdownToggle className="playlist-button mx-1">
                 <FontAwesomeIcon icon={faPenToSquare} />
             </DropdownToggle>
 
-            <Dropdown.Menu>
+            <Dropdown.Menu className="rename-dropdown">
                 <Form onSubmit={handleSubmit}>
-                    <Form.Group controlId="inputField">
+                    <Form.Group className="px-2" controlId="inputField">
                         <InputGroup>
                             <Form.Control type="text" placeholder={renameLabel} ref={inputRef} />
                         </InputGroup>

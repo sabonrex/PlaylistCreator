@@ -21,23 +21,23 @@ export const LoginRender = ({handleSubmit, handleChange}) => {
                                         <h2 className="mt-1 mb-5 pb-1">Welcome Back</h2>
                                     </div>
 
-                                    <form name="login" onSubmit={handleSubmit}>
+                                    <form className="form-background" name="login" onSubmit={handleSubmit}>
                                         <div className="form-outline">
-                                            <label className="form-label" htmlFor="username">Username</label>
+                                            <label className="form-label form-input-label" htmlFor="username">Username</label>
                                             <input 
                                                 type="text" 
                                                 id="username" 
-                                                className="form-control" 
+                                                className="form-control form-input-field" 
                                                 placeholder="Insert your username"
                                                 onChange={handleChange} />
                                         </div>
 
                                         <div className="form-outline">
-                                            <label className="form-label" htmlFor="password">Password</label>
+                                            <label className="form-label form-input-label" htmlFor="password">Password</label>
                                             <input 
                                                 type="password" 
                                                 id="password" 
-                                                className="form-control" 
+                                                className="form-control form-input-field" 
                                                 placeholder="Insert your password" 
                                                 onChange={handleChange} />
                                         </div>

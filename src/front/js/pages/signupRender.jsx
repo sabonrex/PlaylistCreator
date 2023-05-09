@@ -18,42 +18,42 @@ export const SignupRender = ({ handleChange, handleSubmit }) => {
                     </h2>
                   </div>
 
-                  <form name="signup" onSubmit={handleSubmit}>
+                  <form className="form-background" name="signup" onSubmit={handleSubmit}>
                     
                     <div className="form-outline mb-4">
-                      <label className="form-label" htmlFor="username">
+                      <label className="form-label form-input-label" htmlFor="username">
                         Username
                       </label>
                       <input
                         type="text"
                         id="username"
-                        className="form-control"
+                        className="form-control form-input-field"
                         placeholder="Insert new username"
                         onChange={handleChange}
                       />
                     </div>
 
                     <div className="form-outline mb-4">
-                      <label className="form-label" htmlFor="email">
+                      <label className="form-label form-input-label" htmlFor="email">
                         Email
                       </label>
                       <input
                         type="email"
                         id="email"
-                        className="form-control"
+                        className="form-control form-input-field"
                         placeholder="Insert new email"
                         onChange={handleChange}
                       />
                     </div>
 
                     <div className="form-outline mb-4">
-                      <label className="form-label" htmlFor="password">
+                      <label className="form-label form-input-label" htmlFor="password">
                         Password
                       </label>
                       <input
                         type="password"
                         id="password"
-                        className="form-control"
+                        className="form-control form-input-field"
                         placeholder="Insert new password"
                         onChange={handleChange}
                       />
