@@ -20,7 +20,7 @@ div.playlist-play-button {
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
-div.playlist-button {
+.playlist-button {
   color: #D74390;
   background-color: #1D2343;
   border-color: #1D2343;
@@ -42,6 +42,6 @@ div.playlist-button {
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
-div.playlist-button:hover {
+.playlist-button:hover {
   opacity: 1;
 }

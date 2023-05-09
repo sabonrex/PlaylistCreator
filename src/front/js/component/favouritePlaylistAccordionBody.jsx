@@ -23,7 +23,7 @@ export const FavouritePlaylistAccordionBody = ({ favouritePlaylists, playlist })
 
                 <Col xs="6" sm="8" md="5" lg="3">
                     <div className="text-start">
-                        <div className="fw-bold" >{track.name}</div>
+                        <div className="fw-bold" >{track.title}</div>
                         {track.artist}
                     </div>
                 </Col>

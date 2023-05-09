@@ -1,7 +1,10 @@
 import React, { useContext } from "react";
-import { Container, ListGroupItem } from "react-bootstrap";
+import { Container, Dropdown, ListGroupItem } from "react-bootstrap";
+import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash} from "@fortawesome/free-solid-svg-icons";
+
+import { FavouritePlaylistRename } from "./favouritePlaylistRename.jsx";
 
 import { Context } from "../store/appContext";
 
@@ -15,10 +18,8 @@ export const FavouritePlaylistAccordionFeatures = ({ playlist }) => {
 
     return (
         <ListGroupItem>
-            <Container className="d-flex justify-content-center align-items-center"> 
-                <div className="playlist-button mx-1" >
-                    <FontAwesomeIcon icon={faPenToSquare} />
-                </div>
+            <Container className="d-flex justify-content-center align-items-center">
+                <FavouritePlaylistRename playlistName={playlist.name} />
                 <div className="playlist-button mx-1" onClick={removePlaylist}>
                     <FontAwesomeIcon icon={faTrash} />
                 </div>

@@ -380,6 +380,11 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      renamePlaylist: async (playlist) => {
+        console.log(playlist)
+        console.log(`rename this playlist`)
+      },
+
       getSpotifyTrack: () => {
         const store = getStore();
         // in the future, return the last song the user was hearing. For now, return a song
