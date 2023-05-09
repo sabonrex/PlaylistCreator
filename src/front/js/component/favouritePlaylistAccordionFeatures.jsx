@@ -19,7 +19,7 @@ export const FavouritePlaylistAccordionFeatures = ({ playlist }) => {
     return (
         <ListGroupItem>
             <Container className="d-flex justify-content-center align-items-center">
-                <FavouritePlaylistRename playlistName={playlist.name} />
+                <FavouritePlaylistRename playlistName={playlist.name} playlistID={playlist.id}/>
                 <div className="playlist-button mx-1" onClick={removePlaylist}>
                     <FontAwesomeIcon icon={faTrash} />
                 </div>

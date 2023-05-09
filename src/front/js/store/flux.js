@@ -380,9 +380,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      renamePlaylist: async (playlist) => {
-        console.log(playlist)
-        console.log(`rename this playlist`)
+      renamePlaylist: async (newPlaylistName, playlistID) => {
+        console.log(`rename playlist ID ${playlistID} to ${newPlaylistName}`)
       },
 
       getSpotifyTrack: () => {

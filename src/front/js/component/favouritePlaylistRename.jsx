@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { Container, Dropdown, Form, ListGroupItem } from "react-bootstrap";
+import React, { useContext, useRef } from "react";
+import { Container, Dropdown, Form, InputGroup, ListGroupItem } from "react-bootstrap";
 import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash} from "@fortawesome/free-solid-svg-icons";
@@ -7,34 +7,33 @@ import { faPenToSquare, faTrash} from "@fortawesome/free-solid-svg-icons";
 import { Context } from "../store/appContext";
 
 
-export const FavouritePlaylistRename = (playlistName) => {
+export const FavouritePlaylistRename = (playlistData) => {
     const { actions } = useContext(Context)
-    const renameLabel = `Rename ${playlistName.playlistName}`
+    const inputRef = useRef(null);
+
+    const renameLabel = `Rename ${playlistData.playlistName}`
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const newPlaylistName = inputRef.current.value;
+        actions.renamePlaylist(newPlaylistName, playlistData.playlistID)
+    }
     
     return (
         <>
-        <div className="playlist-button mx-1">
-            <FontAwesomeIcon icon={faPenToSquare} />
-        </div>
-
-        <Dropdown autoClose>
-
-            <DropdownToggle className="playlist-button">
+        <Dropdown>
+            <DropdownToggle className="playlist-button mx-1">
                 <FontAwesomeIcon icon={faPenToSquare} />
             </DropdownToggle>
 
             <Dropdown.Menu>
-
-                <Dropdown.Item> 
-                <Form>
-                    <Form.Group className="mb-3" controlId="formBasicEmail">
-                        <Form.Control type="email" placeholder={renameLabel} />
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group controlId="inputField">
+                        <InputGroup>
+                            <Form.Control type="text" placeholder={renameLabel} ref={inputRef} />
+                        </InputGroup>
                     </Form.Group>
                 </Form>
-                </Dropdown.Item>
-
             </Dropdown.Menu>
-
         </Dropdown>
         </>
     )
