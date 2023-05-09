@@ -1,8 +1,8 @@
-import React, { useContext, useRef } from "react";
-import { Container, Dropdown, Form, InputGroup, ListGroupItem } from "react-bootstrap";
+import React, { useContext, useRef, useState } from "react";
+import { Dropdown, Form, InputGroup } from "react-bootstrap";
 import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faTrash} from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare} from "@fortawesome/free-solid-svg-icons";
 
 import { Context } from "../store/appContext";
 
@@ -10,17 +10,23 @@ import { Context } from "../store/appContext";
 export const FavouritePlaylistRename = (playlistData) => {
     const { actions } = useContext(Context)
     const inputRef = useRef(null);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const renameLabel = `Rename ${playlistData.playlistName}`
     const handleSubmit = (event) => {
         event.preventDefault();
         const newPlaylistName = inputRef.current.value;
-        actions.renamePlaylist(newPlaylistName, playlistData.playlistID)
+        actions.renamePlaylist(newPlaylistName, playlistData.playlistID);
+        setDropdownOpen(false);
     }
+    
+    const handleDropdownToggle = () => {
+        setDropdownOpen(!dropdownOpen);
+      };
     
     return (
         <>
-        <Dropdown>
+        <Dropdown show={dropdownOpen} onToggle={handleDropdownToggle}>
             <DropdownToggle className="playlist-button mx-1">
                 <FontAwesomeIcon icon={faPenToSquare} />
             </DropdownToggle>
