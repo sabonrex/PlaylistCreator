@@ -94,7 +94,7 @@ label {
   color: rgb(34, 34, 34);
 }
 
-form {
+.form-background {
   color: aquamarine;
   border-radius: 25px;
   border: 5px solid #37dfd6;
@@ -111,15 +111,15 @@ h2 {
   margin: 0;
 }
 
-.form-control{
-  border-width: 0 0 2px 0; /* top right bottom left */
+.form-input-field {
+  border-width: 0 0 2px 0;
   border-style: solid;
   border-color: #f00 #0f0 rgb(241, 4, 190) #ff0;
   border-radius:  0px;
   padding-block: 2px 0 0 0;
 }
 
-.form-label {
+.form-input-label {
   font-size: 15px;
   padding-top: 20px;
   padding-bottom: 5px;
@@ -230,4 +230,9 @@ button.fav-playlist-button {
 
 button.fav-playlist-button:hover {
   opacity: 1;
+}
+
+.rename-dropdown {
+  background-color: #c54b8a;
+  width: 35%;
 }

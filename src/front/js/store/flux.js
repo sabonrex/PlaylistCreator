@@ -1,5 +1,3 @@
-import { playlistData } from "../component/testData/testDataPlaylist";
-import { favouritesData } from "../component/testData/testDataFavourites";
 import { getToken } from "../auth/getToken";
 
 const getState = ({ getStore, getActions, setStore }) => {
@@ -305,7 +303,9 @@ const getState = ({ getStore, getActions, setStore }) => {
         })
 
         if (favouritesCheck) {
-          alert(`${track.title} by ${track.artist} is already in your favourites`)
+          return (
+            alert(`${track.title} by ${track.artist} is already in your favourites`)
+          )
         } else {
           updateFavouriteTracks.push(track);
           setStore({["favTracksStore"]: updateFavouriteTracks})
@@ -377,6 +377,54 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         } catch(error) {
           console.error(error);
+        }
+      },
+
+      renamePlaylist: async (newPlaylistName, playlistID) => {
+        const store = getStore();
+        const token = getToken();
+        const endpoint = `${store.apiUrl}/api/playlists/rename`;
+        const data = {
+          "id": playlistID,
+          "new_name": newPlaylistName 
+        }
+
+        const indexP = store.favPlaylistsStore.findIndex(p => p.id == playlistID);
+        const updatingP = store.favPlaylistsStore;
+
+        // check if playlist name already exists, to prevent user confusion
+        const pNameCheck = updatingP.find(existingName => {
+          if (existingName.name === newPlaylistName) {
+            return true;
+          }
+          return false
+        })
+
+        if (pNameCheck) {
+          return (
+            alert(`A playlist named ${newPlaylistName} already exists`)
+          )
+        } else {
+          updatingP[indexP].name = newPlaylistName;
+          console.log(updatingP[indexP]);
+          setStore({["favPlaylistsStore"]: updatingP})
+
+          try {
+            const response = await fetch(endpoint, {
+              method: "PUT",
+              headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify(data)
+            });
+            const jsonResponse = await response.json()
+            console.log(jsonResponse)
+  
+          } catch(error) {
+            console.error(error);
+          }
+
         }
       },
 
