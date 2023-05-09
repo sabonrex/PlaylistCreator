@@ -20,10 +20,10 @@ div.playlist-play-button {
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
-.playlist-button {
-  color: #D74390;
-  background-color: #1D2343;
-  border-color: #1D2343;
+.playlist-button, .playlist-button:active {
+  color: #D74390 !important;
+  background-color: #1D2343 !important;
+  border-color: #1D2343 !important;
   opacity: 0.85;
 
   display: inline-block;
@@ -42,6 +42,10 @@ div.playlist-play-button {
   transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
+.playlist-button:focus {
+  box-shadow: none !important;
+}
+
 .playlist-button:hover {
-  opacity: 1;
+  opacity: 1 !important;
 }

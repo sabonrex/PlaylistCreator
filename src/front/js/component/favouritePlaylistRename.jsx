@@ -18,6 +18,7 @@ export const FavouritePlaylistRename = (playlistData) => {
         const newPlaylistName = inputRef.current.value;
         actions.renamePlaylist(newPlaylistName, playlistData.playlistID);
         setDropdownOpen(false);
+        inputRef.current.value = "";
     }
     
     const handleDropdownToggle = () => {
@@ -36,7 +37,7 @@ export const FavouritePlaylistRename = (playlistData) => {
 
             <Dropdown.Menu className="rename-dropdown">
                 <Form onSubmit={handleSubmit}>
-                    <Form.Group className="px-2" controlId="inputField">
+                    <Form.Group className="px-1" controlId="inputField">
                         <InputGroup>
                             <Form.Control type="text" placeholder={renameLabel} ref={inputRef} />
                         </InputGroup>

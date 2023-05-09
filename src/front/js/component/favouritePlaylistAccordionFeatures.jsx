@@ -1,8 +1,7 @@
 import React, { useContext } from "react";
-import { Container, Dropdown, ListGroupItem } from "react-bootstrap";
-import DropdownToggle from "react-bootstrap/esm/DropdownToggle";
+import { Container, ListGroupItem } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPenToSquare, faTrash} from "@fortawesome/free-solid-svg-icons";
+import { faTrash} from "@fortawesome/free-solid-svg-icons";
 
 import { FavouritePlaylistRename } from "./favouritePlaylistRename.jsx";
 
